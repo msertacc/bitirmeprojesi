@@ -2,34 +2,29 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.Reflection.Metadata.Ecma335;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
-using UI.Data;
-using UI.Services;
+using DataAccess.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.ComponentModel.DataAnnotations;
 
 namespace UI.Areas.Identity.Pages.Account.Manage
 {
-    public class IndexModel : PageModel
+	public class IndexModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly IFileService _fileService;
+        //private readonly IFileService _fileService;
 
         public IndexModel(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
-            IFileService fileService
+            SignInManager<ApplicationUser> signInManager
+            //IFileService fileService
             )
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            this._fileService = fileService;
+            //this._fileService = fileService;
         }
 
         /// <summary>
@@ -129,14 +124,14 @@ namespace UI.Areas.Identity.Pages.Account.Manage
 
             if (Input.ImageFile != null)
             {
-                var result = _fileService.SaveImage(Input.ImageFile);
-                if (result.Item1 == 1)
-                {
-                    var oldImage = user.ProfilePicture;
-                    user.ProfilePicture = result.Item2;
-                    await _userManager.UpdateAsync(user);
-                    var deleteResult = _fileService.DeleteImage(oldImage);
-                }
+                ////var result = _fileService.SaveImage(Input.ImageFile);
+                //if (result.Item1 == 1)
+                //{
+                //    var oldImage = user.ProfilePicture;
+                //    user.ProfilePicture = result.Item2;
+                //    await _userManager.UpdateAsync(user);
+                //    //var deleteResult = _fileService.DeleteImage(oldImage);
+                //}
             }
 
             // code for image upload

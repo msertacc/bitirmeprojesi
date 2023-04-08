@@ -1,6 +1,8 @@
 ﻿using UI.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using Newtonsoft.Json;
+using UI.Constants;
 
 namespace UI.Controllers
 {
@@ -13,15 +15,26 @@ namespace UI.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
-        {
-            return View();
+        public async Task<IActionResult> IndexAsync()
+        {          
+			return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+  //      public IActionResult Privacy()
+  //      {
+		//	List<WeatherForecast>? result = new List<WeatherForecast>();
+		//	string S = "";
+		//	using (var httpClient = new HttpClient())
+		//	{
+		//		using (var response =  httpClient.GetAsync(ApiEndpoints.WeatherForecastGet))
+		//		{
+
+		//				string apiResponse =  response.Result.ToString();
+		//			S = apiResponse;
+		//		}
+		//	}
+		//	return View(S);
+		//}
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

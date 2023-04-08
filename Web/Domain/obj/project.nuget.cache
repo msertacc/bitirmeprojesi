@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "QpfTa+g/qzImTi2xXHyidUrVsa8XgBNFYaY6H8EYsYb7LZTRXmTvvMx7Qje+6x7Zih2M0OUr0oUzoujs1aNeMQ==",
+  "success": true,
+  "projectFilePath": "D:\\Bitirme\\bitirmeprojesi\\Web\\Domain\\Domain.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\x\\.nuget\\packages\\microsoft.build.framework\\17.5.0\\microsoft.build.framework.17.5.0.nupkg.sha512",
+    "C:\\Users\\x\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
+    "C:\\Users\\x\\.nuget\\packages\\system.drawing.common\\6.0.0\\system.drawing.common.6.0.0.nupkg.sha512",
+    "C:\\Users\\x\\.nuget\\packages\\system.security.accesscontrol\\6.0.0\\system.security.accesscontrol.6.0.0.nupkg.sha512",
+    "C:\\Users\\x\\.nuget\\packages\\system.security.permissions\\6.0.0\\system.security.permissions.6.0.0.nupkg.sha512",
+    "C:\\Users\\x\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

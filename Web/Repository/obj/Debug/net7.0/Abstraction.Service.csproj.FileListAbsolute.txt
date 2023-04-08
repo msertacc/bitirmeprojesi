@@ -1,0 +1,17 @@
+D:\Bitirme\bitirmeprojesi\Web\Repository\obj\Debug\net7.0\Abstraction.Service.csproj.AssemblyReference.cache
+D:\Bitirme\bitirmeprojesi\Web\Repository\obj\Debug\net7.0\Abstraction.Service.GeneratedMSBuildEditorConfig.editorconfig
+D:\Bitirme\bitirmeprojesi\Web\Repository\obj\Debug\net7.0\Abstraction.Service.AssemblyInfoInputs.cache
+D:\Bitirme\bitirmeprojesi\Web\Repository\obj\Debug\net7.0\Abstraction.Service.AssemblyInfo.cs
+D:\Bitirme\bitirmeprojesi\Web\Repository\obj\Debug\net7.0\Abstraction.Service.csproj.CoreCompileInputs.cache
+D:\Bitirme\bitirmeprojesi\Web\Repository\bin\Debug\net7.0\Abstraction.Service.deps.json
+D:\Bitirme\bitirmeprojesi\Web\Repository\bin\Debug\net7.0\Abstraction.Service.dll
+D:\Bitirme\bitirmeprojesi\Web\Repository\bin\Debug\net7.0\Abstraction.Service.pdb
+D:\Bitirme\bitirmeprojesi\Web\Repository\bin\Debug\net7.0\Dto.dll
+D:\Bitirme\bitirmeprojesi\Web\Repository\bin\Debug\net7.0\Dto.pdb
+D:\Bitirme\bitirmeprojesi\Web\Repository\obj\Debug\net7.0\Abstraction.Service.csproj.CopyComplete
+D:\Bitirme\bitirmeprojesi\Web\Repository\obj\Debug\net7.0\Abstraction.Service.dll
+D:\Bitirme\bitirmeprojesi\Web\Repository\obj\Debug\net7.0\refint\Abstraction.Service.dll
+D:\Bitirme\bitirmeprojesi\Web\Repository\obj\Debug\net7.0\Abstraction.Service.pdb
+D:\Bitirme\bitirmeprojesi\Web\Repository\obj\Debug\net7.0\ref\Abstraction.Service.dll
+D:\Bitirme\bitirmeprojesi\Web\Repository\bin\Debug\net7.0\Domain.dll
+D:\Bitirme\bitirmeprojesi\Web\Repository\bin\Debug\net7.0\Domain.pdb

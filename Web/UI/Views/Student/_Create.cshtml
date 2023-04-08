@@ -1,0 +1,46 @@
+﻿@model UI.Models.Student.StudentViewModel
+
+@using (Html.BeginForm("Create", "Student", FormMethod.Post, new { Id = "frmCreateStudent" }))
+{
+	<div id="createStudentForm" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createStudentForm" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h6 class="modal-title">Öğrenci Ekleme</h6>
+					<button id="closeCreateModal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<form>
+						<fieldset>
+							<div class="form-group">
+								<label>Ad</label>
+								<input type="text" name="FirstName" placeholder="Lütfen öğrenci adını giriniz" class="form-control small-input" />
+								<label>Soyad</label>
+								<input type="text" name="LastName" placeholder="Lütfen öğrenci soyadını giriniz" class="form-control small-input" />
+								<label>TC Kimlik Numarası</label>
+								<input type="text" name="IdentityNumber" pattern="[0-9]{11}" placeholder="Lütfen öğrenci kimlik numarasını giriniz" class="form-control small-input" />
+								<label>Telefon Numarası</label>
+								<input type="text" name="PhoneNumber" pattern="[5][0-9]{10}" placeholder="Lütfen öğrenci telefon numarasını başında sıfır olmadan giriniz" class="form-control small-input" />
+								<label>E-Mail Adresi</label>
+								<input type="email" name="EMail" placeholder="Lütfen öğrenci e-postasını giriniz" class="form-control small-input" />
+								<label>Cinsiyet</label>
+								<input type="text" name="Gender" placeholder="Lütfen öğrenci cinsiyetini giriniz" class="form-control small-input" />
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<div class="btn-group">
+						<button type="submit" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">Kaydet</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+}
+
+<script>
+	$('#closeCreateModal').click(function () {
+		$('#ModalCreate').modal('hide');
+	});
+</script>

@@ -8,6 +8,7 @@ namespace API.Models.Course.Mappings
         public CourseProfile()
         {
 			this.CreateMap<CourseCreateRequest, CourseDto>();
+			this.CreateMap<CourseUpdateRequest, CourseDto>();
 		}
     }
 }

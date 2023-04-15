@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<UI.Models.Student.StudentViewModel>
+@using UI.Constants
 
 <section class="section-content">
 	<div class="row">
@@ -43,7 +44,7 @@
 						<td>@item.IdentityNumber</td>
 						<td>@item.PhoneNumber</td>
 						<td>@item.EMail</td>
-						<td>@item.Gender</td>
+						<td>@(Convert.ToInt32(item.Gender)==0 ? Gender.Kadın : Gender.Erkek)</td>
 						<td>@item.InsertedUser</td>
 						<td>@item.InsertedDate</td>
 					</tr>

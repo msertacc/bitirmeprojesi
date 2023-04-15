@@ -1,6 +1,7 @@
-﻿@model UI.Models.Student.StudentViewModel
+﻿@model UI.Models.Student.StudentViewModel;
+@using UI.Constants;
 
-@using (Html.BeginForm("Create", "Student", FormMethod.Post, new { Id = "frmCreateStudent" }))
+@using (Html.BeginForm("Create", "Student", FormMethod.Post))
 {
 	<div id="createStudentForm" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createStudentForm" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
@@ -14,24 +15,28 @@
 						<fieldset>
 							<div class="form-group">
 								<label>Ad</label>
-								<input type="text" name="FirstName" placeholder="Lütfen öğrenci adını giriniz" class="form-control small-input" />
+								<input type="text" name="FirstName" placeholder="Lütfen öğrenci adını giriniz" class="form-control small-input" required />
 								<label>Soyad</label>
-								<input type="text" name="LastName" placeholder="Lütfen öğrenci soyadını giriniz" class="form-control small-input" />
+								<input type="text" name="LastName" placeholder="Lütfen öğrenci soyadını giriniz" class="form-control small-input" required />
 								<label>TC Kimlik Numarası</label>
-								<input type="text" name="IdentityNumber" pattern="[0-9]{11}" placeholder="Lütfen öğrenci kimlik numarasını giriniz" class="form-control small-input" />
+								<input type="text" name="IdentityNumber" pattern="[0-9]{11}" title="Lütfen kimlik numarasını 11 hane giriniz" placeholder="Lütfen öğrenci kimlik numarasını giriniz" class="form-control small-input" required />
 								<label>Telefon Numarası</label>
-								<input type="text" name="PhoneNumber" pattern="[5][0-9]{10}" placeholder="Lütfen öğrenci telefon numarasını başında sıfır olmadan giriniz" class="form-control small-input" />
+								<input type="text" name="PhoneNumber" pattern="[5][0-9]{9}" title="Lütfen telefon numarasını başında 0 olmadan 10 karakter giriniz" placeholder="Lütfen öğrenci telefon numarasını başında sıfır olmadan giriniz" class="form-control small-input" required />
 								<label>E-Mail Adresi</label>
-								<input type="email" name="EMail" placeholder="Lütfen öğrenci e-postasını giriniz" class="form-control small-input" />
+									<input type="email" name="EMail" title="Lütfen e-mail'i doğru formatta giriniz" placeholder="Lütfen öğrenci e-postasını giriniz" class="form-control small-input" required />
 								<label>Cinsiyet</label>
-								<input type="text" name="Gender" placeholder="Lütfen öğrenci cinsiyetini giriniz" class="form-control small-input" />
+								<select class="form-select" name="Gender">
+									<option selected>Lütfen cinsiyet seçiniz</option>
+									<option value="@Convert.ToInt32(Gender.Erkek)">@Gender.Erkek</option>
+									<option value="@Convert.ToInt32(Gender.Kadın)">@Gender.Kadın</option>
+								</select>
 							</div>
 						</fieldset>
 					</form>
 				</div>
 				<div class="modal-footer">
 					<div class="btn-group">
-						<button type="submit" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">Kaydet</button>
+						<button type="submit" class="btn btn-sm btn-outline-secondary">Kaydet</button>
 					</div>
 				</div>
 			</div>

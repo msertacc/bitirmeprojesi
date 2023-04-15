@@ -1,0 +1,36 @@
+﻿@model UI.Models.Student.StudentViewModel
+
+@using (Html.BeginForm("Delete", "Student", FormMethod.Post, new { Id = "frmDelete" }))
+{
+	<div id="deleteStudentForm" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="deleteStudentForm" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h6 class="modal-title">Öğrenci Silme</h6>
+					<button id="closeDeleteModal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<form>
+						<fieldset>
+							<div class="form-group">
+								<h5>Seçtiğiniz öğrenci silinecektir. Silme işlemine devam etmek istiyor musunuz ?</h5>
+								<input type="text" name="Id" value="@Model.Id" class="form-control small-input" id="id" style="display:none;" />
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<div class="btn-group">
+						<button type="submit" class="btn btn-sm btn-outline-secondary">Sil</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+}
+
+<script>
+	$('#closeDeleteModal').click(function () {
+		$('#ModalDelete').modal('hide');
+	});
+</script>

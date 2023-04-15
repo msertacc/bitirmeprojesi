@@ -1519,20 +1519,6 @@
           }
         }
       },
-      "Abstraction.Service/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v7.0",
-        "dependencies": {
-          "Domain": "1.0.0",
-          "Dto": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/Abstraction.Service.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Abstraction.Service.dll": {}
-        }
-      },
       "DataAccess/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
@@ -4129,11 +4115,6 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "Abstraction.Service/1.0.0": {
-      "type": "project",
-      "path": "../Repository/Abstraction.Service.csproj",
-      "msbuildProject": "../Repository/Abstraction.Service.csproj"
-    },
     "DataAccess/1.0.0": {
       "type": "project",
       "path": "../DataAccess/DataAccess.csproj",
@@ -4152,8 +4133,8 @@
   },
   "projectFileDependencyGroups": {
     "net7.0": [
-      "Abstraction.Service >= 1.0.0",
       "AutoMapper >= 12.0.1",
+      "D:\\Bitirme\\bitirmeprojesi\\Web\\Repository\\Abstraction.Service.csproj",
       "DataAccess >= 1.0.0",
       "Domain >= 1.0.0",
       "Dto >= 1.0.0",
@@ -4245,5 +4226,16 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1104",
+      "level": "Error",
+      "message": "Unable to find project 'D:\\Bitirme\\bitirmeprojesi\\Web\\Repository\\Abstraction.Service.csproj'. Check that the project reference is valid and that the project file exists.",
+      "libraryId": "D:\\Bitirme\\bitirmeprojesi\\Web\\Repository\\Abstraction.Service.csproj",
+      "targetGraphs": [
+        "net7.0"
+      ]
+    }
+  ]
 }

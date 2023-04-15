@@ -31,7 +31,7 @@ namespace Service.Course
 			return mappingResult;
 		}
 
-		public async Task Create(CourseDto courseDto)
+		public async Task<CourseDto> Create(CourseDto courseDto)
 		{
             ArgumentNullException.ThrowIfNull(courseDto);
             ArgumentNullException.ThrowIfNull(courseDto.Name);
@@ -50,6 +50,8 @@ namespace Service.Course
 
             await context.Set<Entity.Domain.Course.Course>().AddAsync(mappingResult);
             await context.SaveChangesAsync();
+
+			return courseDto;
 
 		}
 

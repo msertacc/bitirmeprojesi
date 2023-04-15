@@ -1,8 +1,7 @@
-﻿namespace Entity.Dto.Student
+﻿namespace API.Models.Student
 {
-	public class StudentDto:BaseEntityDto.BaseEntityDto
+	public class StudentCreateRequest
 	{
-
 		public string? FirstName { get; set; }
 
 		public string? LastName { get; set; }

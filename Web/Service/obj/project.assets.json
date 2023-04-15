@@ -1519,6 +1519,20 @@
           }
         }
       },
+      "Abstraction.Service/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "Domain": "1.0.0",
+          "Dto": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Abstraction.Service.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Abstraction.Service.dll": {}
+        }
+      },
       "DataAccess/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
@@ -4115,6 +4129,11 @@
         "useSharedDesignerContext.txt"
       ]
     },
+    "Abstraction.Service/1.0.0": {
+      "type": "project",
+      "path": "../AbstractionService/Abstraction.Service.csproj",
+      "msbuildProject": "../AbstractionService/Abstraction.Service.csproj"
+    },
     "DataAccess/1.0.0": {
       "type": "project",
       "path": "../DataAccess/DataAccess.csproj",
@@ -4133,8 +4152,8 @@
   },
   "projectFileDependencyGroups": {
     "net7.0": [
+      "Abstraction.Service >= 1.0.0",
       "AutoMapper >= 12.0.1",
-      "D:\\Bitirme\\bitirmeprojesi\\Web\\Repository\\Abstraction.Service.csproj",
       "DataAccess >= 1.0.0",
       "Domain >= 1.0.0",
       "Dto >= 1.0.0",
@@ -4173,6 +4192,9 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
+            "D:\\Bitirme\\bitirmeprojesi\\Web\\AbstractionService\\Abstraction.Service.csproj": {
+              "projectPath": "D:\\Bitirme\\bitirmeprojesi\\Web\\AbstractionService\\Abstraction.Service.csproj"
+            },
             "D:\\Bitirme\\bitirmeprojesi\\Web\\DataAccess\\DataAccess.csproj": {
               "projectPath": "D:\\Bitirme\\bitirmeprojesi\\Web\\DataAccess\\DataAccess.csproj"
             },
@@ -4181,9 +4203,6 @@
             },
             "D:\\Bitirme\\bitirmeprojesi\\Web\\Dto\\Dto.csproj": {
               "projectPath": "D:\\Bitirme\\bitirmeprojesi\\Web\\Dto\\Dto.csproj"
-            },
-            "D:\\Bitirme\\bitirmeprojesi\\Web\\Repository\\Abstraction.Service.csproj": {
-              "projectPath": "D:\\Bitirme\\bitirmeprojesi\\Web\\Repository\\Abstraction.Service.csproj"
             }
           }
         }
@@ -4226,16 +4245,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1104",
-      "level": "Error",
-      "message": "Unable to find project 'D:\\Bitirme\\bitirmeprojesi\\Web\\Repository\\Abstraction.Service.csproj'. Check that the project reference is valid and that the project file exists.",
-      "libraryId": "D:\\Bitirme\\bitirmeprojesi\\Web\\Repository\\Abstraction.Service.csproj",
-      "targetGraphs": [
-        "net7.0"
-      ]
-    }
-  ]
+  }
 }

@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "dgSpecHash": "/D7GTx3kUE6VhDqNFoK0bvDeKgsqPayC05z9LtYovYwLwBMlQlR9gAgfcnTnoN8d0UGHFM8NDJUYqTiLUqOrWA==",
-  "success": false,
+  "dgSpecHash": "X9ZCBLlYaWAiSSJNcVOrPgyC+T+9H0rmzJI3lQd9BuhdKBAednSqy46SmxcsC24DF0NCdC41zExDMLkCiR/06Q==",
+  "success": true,
   "projectFilePath": "D:\\Bitirme\\bitirmeprojesi\\Web\\UI\\UI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\x\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
@@ -215,15 +215,5 @@
     "C:\\Users\\x\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Users\\x\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1104",
-      "level": "Error",
-      "message": "Unable to find project 'D:\\Bitirme\\bitirmeprojesi\\Web\\Repository\\Abstraction.Service.csproj'. Check that the project reference is valid and that the project file exists.",
-      "libraryId": "D:\\Bitirme\\bitirmeprojesi\\Web\\Repository\\Abstraction.Service.csproj",
-      "targetGraphs": [
-        "net7.0"
-      ]
-    }
-  ]
+  "logs": []
 }

@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{4
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Business", "Business", "{C263BA6A-8DE7-4553-93C5-08B61A8BDA99}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abstraction.Service", "Repository\Abstraction.Service.csproj", "{430D0EC8-A4F5-4713-B16E-4D78BDDEB91C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abstraction.Service", "AbstractionService\Abstraction.Service.csproj", "{430D0EC8-A4F5-4713-B16E-4D78BDDEB91C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "Service\Service.csproj", "{CE9C8894-6008-4787-B339-A0B682BA05D4}"
 EndProject

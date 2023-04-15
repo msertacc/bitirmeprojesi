@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "dgSpecHash": "BSVrZyc3OZ3Pw4d2fmczqH1z+KN1YjBmbHEUbUQFfxVoyBW/WFWgty4El8Pu5rhqKwc1ANFzegwYkgBCD4jCIQ==",
-  "success": false,
+  "dgSpecHash": "ZN/13tQPUcgNJw1B9M/URe5+4cDTtlyXA/Ta0ZaFLzOd9j3f4N7ujtQmEZSQzPdH9DcCv9yTLnmFMk/p7mYQnA==",
+  "success": true,
   "projectFilePath": "D:\\Bitirme\\bitirmeprojesi\\Web\\API\\API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\x\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
@@ -102,15 +102,5 @@
     "C:\\Users\\x\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512",
     "C:\\Users\\x\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1104",
-      "level": "Error",
-      "message": "Unable to find project 'D:\\Bitirme\\bitirmeprojesi\\Web\\Repository\\Abstraction.Service.csproj'. Check that the project reference is valid and that the project file exists.",
-      "libraryId": "D:\\Bitirme\\bitirmeprojesi\\Web\\Repository\\Abstraction.Service.csproj",
-      "targetGraphs": [
-        "net7.0"
-      ]
-    }
-  ]
+  "logs": []
 }

@@ -1,0 +1,61 @@
+﻿@model UI.Models.Student.StudentViewModel;
+@using UI.Constants;
+
+@using (Html.BeginForm("Update", "Student", FormMethod.Post))
+{
+	<div id="updateStudentForm" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="updateStudentForm" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h6 class="modal-title">Öğrenci Güncelleme</h6>
+					<button id="closeCreateModal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<form>
+						<fieldset>
+							<div class="form-group">
+									<input type="text" name="Id" value="@Model.Id" class="form-control small-input" id="id" style="display:none;" />
+								<label>Ad</label>
+								<input type="text" value="@Model.FirstName" name="FirstName" placeholder="Lütfen öğrenci adını giriniz" class="form-control small-input" required />
+								<label>Soyad</label>
+								<input type="text" value="@Model.LastName" name="LastName" placeholder="Lütfen öğrenci soyadını giriniz" class="form-control small-input" required />
+								<label>TC Kimlik Numarası</label>
+								<input type="text" value="@Model.IdentityNumber" name="IdentityNumber" pattern="[0-9]{11}" title="Lütfen kimlik numarasını 11 hane giriniz" placeholder="Lütfen öğrenci kimlik numarasını giriniz" class="form-control small-input" required />
+								<label>Telefon Numarası</label>
+								<input type="text" value="@Model.PhoneNumber" name="PhoneNumber" pattern="[5][0-9]{9}" title="Lütfen telefon numarasını başında 0 olmadan 10 karakter giriniz" placeholder="Lütfen öğrenci telefon numarasını başında sıfır olmadan giriniz" class="form-control small-input" required />
+								<label>E-Mail Adresi</label>
+									<input type="email" value="@Model.EMail" name="EMail" title="Lütfen e-mail'i doğru formatta giriniz" placeholder="Lütfen öğrenci e-postasını giriniz" class="form-control small-input" required />
+								<label>Cinsiyet</label>
+								<select class="form-select" value="@Model.Gender" name="Gender">
+									<option>Lütfen cinsiyet seçiniz</option>
+									@if(Model.Gender==Convert.ToInt32(Gender.Erkek).ToString())
+									{										
+										<option value="@Convert.ToInt32(Gender.Erkek)" selected>@Gender.Erkek</option>
+										<option value="@Convert.ToInt32(Gender.Kadın)">@Gender.Kadın</option>
+									}
+									else
+									{
+										<option value="@Convert.ToInt32(Gender.Erkek)">@Gender.Erkek</option>
+										<option value="@Convert.ToInt32(Gender.Kadın)" selected>@Gender.Kadın</option>
+									}
+
+								</select>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<div class="btn-group">
+						<button type="submit" class="btn btn-sm btn-outline-secondary">Kaydet</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+}
+
+<script>
+	$('#closeCreateModal').click(function () {
+		$('#ModalUpdate').modal('hide');
+	});
+</script>

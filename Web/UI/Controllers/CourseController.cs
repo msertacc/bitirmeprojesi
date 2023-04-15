@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using Newtonsoft.Json;
 using System.Text;
 using UI.Constants;
@@ -36,41 +37,84 @@ namespace UI.Controllers
 			return PartialView(viewModel);
 		}
 
-		[HttpPost]
 		public async Task<IActionResult> Create(CourseViewModel viewModel)
 		{
+			var errorMessage="";
 			var json = JsonConvert.SerializeObject(viewModel, new JsonSerializerSettings { });
 			var data = new StringContent(json, Encoding.UTF8, "application/json");
 			var response = await client.PostAsync(ApiEndpoints.CreateCourseEndPoint, data).ConfigureAwait(false);
-
+			if (!response.IsSuccessStatusCode)
+			{
+				var byteArray = await response.Content.ReadAsByteArrayAsync();
+				errorMessage = Encoding.UTF8.GetString(byteArray, 0, byteArray.Length);
+			}
 			return this.Redirect(Url.Action("Index"));
 		}
 
-		//public ActionResult _Update(int id)
-		//{
-		//	var result = this.courseService.GetCourseById(id);
-		//	var mappingResult = this.mapper.Map<CourseDto, CourseViewModel>(result);
-		//	return PartialView(mappingResult);
-		//}
+		public async Task<ActionResult> _Update(int id)
+		{
+			var errorMessage = "";
 
-		//public ActionResult Update(CourseViewModel viewModel)
-		//{
-		//	var mappingResult = this.mapper.Map<CourseViewModel, CourseDto>(viewModel);
-		//	this.courseService.Update(mappingResult);
-		//	return this.Redirect(Url.Action("Index"));
-		//}
+			var query = new Dictionary<string, string>()
+			{
+				["courseId"] = id.ToString(),
+			};
 
-		//public ActionResult _Delete(int id)
-		//{
-		//	var result = this.courseService.GetCourseById(id);
-		//	var mappingResult = this.mapper.Map<CourseDto, CourseViewModel>(result);
-		//	return PartialView(mappingResult);
-		//}
+			var uri = QueryHelpers.AddQueryString(ApiEndpoints.GetCourseByIdEndPoint, query);
+			var response = await client.GetAsync(uri).ConfigureAwait(false);
+			var apiResponse = await response.Content.ReadAsStringAsync();
+			if (!response.IsSuccessStatusCode)
+			{
+				errorMessage = apiResponse;
+			}
+			var result = JsonConvert.DeserializeObject<CourseViewModel>(apiResponse);
+			return PartialView(result);
+		}
 
-		//public ActionResult Delete(CourseViewModel viewModel)
-		//{
-		//	this.courseService.Delete(viewModel.Id);
-		//	return this.Redirect(Url.Action("Index"));
-		//}
+		public async Task<ActionResult> Update(CourseViewModel viewModel)
+		{
+			var errorMessage = "";
+			var json = JsonConvert.SerializeObject(viewModel, new JsonSerializerSettings { });
+			var data = new StringContent(json, Encoding.UTF8, "application/json");
+			var response = await client.PostAsync(ApiEndpoints.UpdateCourseEndPoint, data).ConfigureAwait(false);
+			if (!response.IsSuccessStatusCode)
+			{
+				errorMessage = response.Content.ReadAsStringAsync().Result;
+			}
+			return this.Redirect(Url.Action("Index"));
+		}
+
+		public async Task<ActionResult> _Delete(int id)
+		{
+			var errorMessage = "";
+
+			var query = new Dictionary<string, string>()
+			{
+				["courseId"] = id.ToString(),
+			};
+
+			var uri = QueryHelpers.AddQueryString(ApiEndpoints.GetCourseByIdEndPoint, query);
+			var response = await client.GetAsync(uri).ConfigureAwait(false);
+			var apiResponse = await response.Content.ReadAsStringAsync();
+			if (!response.IsSuccessStatusCode)
+			{
+				errorMessage = apiResponse;
+			}
+			var result = JsonConvert.DeserializeObject<CourseViewModel>(apiResponse);
+			return PartialView(result);
+		}
+
+		public async Task<ActionResult> Delete(CourseViewModel viewModel)
+		{
+			var errorMessage = "";
+			var json = JsonConvert.SerializeObject(viewModel.Id, new JsonSerializerSettings { });
+			var data = new StringContent(json, Encoding.UTF8, "application/json");
+			var response = await client.PostAsync(ApiEndpoints.DeleteCourseEndPoint, data).ConfigureAwait(false);
+			if (!response.IsSuccessStatusCode)
+			{
+				errorMessage = response.Content.ReadAsStringAsync().Result;
+			}
+			return this.Redirect(Url.Action("Index"));
+		}
 	}
 }

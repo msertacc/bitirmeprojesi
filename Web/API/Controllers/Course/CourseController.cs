@@ -26,14 +26,59 @@ namespace API.Controllers.Course
 			return response;
 		}
 
+		[HttpGet("GetById")]
+		public CourseDto GetById(int courseId)
+		{
+			var response = this.courseService.GetCourseById(courseId);
+			return response;
+		}
+
 		[HttpPost("Create")]
 		public async Task<IActionResult> Create([FromBody] CourseCreateRequest model)
 		{
+
 			var mappingModel = this.mapper.Map<CourseCreateRequest, CourseDto>(model);
 
 			await this.courseService.Create(mappingModel).ConfigureAwait(false);
 
 			return this.Ok();
+
+
+		}
+
+		[HttpPost("Update")]
+		public async Task<IActionResult> Update([FromBody] CourseUpdateRequest model)
+		{
+			try
+			{
+				var mappingModel = this.mapper.Map<CourseUpdateRequest, CourseDto>(model);
+
+				await this.courseService.Update(mappingModel).ConfigureAwait(false);
+
+				return this.Ok();
+			}
+			catch (Exception ex)
+			{
+
+				return this.BadRequest(ex.Message);
+			}
+
+		}
+
+		[HttpPost("Delete")]
+		public async Task<IActionResult> Delete([FromBody] int courseId)
+		{
+			try
+			{
+				await this.courseService.Delete(courseId).ConfigureAwait(false);
+
+				return this.Ok();
+			}
+			catch (Exception ex)
+			{
+
+				return this.BadRequest(ex.Message);
+			}
 
 		}
 	}

@@ -14,8 +14,17 @@
 <div id="ModalDelete" class="modal fade" role="dialog"></div>
 
 <script type="text/javascript">
-	
-	function openCreateModal(){
+
+	$(document).ready(function () {
+		var x = '@(TempData["ErrorMessage"])';
+		if(x!=null)
+		{
+			console.log(x);
+		}
+		
+	});
+
+	function openCreateModal() {
 		$.ajax({
 			type: 'GET',
 			url: '/Course/_Create',
@@ -26,7 +35,7 @@
 			}
 		});
 	}
-	
+
 	function openUpdateModal(id) {
 		$.ajax({
 			type: 'GET',

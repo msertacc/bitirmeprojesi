@@ -10,8 +10,8 @@
 
 
 <div id="ModalCreate" class="modal fade" role="dialog"></div>
-@*<div id="ModalUpdate" class="modal fade" role="dialog"></div>
-<div id="ModalDelete" class="modal fade" role="dialog"></div>*@
+<div id="ModalUpdate" class="modal fade" role="dialog"></div>
+<div id="ModalDelete" class="modal fade" role="dialog"></div>
 
 <script type="text/javascript">
 
@@ -27,31 +27,31 @@
 		});
 	}
 
-	//function openUpdateModal(id) {
-	//	$.ajax({
-	//		type: 'GET',
-	//		url: '/Student/_Update',
-	//		data: { id: id },
-	//		success: function (data) {
-	//			$("#ModalUpdate").html(data);
-	//			$("#updateCourseForm").modal('show');
-	//			$("#ModalUpdate").modal('show');
-	//		}
-	//	});
-	//}
+	function openUpdateModal(id) {
+		$.ajax({
+			type: 'GET',
+			url: '/Student/_Update',
+			data: { id: id },
+			success: function (data) {
+				$("#ModalUpdate").html(data);
+				$("#updateStudentForm").modal('show');
+				$("#ModalUpdate").modal('show');
+			}
+		});
+	}
 
-	//function openDeleteModal(id) {
-	//	$.ajax({
-	//		type: 'GET',
-	//		url: '/Student/_Delete',
-	//		data: { id: id },
-	//		success: function (data) {
-	//			$("#ModalDelete").html(data);
-	//			$("#deleteCourseForm").modal('show');
-	//			$("#ModalDelete").modal('show');
-	//		}
-	//	});
-	//}
+	function openDeleteModal(id) {
+		$.ajax({
+			type: 'GET',
+			url: '/Student/_Delete',
+			data: { id: id },
+			success: function (data) {
+				$("#ModalDelete").html(data);
+				$("#deleteStudentForm").modal('show');
+				$("#ModalDelete").modal('show');
+			}
+		});
+	}
 
 </script>
 

@@ -1,9 +1,17 @@
+using Abstraction.Service.Choice;
 using Abstraction.Service.Course;
+using Abstraction.Service.Exam;
+using Abstraction.Service.Question;
+using Abstraction.Service.QuestionType;
 using Abstraction.Service.Student;
 using API.Filters;
 using DataAccess.Data;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Service.Choice;
 using Service.Course;
+using Service.Exam;
+using Service.Question;
+using Service.QuestionType;
 using Service.Student;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +24,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddScoped<IExamService, ExamService>();
+builder.Services.AddScoped<IQuestionService, QuestionService>();
+builder.Services.AddScoped<IQuestionTypeService, QuestionTypeService>();
+builder.Services.AddScoped<IChoiceService, ChoiceService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddMvc((options) =>
 {

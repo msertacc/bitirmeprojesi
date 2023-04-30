@@ -1,0 +1,93 @@
+﻿@model IEnumerable<UI.Models.Exam.ExamViewModel>
+<style>
+	.svg-icon {
+		width: 1em;
+		height: 1em;
+	}
+
+		.svg-icon path,
+		.svg-icon polygon,
+		.svg-icon rect {
+			fill: #4691f6;
+		}
+
+		.svg-icon circle {
+			stroke: #4691f6;
+			stroke-width: 1;
+		}
+</style>
+<section class="section-content">
+	<div class="row">
+		<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 actions-left">
+			<button onclick="openCreateModal();" type="button" style="margin-bottom:5px;margin-top:10px;" class="btn btn-success" tooltip="Kayıt Ekleme">Kayıt Ekleme</button>
+		</div>
+	</div>
+	<div class="row">
+		<table class="table table-bordered" id="courseTable">
+			<thead>
+				<tr>
+					<th scope="col" style="width:12%">İşlemler</th>
+					<th scope="col">Sınav Adı</th>
+					<th scope="col">Açıklama</th>
+					<th scope="col">Başlangıç Tarihi</th>
+					<th scope="col">Bitiş Tarihi</th>
+					<th scope="col">Süre</th>
+					<th scope="col">Ders</th>
+					<th scope="col">Kaydeden Kullanıcı</th>
+					<th scope="col">Kaydedilen Tarih</th>
+					<th scope="col">Güncelleyen Kullanıcı</th>
+					<th scope="col">Güncellenilen Tarih</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var item in Model)
+				{
+					<tr modelId="@item.Id">
+						<td>
+							<button onclick="openUpdateModal(@item.Id);" type="button" class="btn btn-primary" title="Sınavı güncellemek için tıklayınız">
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+									<path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z" />
+								</svg>
+							</button>
+							<button onclick="openDeleteModal(@item.Id);" type="button" class="btn btn-outline-danger" title="Sınavı silmek için tıklayınız">
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+									<path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
+									<path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
+								</svg>
+							</button>
+
+							@*<a asp-controller="QuestionManagement" asp-action="Index/@item.Id">*@
+							<button type="button" class="btn btn-outline-info" onclick="GetQuestionManagement(@item.Id)" title="Sınav soruları için tıklayınız.">
+								<svg class="svg-icon" viewBox="0 0 20 20">
+									<path fill="none" d="M17.222,5.041l-4.443-4.414c-0.152-0.151-0.356-0.235-0.571-0.235h-8.86c-0.444,0-0.807,0.361-0.807,0.808v17.602c0,0.448,0.363,0.808,0.807,0.808h13.303c0.448,0,0.808-0.36,0.808-0.808V5.615C17.459,5.399,17.373,5.192,17.222,5.041zM15.843,17.993H4.157V2.007h7.72l3.966,3.942V17.993z"></path>
+									<path fill="none" d="M5.112,7.3c0,0.446,0.363,0.808,0.808,0.808h8.077c0.445,0,0.808-0.361,0.808-0.808c0-0.447-0.363-0.808-0.808-0.808H5.92C5.475,6.492,5.112,6.853,5.112,7.3z"></path>
+									<path fill="none" d="M5.92,5.331h4.342c0.445,0,0.808-0.361,0.808-0.808c0-0.446-0.363-0.808-0.808-0.808H5.92c-0.444,0-0.808,0.361-0.808,0.808C5.112,4.97,5.475,5.331,5.92,5.331z"></path>
+									<path fill="none" d="M13.997,9.218H5.92c-0.444,0-0.808,0.361-0.808,0.808c0,0.446,0.363,0.808,0.808,0.808h8.077c0.445,0,0.808-0.361,0.808-0.808C14.805,9.58,14.442,9.218,13.997,9.218z"></path>
+									<path fill="none" d="M13.997,11.944H5.92c-0.444,0-0.808,0.361-0.808,0.808c0,0.446,0.363,0.808,0.808,0.808h8.077c0.445,0,0.808-0.361,0.808-0.808C14.805,12.306,14.442,11.944,13.997,11.944z"></path>
+									<path fill="none" d="M13.997,14.67H5.92c-0.444,0-0.808,0.361-0.808,0.808c0,0.447,0.363,0.808,0.808,0.808h8.077c0.445,0,0.808-0.361,0.808-0.808C14.805,15.032,14.442,14.67,13.997,14.67z"></path>
+								</svg>
+							</button>
+							@*</a>*@
+						</td>
+						<td>@item.ExamName</td>
+						<td>@item.ExamDescription</td>
+						<td>@item.ExamStartTime</td>
+						<td>@item.ExamEndTime</td>
+						<td>@item.ExamDuration</td>
+						<td>@item.Course.Name</td>
+						<td>@item.InsertedUser</td>
+						<td>@item.InsertedDate</td>
+						<td>@item.UpdatedUser</td>
+						<td>@item.UpdatedDate</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+</section>
+
+<script>
+	function GetQuestionManagement(id) {
+		window.location.href = '@Url.Action("Index", "QuestionManagement")' + "?id=" + id;
+	}
+</script>

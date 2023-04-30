@@ -13,9 +13,9 @@ namespace DataAccess.Data
 		{
 			if (!options.IsConfigured)
 			{
-				options.UseSqlServer("Server=DESKTOP-NMB5OV5;Database=SSA;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true");
-			}
-		}
+                options.UseSqlServer("Server=LAPTOP-QORO4PVD;Database=SSA;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true");
+            }
+        }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
@@ -23,5 +23,9 @@ namespace DataAccess.Data
 		}
 		public DbSet<Entity.Domain.Course.Course> Courses { get; set; }
         public DbSet<Entity.Domain.Student.Student> Students { get; set; }
+        public DbSet<Entity.Domain.Exam.Exam> Exams { get; set; }
+        public DbSet<Entity.Domain.Choice.Choice> Choices { get; set; }
+        public DbSet<Entity.Domain.Question.Question> Questions { get; set; }
+        public DbSet<Entity.Domain.QuestionType.QuestionType> QuestionTypes { get; set; }
     }
 }

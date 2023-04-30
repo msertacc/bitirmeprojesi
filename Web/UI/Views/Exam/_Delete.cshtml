@@ -1,0 +1,57 @@
+﻿@model UI.Models.Exam.ExamViewModel
+
+@using (Html.BeginForm("Delete", "Exam", FormMethod.Post, new { Id = "frmDelete" }))
+{
+	<div id="deleteExamForm" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="deleteExamForm" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h6 class="modal-title">Sınav Silme</h6>
+					<button id="closeDeleteModal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<form>
+						<fieldset>
+							<div class="form-group">
+								<h5>Seçtiğiniz sınav silinecektir. Silme işlemine devam etmek istiyor musunuz ?</h5>
+								<input type="text" name="Id" value="@Model.Id" class="form-control small-input" id="id" style="display:none;" />
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<div class="btn-group">
+						<button type="submit" onclick="deneme()" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">Sil</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+}
+
+<script>
+	//function deneme()
+	//{
+	//	console.log("deneme")
+	//	let viewModel = {
+	//		Id: $('#id').val()
+	//	};
+	//	console.log(viewModel)
+	//	$.ajax({
+	//		url: '@Url.Action("Delete", "Exam")',
+	//		type: 'post',
+	//		data: viewModel,
+	//		success: function () {
+	//			window.location.href = '@Url.Action("Index", "QuestionManagement")' + "?id=" + $('#ExamId').val();
+	//		},
+	//		error: function (errMsg) {
+	//			alert(errMsg);
+	//		}
+	//	})
+	//}
+
+
+	$('#closeDeleteModal').click(function () {
+		$('#ModalDelete').modal('hide');
+	});
+</script>

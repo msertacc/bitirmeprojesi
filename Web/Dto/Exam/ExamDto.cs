@@ -9,5 +9,6 @@
         public int? ExamDuration { get; set; }
         public int? CourseId { get; set; }
         public Course.CourseDto Course { get; set; }
+        public string? IsEnded { get; set; }
     }
 }

@@ -20,5 +20,6 @@ namespace UI.Models.Exam
         public Entity.Domain.Course.Course? Course { get; set; }
         public List<Entity.Domain.Question.Question>? Questions { get; set; }
         public string? ErrorMessage { get; set; }
+        public string? IsEnded { get; set; }
     }
 }

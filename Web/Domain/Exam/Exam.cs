@@ -15,6 +15,7 @@ namespace Entity.Domain.Exam
         public int? CourseId { get; set; }
         public Course.Course? Course { get; set; }
         public List<Question.Question>? Questions { get; set; }
+        public string? IsEnded { get; set; }
 
     }
 }

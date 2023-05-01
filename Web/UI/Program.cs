@@ -57,11 +57,7 @@ app.UseAuthorization();
 app.MapHub<ExamHub>("/examHub");
 app.MapControllerRoute(
     name: "default",
-<<<<<<< HEAD
-    pattern: "{controller=ExamStudent}/{action=Index}/{id?}");
-=======
     pattern: "{controller=Exam}/{action=Index}/{id?}");
->>>>>>> 463c0936687fa4a89dde18d8fe19f649fd2636c5
 app.MapRazorPages();
 
 //using (var scope = app.Services.CreateScope())

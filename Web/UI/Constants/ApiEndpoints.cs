@@ -33,18 +33,12 @@
 		public static string? UpdateStudentEndPoint = StudentEndPoint + "/Update";
 
 		public static string? DeleteStudentEndPoint = StudentEndPoint + "/Delete";
-<<<<<<< HEAD
 		#endregion
 		#region ExamStudent
 		public static string? ExamStudentEndPoint = baseUrl + "/ExamStudent";
 
         public static string? GetExamStudentByIdEndPoint = ExamStudentEndPoint + "/GetExamByStudentId";
         #endregion
-        //get
-        //post
-        //delete
-
-=======
         //get
         //post
         //delete
@@ -101,8 +95,5 @@
         public static string? DeleteChoiceEndPoint = ChoiceEndPoint + "/Delete";
 
         //public static string? UpdateChoiceEndPoint = ChoiceEndPoint + "/Update";
->>>>>>> 463c0936687fa4a89dde18d8fe19f649fd2636c5
-
-
     }
 }

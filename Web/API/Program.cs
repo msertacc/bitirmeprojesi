@@ -1,9 +1,11 @@
 using Abstraction.Service.Course;
+using Abstraction.Service.ExamStudent;
 using Abstraction.Service.Student;
 using API.Filters;
 using DataAccess.Data;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Service.Course;
+using Service.ExamStudent;
 using Service.Student;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +18,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddScoped<IExamStudentService, ExamStudentService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddMvc((options) =>
 {

@@ -1,0 +1,60 @@
+﻿@model IEnumerable<UI.Models.Exam.ExamViewModel>
+<div class="row">
+	<div id="content-wrapper">
+		<div class="container-fluid">
+			<h2>Sınav Oluşturma</h2>
+			@Html.Partial("_DataGrid", Model)
+		</div>
+	</div>
+</div>
+
+
+<div id="ModalCreate" class="modal fade" role="dialog"></div>
+<div id="ModalUpdate" class="modal fade" role="dialog"></div>
+<div id="ModalDelete" class="modal fade" role="dialog"></div>
+
+<script type="text/javascript">
+
+	function openCreateModal() {
+		$.ajax({
+			type: 'GET',
+			url: '/Exam/_Create',
+			success: function (data) {
+				$("#ModalCreate").html(data);
+				$("#createExamForm").modal('show');
+				$("#ModalCreate").modal('show');
+			}
+		});
+	}
+
+	function openUpdateModal(id) {
+		$.ajax({
+			type: 'GET',
+			url: '/Exam/_Update',
+			data: { id: id },
+			success: function (data) {
+				$("#ModalUpdate").html(data);
+				$("#updateExamForm").modal('show');
+				$("#ModalUpdate").modal('show');
+			}
+		});
+	}
+
+	function openDeleteModal(id) {
+		$.ajax({
+			type: 'GET',
+			url: '/Exam/_Delete',
+			data: { id: id },
+			success: function (data) {
+				console.log(data)
+				$("#ModalDelete").html(data);
+				$("#deleteExamForm").modal('show');
+				$("#ModalDelete").modal('show');
+			}
+		});
+	}
+
+</script>
+
+
+

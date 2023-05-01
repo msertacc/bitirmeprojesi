@@ -33,6 +33,7 @@
 		public static string? UpdateStudentEndPoint = StudentEndPoint + "/Update";
 
 		public static string? DeleteStudentEndPoint = StudentEndPoint + "/Delete";
+<<<<<<< HEAD
 		#endregion
 		#region ExamStudent
 		public static string? ExamStudentEndPoint = baseUrl + "/ExamStudent";
@@ -43,6 +44,64 @@
         //post
         //delete
 
+=======
+        //get
+        //post
+        //delete
+
+        public static string? ExamEndPoint = baseUrl + "/Exam";
+
+        public static string? GetExamEndPoint = ExamEndPoint + "/Get";
+
+        public static string? GetExamByIdEndPoint = ExamEndPoint + "/GetExamById";
+
+        public static string? CreateExamEndPoint = ExamEndPoint + "/Create";
+
+        public static string? DeleteExamEndPoint = ExamEndPoint + "/Delete";
+
+        public static string? UpdateExamEndPoint = ExamEndPoint + "/Update";
+
+
+        public static string? QuestionEndPoint = baseUrl + "/Question";
+
+        public static string? GetQuestionEndPoint = QuestionEndPoint + "/Get"; //GetQuestionsByExamId
+
+        public static string? GetQuestionsByExamIdEndPoint = QuestionEndPoint + "/GetQuestionsByExamId";
+
+        public static string? GetQuestionsByParametersEndPoint = QuestionEndPoint + "/GetQuestionsByParameters";
+
+        public static string? GetQuestionByIdEndPoint = QuestionEndPoint + "/GetQuestionById";
+
+        public static string? CreateQuestionEndPoint = QuestionEndPoint + "/Create";
+
+        public static string? DeleteQuestionEndPoint = QuestionEndPoint + "/Delete";
+
+        public static string? UpdateQuestionEndPoint = QuestionEndPoint + "/Update";
+
+
+
+        public static string? QuestionTypeEndPoint = baseUrl + "/QuestionType";
+
+        public static string? GetQuestionTypeEndPoint = QuestionTypeEndPoint + "/Get";
+
+        public static string? GetQuestionTypeByIdEndPoint = QuestionTypeEndPoint + "/GetQuestionTypeById";
+
+
+
+        public static string? ChoiceEndPoint = baseUrl + "/Choice";
+
+        //public static string? GetChoiceEndPoint = ChoiceEndPoint + "/Get";
+
+        public static string? GetChoiceByQuestionIdEndPoint = ChoiceEndPoint + "/GetChoiceByQuestionId";
+
+        //public static string? GetChoiceByIdEndPoint = ChoiceEndPoint + "/GetChoiceById";
+
+        public static string? CreateChoiceEndPoint = ChoiceEndPoint + "/Create";
+
+        public static string? DeleteChoiceEndPoint = ChoiceEndPoint + "/Delete";
+
+        //public static string? UpdateChoiceEndPoint = ChoiceEndPoint + "/Update";
+>>>>>>> 463c0936687fa4a89dde18d8fe19f649fd2636c5
 
 
     }

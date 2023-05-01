@@ -1,0 +1,80 @@
+﻿@model UI.Models.Exam.ExamAndCourseViewModel
+
+@using (Html.BeginForm("Update", "Exam", FormMethod.Post, new { Id = "frmUpdate" }))
+{
+	<div id="updateExamForm" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="updateExamForm" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h6 class="modal-title">Sınav Güncelleme</h6>
+					<button id="closeUpdateModal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<form>
+						<fieldset>
+							<div class="form-group">
+								<label>Sınav Adı</label>
+								<input type="text" name="ExamName" value="@Model.ExamViewModel.ExamName" placeholder="Lütfen sınav ismini giriniz" class="form-control small-input" id="name" />
+								<input type="text" name="Id" value="@Model.ExamViewModel.Id" class="form-control small-input" id="id" style="display:none;" />
+							</div>
+						</fieldset>
+
+						<fieldset>
+							<div class="form-group">
+								<label>Açıklama</label>
+								<input type="text" name="ExamDescription" value="@Model.ExamViewModel.ExamDescription" placeholder="Lütfen açıklama giriniz" class="form-control small-input" id="name" />
+							</div>
+						</fieldset>
+
+						<label for="party">Başlangıç Tarihi</label>
+						<input id="party" type="datetime-local" name="ExamStartTime" value="@Model.ExamViewModel.ExamStartTime" style="width:100%" />
+
+
+
+						<label for="party">Bitiş Tarihi</label>
+						<input id="party" type="datetime-local" name="ExamEndTime" value="@Model.ExamViewModel.ExamEndTime" style="width:100%" />
+
+						@*DateTime.ParseExact*@
+
+						<fieldset>
+							<div class="form-group">
+								<label>Süre</label>
+								<input type="text" name="ExamDuration" value="@Model.ExamViewModel.ExamDuration" placeholder="Lütfen süre giriniz" class="form-control small-input" id="name" />
+							</div>
+						</fieldset>
+
+						<div class="form-group">
+							<label for="exampleFormControlSelect1">Ders</label>
+							<select class="form-control" id="deneme" name="CourseId">
+								@foreach (var item in Model.CourseViewModel)
+								{
+									if (item.Id == @Model.ExamViewModel.CourseId)
+									{
+										<option selected value="@item.Id">@item.Name</option>
+									}
+									else
+									{
+										<option value="@item.Id">@item.Name</option>
+									}
+								}
+							</select>
+						</div>
+
+					</form>
+				</div>
+				<div class="modal-footer">
+					<div class="btn-group">
+						<button type="submit" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">Güncelle</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+}
+
+
+<script>
+	$('#closeUpdateModal').click(function () {
+		$('#ModalUpdate').modal('hide');
+	});
+</script>

@@ -1,0 +1,218 @@
+﻿@model UI.Models.QuestionManagement.QuestionManagementViewModel
+
+<link href="~/css/svg.css" rel="stylesheet" />
+<h3>Soru Güncelle</h3>
+<div class="btn-group" style="margin-left: 95%;">
+    <button type="submit" onclick="UpdateQuestionFunc()" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">Kaydet</button>
+</div>
+<section class="section-content">
+    <form>
+        <fieldset>
+            <div class="form-group">
+                <label>Soru Başlığı</label>
+                <input type="text" name="QuestionText" value="@Model.QuestionModel.QuestionText" placeholder="Lütfen soru başlığı giriniz" class="form-control small-input" id="QuestionText" />
+                <input type="text" name="Id" value="@Model.QuestionModel.Id" class="form-control small-input" id="Id" style="display:none;" />
+                <input type="text" name="ExamId" value="@Model.QuestionModel.ExamId" class="form-control small-input" id="ExamId" style="display:none;" />
+
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <div class="form-group">
+                <label>Puan</label>
+                <input type="number" name="Score" value="@Model.QuestionModel.Score" placeholder="Lütfen soru puanı giriniz" class="form-control small-input" id="Score" />
+            </div>
+        </fieldset>
+
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">Soru Tipi</label>
+            <select class="form-control" name="QuestionTypeId" id="QuestionTypeId" onchange="QuestionTypeChange()">
+                <option value="0"></option>
+                @foreach (var item in Model.QuestionTypeList)
+                {
+                    if (item.Id == @Model.QuestionModel.QuestionTypeId)
+                    {
+                        <option selected value="@item.Id">@item.TypeName</option>
+                    }
+                    else
+                    {
+                        <option value="@item.Id">@item.TypeName</option>
+                    }
+                }
+            </select>
+        </div>
+
+    </form>
+    <br>
+
+</section>
+<br />
+<br />
+
+<h3>Cevap Güncelle</h3>
+<div id="multipleChoiceAnswer">
+    <div id="multipleChoiceInput">
+    </div>
+    <div id="choiceButtonDivId">
+        <button onclick="AddChoice()" style="background-color: snow;">Seçenek Ekle</button>
+    </div>
+</div>
+
+<div id="trueFalseAnswer">
+@*    <svg class="svg-icon" viewBox="0 0 20 20">
+        <path fill="none" d="M7.197,16.963H7.195c-0.204,0-0.399-0.083-0.544-0.227l-6.039-6.082c-0.3-0.302-0.297-0.788,0.003-1.087
+							C0.919,9.266,1.404,9.269,1.702,9.57l5.495,5.536L18.221,4.083c0.301-0.301,0.787-0.301,1.087,0c0.301,0.3,0.301,0.787,0,1.087
+							L7.741,16.738C7.596,16.882,7.401,16.963,7.197,16.963z"></path>
+    </svg>*@
+    <label for="fname">Doğru</label>
+    <input type="text" id="answerTrueId" name="fname"><br><br>
+@*
+    <svg class="svg-icon" viewBox="0 0 20 20">
+        <path fill="none" d="M11.469,10l7.08-7.08c0.406-0.406,0.406-1.064,0-1.469c-0.406-0.406-1.063-0.406-1.469,0L10,8.53l-7.081-7.08
+							c-0.406-0.406-1.064-0.406-1.469,0c-0.406,0.406-0.406,1.063,0,1.469L8.531,10L1.45,17.081c-0.406,0.406-0.406,1.064,0,1.469
+							c0.203,0.203,0.469,0.304,0.735,0.304c0.266,0,0.531-0.101,0.735-0.304L10,11.469l7.08,7.081c0.203,0.203,0.469,0.304,0.735,0.304
+							c0.267,0,0.532-0.101,0.735-0.304c0.406-0.406,0.406-1.064,0-1.469L11.469,10z"></path>
+    </svg>*@
+    <label for="fname">Yanlış</label>
+    <input type="text" id="answerFalseId" name="fname" style="margin-left:7px"><br><br>
+</div>
+
+<script>
+    var multipleChoiceCount = 0;
+
+    $(document).ready(function () {
+
+        var result = '';
+        if (@Model.ChoiceList.Count!= 0) {
+            if (@Model.QuestionModel.QuestionTypeId == 1) {
+                var choiceList = @Html.Raw(Json.Serialize(@Model.ChoiceList));
+                console.log(choiceList);
+
+                document.getElementById("trueFalseAnswer").style.visibility = "hidden";
+                document.getElementById("multipleChoiceAnswer").style.visibility = "visible";
+
+                for (var i = 0; i < choiceList.length; i++) {
+
+                    if (choiceList[i].isTrue == true) {
+                        $("#multipleChoiceInput").append('<input type="radio" ' + 'id="' + multipleChoiceCount + 'MChoiceRadioId"' + 'name="fav_language"' + 'checked value="' + multipleChoiceCount + '"' + ' >');
+                    }
+                    else {
+                        $("#multipleChoiceInput").append('<input type="radio" ' + 'id="' + multipleChoiceCount + 'MChoiceRadioId"' + 'name="fav_language"' + ' value="' + multipleChoiceCount + '"' + ' >');
+                    }
+
+                    $("#multipleChoiceInput").append('<input type="text"  ' + 'id="' + multipleChoiceCount + 'MChoiceTextId"' + 'name="fname"' + 'value=' + choiceList[i].choiceExplanation + '><br><br>');
+
+                    multipleChoiceCount++;
+                }
+            }
+            else if (@Model.QuestionModel.QuestionTypeId== 2) {
+                document.getElementById("trueFalseAnswer").style.visibility = "visible";
+                document.getElementById("trueFalseAnswer").style.marginTop = "-20px";
+                document.getElementById("multipleChoiceAnswer").style.visibility = "hidden";
+                $("#answerTrueId").val('@Model.ChoiceList[0].ChoiceExplanation');
+                $("#answerFalseId").val('@Model.ChoiceList[1].ChoiceExplanation');
+            }
+        }
+        else {
+            console.log("choice bulunamadı")
+        }
+
+    });
+
+
+    function AddChoice() {
+        document.getElementById("multipleChoiceInput").innerHTML += '<input type="radio" ' + 'id="' + multipleChoiceCount + 'MChoiceRadioId"' + 'name="fav_language"' + 'value="' + multipleChoiceCount + '"' + ' >';
+
+        document.getElementById("multipleChoiceInput").innerHTML += '<input type="text"  ' + 'id="' + multipleChoiceCount + 'MChoiceTextId"' + 'name="fname"><br><br>';
+
+        multipleChoiceCount++;
+
+    }
+
+
+    function QuestionTypeChange() {
+        $('#multipleChoiceInput').html('');
+        multipleChoiceCount = 0;
+
+        if ($("#QuestionTypeId").val() == 1) {
+            document.getElementById("trueFalseAnswer").style.visibility = "hidden";
+            document.getElementById("multipleChoiceAnswer").style.visibility = "visible";
+            AddChoice(); AddChoice();
+        }
+        else if ($("#QuestionTypeId").val() == 2) {
+            document.getElementById("trueFalseAnswer").style.visibility = "visible";
+            document.getElementById("trueFalseAnswer").style.marginTop = "-20px";
+            document.getElementById("multipleChoiceAnswer").style.visibility = "hidden";
+        }
+    }
+
+
+    function UpdateQuestionFunc() {
+        const answerArray = [];
+        var trueAnswer = '';
+        var getError = false;
+
+        if ($('#QuestionTypeId').val() == '1') {
+
+            for (var i = 0; i < multipleChoiceCount; i++) {
+                if ($('#' + i.toString() + 'MChoiceTextId').val() == '') {
+                    getError = true;
+                }
+                else {
+
+                    answerArray.push($('#' + i.toString() + 'MChoiceTextId').val());
+                }
+            }
+            var getSelectedValue = document.querySelector('input[name="fav_language"]:checked');
+
+            if (getSelectedValue != null) {
+                trueAnswer = document.querySelector('input[name="fav_language"]:checked').value;
+            }
+            else {
+                getError = true;
+            }
+        }
+
+
+        else if ($('#QuestionTypeId').val() == '2') {
+            trueAnswer = 0;
+
+            answerArray.push($('#answerTrueId').val());
+            answerArray.push($('#answerFalseId').val());
+
+            if ($('#answerTrueId').val() == '' || $('#answerFalseId').val() == '') {
+                getError = true;
+            }
+
+        }
+
+        if (!getError) {
+
+            let viewModel = {
+                Id: $('#Id').val(),
+                QuestionText: $('#QuestionText').val(),
+                QuestionTypeId: $('#QuestionTypeId').val(),
+                ExamId: $('#ExamId').val(),
+                Score: $('#Score').val(),
+                AnswerArray: answerArray,
+                TrueAnswer: trueAnswer,
+            };
+
+            $.ajax({
+                url: '@Url.Action("Update", "QuestionManagement")',
+                type: 'post',
+                data: viewModel,
+                success: function () {
+                    window.location.href = '@Url.Action("Index", "QuestionManagement")' + "?id=" + $('#ExamId').val();
+                },
+                error: function (errMsg) {
+                    alert(errMsg);
+                }
+            })
+        }
+        else {
+            alert("tüm alanlar dolu olmalı")
+        }
+
+    }
+</script>

@@ -93,6 +93,51 @@ namespace DataAccess.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+<<<<<<< HEAD
+=======
+            modelBuilder.Entity("Entity.Domain.Choice.Choice", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ChoiceExplanation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("InsertedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("InsertedUser")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IsActive")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("IsTrue")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("QuestionId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedUser")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestionId");
+
+                    b.ToTable("Choice");
+                });
+
+>>>>>>> 463c0936687fa4a89dde18d8fe19f649fd2636c5
             modelBuilder.Entity("Entity.Domain.Course.Course", b =>
                 {
                     b.Property<int>("Id")
@@ -127,7 +172,11 @@ namespace DataAccess.Migrations
                     b.ToTable("Course");
                 });
 
+<<<<<<< HEAD
             modelBuilder.Entity("Entity.Domain.ExamStudent.ExamStudent", b =>
+=======
+            modelBuilder.Entity("Entity.Domain.Exam.Exam", b =>
+>>>>>>> 463c0936687fa4a89dde18d8fe19f649fd2636c5
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -135,7 +184,62 @@ namespace DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+<<<<<<< HEAD
                     b.Property<int>("ExamId")
+=======
+                    b.Property<int?>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ExamDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ExamDuration")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ExamEndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ExamName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ExamStartTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("InsertedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("InsertedUser")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IsActive")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedUser")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("Exam");
+                });
+
+            modelBuilder.Entity("Entity.Domain.Question.Question", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("ExamId")
+>>>>>>> 463c0936687fa4a89dde18d8fe19f649fd2636c5
                         .HasColumnType("int");
 
                     b.Property<DateTime>("InsertedDate")
@@ -149,7 +253,18 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+<<<<<<< HEAD
                     b.Property<int>("StudentId")
+=======
+                    b.Property<string>("QuestionText")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("QuestionTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Score")
+>>>>>>> 463c0936687fa4a89dde18d8fe19f649fd2636c5
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedDate")
@@ -160,7 +275,49 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
+<<<<<<< HEAD
                     b.ToTable("ExamStudent");
+=======
+                    b.HasIndex("ExamId");
+
+                    b.HasIndex("QuestionTypeId");
+
+                    b.ToTable("Question");
+                });
+
+            modelBuilder.Entity("Entity.Domain.QuestionType.QuestionType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("InsertedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("InsertedUser")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IsActive")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TypeName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedUser")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("QuestionType");
+>>>>>>> 463c0936687fa4a89dde18d8fe19f649fd2636c5
                 });
 
             modelBuilder.Entity("Entity.Domain.Student.Student", b =>
@@ -353,6 +510,39 @@ namespace DataAccess.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Entity.Domain.Choice.Choice", b =>
+                {
+                    b.HasOne("Entity.Domain.Question.Question", "Question")
+                        .WithMany("Choices")
+                        .HasForeignKey("QuestionId");
+
+                    b.Navigation("Question");
+                });
+
+            modelBuilder.Entity("Entity.Domain.Exam.Exam", b =>
+                {
+                    b.HasOne("Entity.Domain.Course.Course", "Course")
+                        .WithMany("Exams")
+                        .HasForeignKey("CourseId");
+
+                    b.Navigation("Course");
+                });
+
+            modelBuilder.Entity("Entity.Domain.Question.Question", b =>
+                {
+                    b.HasOne("Entity.Domain.Exam.Exam", "Exam")
+                        .WithMany("Questions")
+                        .HasForeignKey("ExamId");
+
+                    b.HasOne("Entity.Domain.QuestionType.QuestionType", "QuestionTypes")
+                        .WithMany("Questions")
+                        .HasForeignKey("QuestionTypeId");
+
+                    b.Navigation("Exam");
+
+                    b.Navigation("QuestionTypes");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -402,6 +592,26 @@ namespace DataAccess.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Entity.Domain.Course.Course", b =>
+                {
+                    b.Navigation("Exams");
+                });
+
+            modelBuilder.Entity("Entity.Domain.Exam.Exam", b =>
+                {
+                    b.Navigation("Questions");
+                });
+
+            modelBuilder.Entity("Entity.Domain.Question.Question", b =>
+                {
+                    b.Navigation("Choices");
+                });
+
+            modelBuilder.Entity("Entity.Domain.QuestionType.QuestionType", b =>
+                {
+                    b.Navigation("Questions");
                 });
 #pragma warning restore 612, 618
         }

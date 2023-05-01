@@ -1,0 +1,32 @@
+﻿@model IEnumerable<UI.Models.Question.QuestionViewModel>
+<div class="row">
+	<div id="content-wrapper">
+		<div class="container-fluid">
+			<h2>Soru Oluşturma</h2>
+			@Html.Partial("_DataGrid", Model)
+		</div>
+	</div>
+</div>
+
+
+<div id="ModalCreate" class="modal fade" role="dialog"></div>
+<div id="ModalUpdate" class="modal fade" role="dialog"></div>
+<div id="ModalDelete" class="modal fade" role="dialog"></div>
+
+<script type="text/javascript">
+
+	function openCreateModal() {
+		$.ajax({
+			type: 'GET',
+			url: '/QuestionManagement/_Create/' + "?id=" + @ViewBag.ExamId,
+			success: function (data) {
+				$("#ModalCreate").html(data);
+				$("#createQuestionForm").modal('show');
+				$("#ModalCreate").modal('show');
+			}
+		});
+	}
+</script>
+
+
+

@@ -1,8 +1,8 @@
-﻿@model IEnumerable<UI.Models.ExamStudent.ExamStudentViewModel>
+﻿@model UI.Models.ViewModels.UserExamViewModel
 <div class="row">
 	<div id="content-wrapper">
 		<div class="container-fluid">
-			<h2>Ders Oluşturma</h2>
+			@*<h2>Ders Oluşturma</h2>*@
 			@Html.Partial("_DataGrid", Model)
 		</div>
 	</div>
@@ -26,10 +26,10 @@
 	function openCreateModal() {
 		$.ajax({
 			type: 'GET',
-			url: '/ExamStudent/_Create',
+			url: '/ExamUser/_Create',
 			success: function (data) {
 				$("#ModalCreate").html(data);
-				$("#createExamStudentForm").modal('show');
+				$("#createExamUserForm").modal('show');
 				$("#ModalCreate").modal('show');
 			}
 		});
@@ -38,11 +38,11 @@
 	function openUpdateModal(id) {
 		$.ajax({
 			type: 'GET',
-			url: '/ExamStudent/_Update',
+			url: '/ExamUser/_Update',
 			data: { id: id },
 			success: function (data) {
 				$("#ModalUpdate").html(data);
-				$("#updateExamStudentForm").modal('show');
+				$("#updateExamUserForm").modal('show');
 				$("#ModalUpdate").modal('show');
 			}
 		});
@@ -51,11 +51,11 @@
 	function openDeleteModal(id) {
 		$.ajax({
 			type: 'GET',
-			url: '/ExamStudent/_Delete',
+			url: '/ExamUser/_Delete',
 			data: { id: id },
 			success: function (data) {
 				$("#ModalDelete").html(data);
-				$("#deleteExamStudentForm").modal('show');
+				$("#deleteExamUserForm").modal('show');
 				$("#ModalDelete").modal('show');
 			}
 		});

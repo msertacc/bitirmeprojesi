@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Entity.Domain.Student
+namespace Entity.Domain.User
 {
-	[Table("Student")]
-	public class Student:BaseEntity.BaseEntity
+	[Table("User")]
+	public class User:BaseEntity.BaseEntity
 	{
 		[Required]
 		[StringLength(50)]
@@ -26,5 +26,7 @@ namespace Entity.Domain.Student
 
 		[Required]
 		public string? Gender { get; set; }
-	}
+
+        public string? RoleId { get; set; }
+    }
 }

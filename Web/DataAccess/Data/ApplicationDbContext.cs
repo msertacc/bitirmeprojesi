@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Entity.Domain.ApplicationUser;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Data
@@ -22,8 +23,8 @@ namespace DataAccess.Data
 			base.OnModelCreating(modelBuilder);
 		}
 		public DbSet<Entity.Domain.Course.Course> Courses { get; set; }
-        public DbSet<Entity.Domain.Student.Student> Students { get; set; }
-        public DbSet<Entity.Domain.ExamStudent.ExamStudent> ExamStudents { get; set; }
+        public DbSet<ApplicationUser> Users { get; set; }
+        public DbSet<Entity.Domain.ExamUser.ExamUser> ExamUsers { get; set; }
         public DbSet<Entity.Domain.Exam.Exam> Exams { get; set; }
         public DbSet<Entity.Domain.Choice.Choice> Choices { get; set; }
         public DbSet<Entity.Domain.Question.Question> Questions { get; set; }

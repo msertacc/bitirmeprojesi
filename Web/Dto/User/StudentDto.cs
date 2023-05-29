@@ -1,6 +1,6 @@
-﻿namespace Entity.Dto.Student
+﻿namespace Entity.Dto.User
 {
-	public class StudentDto:BaseEntityDto.BaseEntityDto
+	public class UserDto
 	{
 
 		public string? FirstName { get; set; }
@@ -14,5 +14,6 @@
 		public string? EMail { get; set; }
 
 		public string? Gender { get; set; }
-	}
+        public string? RoleId { get; set; }
+    }
 }

@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
-using Entity.Dto.ExamStudent;
+using Entity.Dto.ExamUser;
 
-namespace Service.ExamStudent.Mappings
+namespace Service.ExamUser.Mappings
 {
-    public class ExamStudentProfile:Profile
+    public class ExamUserProfile:Profile
     {
-        public ExamStudentProfile()
+        public ExamUserProfile()
         {
-            this.CreateMap<Entity.Domain.ExamStudent.ExamStudent, ExamStudentDto>();
-			this.CreateMap<ExamStudentDto, Entity.Domain.ExamStudent.ExamStudent>();			
+            this.CreateMap<Entity.Domain.ExamUser.ExamUser, ExamUserDto>();
+			this.CreateMap<ExamUserDto, Entity.Domain.ExamUser.ExamUser>();			
 		}
     }
 }

@@ -3,6 +3,7 @@
 #nullable disable
 
 using DataAccess.Data;
+using Entity.Domain.ApplicationUser;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;

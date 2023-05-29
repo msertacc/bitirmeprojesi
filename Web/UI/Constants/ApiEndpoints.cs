@@ -21,23 +21,23 @@
 
 		public static string? DeleteCourseEndPoint = CourseEndPoint + "/Delete";
 		#endregion
-		#region Student
-		public static string? StudentEndPoint = baseUrl + "/Student";
+		#region User
+		public static string? UserEndPoint = baseUrl + "/User";
 
-		public static string? GetStudentEndPoint = StudentEndPoint + "/Get";
+		public static string? GetUserEndPoint = UserEndPoint + "/Get";
 
-		public static string? GetStudentByIdEndPoint = StudentEndPoint + "/GetById";
+		public static string? GetUserByIdEndPoint = UserEndPoint + "/GetById";
 
-		public static string? CreateStudentEndPoint = StudentEndPoint + "/Create";
+		public static string? CreateUserEndPoint = UserEndPoint + "/Create";
 
-		public static string? UpdateStudentEndPoint = StudentEndPoint + "/Update";
+		public static string? UpdateUserEndPoint = UserEndPoint + "/Update";
 
-		public static string? DeleteStudentEndPoint = StudentEndPoint + "/Delete";
+		public static string? DeleteUserEndPoint = UserEndPoint + "/Delete";
 		#endregion
-		#region ExamStudent
-		public static string? ExamStudentEndPoint = baseUrl + "/ExamStudent";
+		#region ExamUser
+		public static string? ExamUserEndPoint = baseUrl + "/ExamUser";
 
-        public static string? GetExamStudentByIdEndPoint = ExamStudentEndPoint + "/GetExamByStudentId";
+        public static string? GetExamUserByIdEndPoint = ExamUserEndPoint + "/GetExamByUserId";
         #endregion
         //get
         //post
@@ -87,6 +87,8 @@
         //public static string? GetChoiceEndPoint = ChoiceEndPoint + "/Get";
 
         public static string? GetChoiceByQuestionIdEndPoint = ChoiceEndPoint + "/GetChoiceByQuestionId";
+
+        public static string? GetChoicesByQuestionIdListEndPoint = ChoiceEndPoint + "/GetChoicesByQuestionIdList";
 
         //public static string? GetChoiceByIdEndPoint = ChoiceEndPoint + "/GetChoiceById";
 

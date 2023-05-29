@@ -1,6 +1,6 @@
-﻿namespace API.Models.Student
+﻿namespace API.Models.User
 {
-	public class StudentCreateRequest
+	public class UserCreateRequest
 	{
 		public string? FirstName { get; set; }
 

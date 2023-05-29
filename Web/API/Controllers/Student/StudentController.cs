@@ -1,92 +1,93 @@
-﻿using Abstraction.Service.Student;
-using API.Models.Student;
+﻿using Abstraction.Service.User;
+using API.Models.User;
 using AutoMapper;
+using Entity.Domain.ApplicationUser;
 using Entity.Dto.Course;
-using Entity.Dto.Student;
+using Entity.Dto.User;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Controllers.Student
+namespace API.Controllers.User
 {
 	[ApiController]
 	[Route("[controller]")]
-	public class StudentController:ControllerBase
+	public class UserController:ControllerBase
 	{
-		private readonly IStudentService studentService;
+		private readonly IUserService userService;
 		private readonly IMapper mapper;
 
-		public StudentController(IStudentService studentService, IMapper mapper)
+		public UserController(IUserService userService, IMapper mapper)
 		{
-			this.studentService = studentService;	
+			this.userService = userService;	
 			this.mapper = mapper;
 		}
 
 		[HttpGet("Get")]
-		public IEnumerable<StudentDto> Get()
+		public IEnumerable<ApplicationUser> Get()
 		{
-			var response = this.studentService.GetStudents();
+			var response = this.userService.GetUsers();
 			return response;
 		}
 
 		[HttpGet("GetById")]
-		public StudentDto GetById(int studentId)
+		public ApplicationUser GetById(int userId)
 		{
-			var response = this.studentService.GetStudentById(studentId);
+			var response = this.userService.GetUserById(userId);
 			return response;
 		}
 
-		[HttpPost("Create")]
-		public async Task<IActionResult> Create([FromBody] StudentCreateRequest model)
-		{
-			try
-			{
-				var mappingModel = this.mapper.Map<StudentCreateRequest, StudentDto>(model);
+		//[HttpPost("Create")]
+		//public async Task<IActionResult> Create([FromBody] UserCreateRequest model)
+		//{
+		//	try
+		//	{
+		//		var mappingModel = this.mapper.Map<UserCreateRequest, UserDto>(model);
 
-				await this.studentService.Create(mappingModel).ConfigureAwait(false);
+		//		await this.userService.Create(mappingModel).ConfigureAwait(false);
 
-				return this.Ok();
-			}
-			catch (Exception ex)
-			{
+		//		return this.Ok();
+		//	}
+		//	catch (Exception ex)
+		//	{
 
-				return this.BadRequest(ex.Message);
-			}
+		//		return this.BadRequest(ex.Message);
+		//	}
 
-		}
+		//}
 
-		[HttpPost("Update")]
-		public async Task<IActionResult> Update([FromBody] StudentUpdateRequest model)
-		{
-			try
-			{
-				var mappingModel = this.mapper.Map<StudentUpdateRequest, StudentDto>(model);
+		//[HttpPost("Update")]
+		//public async Task<IActionResult> Update([FromBody] UserUpdateRequest model)
+		//{
+		//	try
+		//	{
+		//		var mappingModel = this.mapper.Map<UserUpdateRequest, UserDto>(model);
 
-				await this.studentService.Update(mappingModel).ConfigureAwait(false);
+		//		await this.userService.Update(mappingModel).ConfigureAwait(false);
 
-				return this.Ok();
-			}
-			catch (Exception ex)
-			{
+		//		return this.Ok();
+		//	}
+		//	catch (Exception ex)
+		//	{
 
-				return this.BadRequest(ex.Message);
-			}
+		//		return this.BadRequest(ex.Message);
+		//	}
 
-		}
+		//}
 
-		[HttpPost("Delete")]
-		public async Task<IActionResult> Delete([FromBody] int studentId)
-		{
-			try
-			{
-				await this.studentService.Delete(studentId).ConfigureAwait(false);
+		//[HttpPost("Delete")]
+		//public async Task<IActionResult> Delete([FromBody] int userId)
+		//{
+		//	try
+		//	{
+		//		await this.userService.Delete(userId).ConfigureAwait(false);
 
-				return this.Ok();
-			}
-			catch (Exception ex)
-			{
+		//		return this.Ok();
+		//	}
+		//	catch (Exception ex)
+		//	{
 
-				return this.BadRequest(ex.Message);
-			}
+		//		return this.BadRequest(ex.Message);
+		//	}
 
-		}
+		//}
 	}
 }

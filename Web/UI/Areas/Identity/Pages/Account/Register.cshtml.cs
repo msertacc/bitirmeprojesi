@@ -1,8 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-#nullable disable
-
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +9,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using UI.Constants;
 using DataAccess.Data;
+using Entity.Domain.ApplicationUser;
 
 namespace UI.Areas.Identity.Pages.Account
 {
@@ -63,12 +60,8 @@ namespace UI.Areas.Identity.Pages.Account
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
-        public class InputModel
+        public class InputModel : ApplicationUser
         {
-            public string? Name { get; set; }
-
-            public string Role { get; set; }
-            
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -112,14 +105,22 @@ namespace UI.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
-                user.Name = Input.Name;
+                user.FirstName = Input.FirstName;
+                user.LastName = Input.LastName;
+                user.IdentityNumber = Input.IdentityNumber;
+                user.Gender = Input.Gender;
+                user.Email = Input.Email;
+                user.RoleId = Input.RoleId;
+                user.IsActive = Input.IsActive;
+                user.InsertedDate = Input.InsertedDate;
+                user.InsertedUser = Environment.UserName;
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(user,Input.Role == "Teacher" ? Roles.Teacher.ToString() : Roles.Student.ToString());
+                    await _userManager.AddToRoleAsync(user, Input.RoleId == "0" ? Roles.Teacher.ToString() : Roles.Student.ToString());
                     _logger.LogInformation("User created a new account with password.");
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -139,8 +140,8 @@ namespace UI.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
+                        //await _signInManager.SignInAsync(user, isPersistent: false);
+                        return LocalRedirect("/Home");
                     }
                 }
                 foreach (var error in result.Errors)

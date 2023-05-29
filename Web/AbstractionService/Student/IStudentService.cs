@@ -1,17 +1,18 @@
-﻿using Entity.Dto.Student;
+﻿using Entity.Domain.ApplicationUser;
+using Entity.Dto.User;
 
-namespace Abstraction.Service.Student
+namespace Abstraction.Service.User
 {
-	public interface IStudentService
+	public interface IUserService
 	{
-		List<StudentDto> GetStudents();
+		List<ApplicationUser> GetUsers();
 
-		StudentDto GetStudentById(int id);
+        ApplicationUser GetUserById(int id);
 
-		Task Create(StudentDto studentDto);
+		//Task Create(UserDto userDto);
 
-		Task Update(StudentDto studentDto);
+		//Task Update(UserDto userDto);
 
-		Task Delete(int id);
+		//Task Delete(int id);
 	}
 }

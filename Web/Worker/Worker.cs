@@ -17,7 +17,7 @@ namespace Service.Worker
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             SqlConnection connection = new SqlConnection(_connectionString);
-            string query = "UPDATE Exam SET IsEnded = 1 WHERE EndDate <= GETDATE()";
+            string query = "UPDATE Exam SET IsEnded = 1 WHERE ExamEndTime <= GETDATE()";
             SqlCommand command = new SqlCommand(query, connection);
             try
             {
@@ -32,7 +32,7 @@ namespace Service.Worker
             {
                 _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
                 command.ExecuteNonQuery();
-                await Task.Delay(5000, stoppingToken);
+                await Task.Delay(1000, stoppingToken);
 
             }
         }

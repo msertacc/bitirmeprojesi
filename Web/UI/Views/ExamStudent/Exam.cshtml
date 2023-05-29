@@ -1,8 +1,12 @@
-﻿@{
+﻿@using System.Globalization;
+@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@model UI.Models.ViewModels.ExamProcessViewModel
+@{
+    var dateTime = Model.Exam.ExamEndTime.Value;
+}
 @section Scripts{
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
     <script src="~/js/exam.js"></script>
@@ -12,7 +16,7 @@
         <tr>
             <th>ID</th>
             <th>ExamId</th>
-            <th>StudentId</th>
+            <th>UserId</th>
         </tr>
     </thead>
     <tbody>
@@ -25,63 +29,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="~/css/exam.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
-    <link id="bootstrap-ltr" rel="stylesheet" href="~/css/bootstrap.css">
-    <link id="bootstrap-rtl" rel="stylesheet" href="~/css/bootstrap2.css" disabled="">
 </head>
 <div class="row" style="border: 2px solid #ccc">
     <div id="carouselExampleDark" class="col-lg-10 carousel carousel-dark slide" data-bs-ride="carousel" data-bs-interval="false">
-
         <ol class="carousel-indicators">
-            @for (int i = 0; i < 10; i++)
+            @for (int i = 0; i < Model.Question?.Count(); i++)
             {
                 <li style="list-style : decimal; text-decoration : none" data-bs-target="#carouselExampleDark" data-bs-slide-to="@i" class="@(i.ToString() == "0" ? "active" : null )" aria-current="true" aria-label="Slide 1"></li>
             }
         </ol>
-        <div class="carousel-inner" >
-            @for (int i = 0; i < 10; i++)
+        <div class="carousel-inner">
+            @foreach (var item in Model.Question.Select((x, i) => new { Value = x, Index = i }))
             {
-                <div class="carousel-item @(i.ToString() == "0" ? "active" : null )">
+                <div class="carousel-item @(item.Index.ToString() == "0" ? "active" : null )">
                     <div style="background-color:#fff; width:100%; height : 700px;padding:40px 130px 40px 130px;">
-                        <h1 style="font-family : Tahoma; color:tomato">Soru - @(i + 1)</h1>
-                        <hr/>
+                        <div style="float:left">
+                            <h1 style="font-family : Tahoma; color:tomato">Soru - @(item.Index + 1)</h1>
+                        </div>
+                        <div class="mt-2" style="float:right;">
+                            <p style="font-size: 20px; background-color: #057ff8;color:white"><b>Puan : @item.Value.Score </b></p>
+                        </div>
+                        <br /><br />
+                        <hr />
                         <p style="font-size :20px; font-family:Tahoma">
-                            <b>Türkiye'nin başkenti neresidir?</b>
+                            <b>@item.Value.QuestionText</b>
                         </p>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                            <label style="font-size:larger;font-family : Tahoma" class="form-check-label" for="flexRadioDefault1">
-                                a) Ankara
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                            <label style="font-size:larger;font-family : Tahoma" class="form-check-label" for="flexRadioDefault2">
-                                b) İstanbul
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                            <label style="font-size:larger;font-family : Tahoma" class="form-check-label" for="flexRadioDefault2">
-                                c) Edirne
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                            <label style="font-size:larger;font-family : Tahoma" class="form-check-label" for="flexRadioDefault2">
-                                d) Kastamonu
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                            <label style="font-size:larger;font-family : Tahoma" class="form-check-label" for="flexRadioDefault2">
-                                e) Sakarya
-                            </label>
-                        </div>
-
+                        @foreach (var choice in Model.Choice.Where((x, i) => x.QuestionId == item.Value.Id).Select((x, i) => new { Value = x, Index = i }))
+                        {
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                <label style="font-size:larger;font-family : Tahoma" class="form-check-label" for="flexRadioDefault1">
+                                    @(Convert.ToChar(choice.Index + 65))) @choice.Value.ChoiceExplanation
+                                </label>
+                            </div>
+                        }          
                         <div class="form-check mt-5">
                             <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
                             <label style="font-size:larger;font-family : Tahoma" class="form-check-label" for="flexRadioDefault2">
-                                 Seçimimi boş bırakacağım.
+                                Seçimimi boş bırakacağım.
                             </label>
                         </div>
                     </div>
@@ -101,19 +86,12 @@
         <div id="app"></div>
     </div>
 </div>
-<p id="timeRemain" hidden endDate="" startDate=""></p>
 <script>
     var TIME_LIMIT;
     $(document).ready(function () {
-        //var connection = new signalR.HubConnectionBuilder().withUrl("/examHub").build();
-        //await connection.start();
-        debugger;
-        getExam(@ViewBag.examId);
-        TIME_LIMIT = renderCountdown(new Date(), new Date("2023-05-01T19:31:23.85"));
-        console.log(TIME_LIMIT)
+        TIME_LIMIT = renderCountdown(new Date(), new Date('@dateTime.Year', '@Convert.ToInt32(dateTime.Month - 1)', '@dateTime.Day', '@dateTime.Hour', '@dateTime.Minute', '@dateTime.Second'));
         startTimer();
-
-        //InvokeExams();
+        getExam('@Model.Exam.Id');
     })
 
     const FULL_DASH_ARRAY = 283;
@@ -140,28 +118,28 @@
     let remainingPathColor = COLOR_CODES.info.color;
 
     document.getElementById("app").innerHTML = `
-                <div class="base-timer">
-                  <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <g class="base-timer__circle">
-                      <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
-                      <path
-                        id="base-timer-path-remaining"
-                        stroke-dasharray="283"
-                        class="base-timer__path-remaining ${remainingPathColor}"
-                        d="
-                          M 50, 50
-                          m -45, 0
-                          a 45,45 0 1,0 90,0
-                          a 45,45 0 1,0 -90,0
-                        "
-                      ></path>
-                    </g>
-                  </svg>
-                  <span id="base-timer-label" class="base-timer__label">${formatTime(
+                    <div class="base-timer">
+                      <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <g class="base-timer__circle">
+                          <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
+                          <path
+                            id="base-timer-path-remaining"
+                            stroke-dasharray="283"
+                            class="base-timer__path-remaining ${remainingPathColor}"
+                            d="
+                              M 50, 50
+                              m -45, 0
+                              a 45,45 0 1,0 90,0
+                              a 45,45 0 1,0 -90,0
+                            "
+                          ></path>
+                        </g>
+                      </svg>
+                      <span id="base-timer-label" class="base-timer__label">${formatTime(
         timeLeft
     )}</span>
-                </div>
-                `;
+                    </div>
+                    `;
 
 
     function onTimesUp() {
@@ -175,9 +153,8 @@
             if (timeLeft < 0) {
                 timeLeft = 0;
             }
-            document.getElementById("base-timer-label").innerHTML = formatTime(
-                timeLeft
-            );
+                document.getElementById("base-timer-label").innerHTML = formatTime(
+                    timeLeft)
             setCircleDasharray();
             setRemainingPathColor(timeLeft);
             if (timeLeft === 0) {
@@ -187,6 +164,9 @@
     }
 
     function formatTime(time) {
+
+        time = isNaN(time) == true ? 0 : time;
+
         const minutes = Math.floor(time / 60);
         let seconds = time % 60;
 
@@ -228,7 +208,6 @@
             .getElementById("base-timer-path-remaining")
             .setAttribute("stroke-dasharray", circleDasharray);
     }
-
 
     function renderCountdown(dateStart, dateEnd) {
         let currentDate = dateStart.getTime();

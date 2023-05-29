@@ -7,6 +7,7 @@ using Entity.Dto.Course;
 using Entity.Dto.Exam;
 using Entity.Dto.Question;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 using System.Linq;
 
 namespace Service.Exam
@@ -30,7 +31,7 @@ namespace Service.Exam
             examDto.InsertedUser = Environment.UserName;
             examDto.InsertedDate = DateTime.Now;
             examDto.IsActive = "1";
-
+            examDto.IsEnded = "1";
             var mappingResult = mapper.Map<ExamDto, Entity.Domain.Exam.Exam>(examDto);
 
             await context.Set<Entity.Domain.Exam.Exam>().AddAsync(mappingResult);
@@ -137,6 +138,7 @@ namespace Service.Exam
         {
 
             var result = context.Exams.AsNoTracking().Where(x => x.IsActive == "1" && x.Id == id).FirstOrDefault();
+            //var endTime = DateTime.ParseExact(result.ExamEndTime.ToString(), "M/d/yyyy HH:mm:ss",  CultureInfo.);
             var mappingResult = mapper.Map<ExamDto>(result);
             return mappingResult;
         }

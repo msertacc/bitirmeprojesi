@@ -1,9 +1,10 @@
-﻿@model UI.Models.Student.StudentViewModel;
+﻿@using Entity.Domain.ApplicationUser;
+@model ApplicationUser;
 @using UI.Constants;
 
-@using (Html.BeginForm("Create", "Student", FormMethod.Post))
+@using (Html.BeginForm("Create", "User", FormMethod.Post))
 {
-	<div id="createStudentForm" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createStudentForm" aria-hidden="true">
+	<div id="createUserForm" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createUserForm" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header">

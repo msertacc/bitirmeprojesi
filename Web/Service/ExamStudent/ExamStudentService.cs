@@ -2,26 +2,26 @@
 using Microsoft.EntityFrameworkCore;
 using DataAccess.Data;
 using Entity.Dto.Course;
-using Abstraction.Service.ExamStudent;
-using Entity.Dto.ExamStudent;
+using Abstraction.Service.ExamUser;
+using Entity.Dto.ExamUser;
 
-namespace Service.ExamStudent
+namespace Service.ExamUser
 {
-	public class ExamStudentService : IExamStudentService
+	public class ExamUserService : IExamUserService
     {
         private ApplicationDbContext context;
         private IMapper mapper;
 
-        public ExamStudentService(ApplicationDbContext context,IMapper mapper)
+        public ExamUserService(ApplicationDbContext context,IMapper mapper)
         {
             this.context = context;
             this.mapper = mapper;
         }
 
-		public List<ExamStudentDto> GetExamByStudent(int userId)
+		public List<ExamUserDto> GetExamByUser(string user)
         {
-            var result = context.ExamStudents.AsNoTracking().Where(x => x.IsActive == "1" && x.StudentId == userId).ToList();
-            var mappingResult=mapper.Map<List<ExamStudentDto>>(result);
+            var result = context.ExamUsers.AsNoTracking().Where(x => x.IsActive == "1" && x.UserId == user).ToList();
+            var mappingResult=mapper.Map<List<ExamUserDto>>(result);
             return mappingResult;
         }
 

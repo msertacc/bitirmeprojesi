@@ -1,4 +1,4 @@
-﻿using Entity.Domain.ExamStudent;
+﻿using Entity.Domain.ExamUser;
 using Microsoft.Data.SqlClient;
 using System.Data;
 
@@ -12,19 +12,19 @@ namespace UI.SignalR.Repositories
             this.connectionString = connectionString;
         }
 
-        public List<ExamStudent> GetExams(int? id)
+        public List<Exam> GetExams(int? id)
         {
-            List<ExamStudent> exams = new List<ExamStudent>();
-            ExamStudent exam;
+            List<Exam> exams = new List<Exam>();
+            Exam exam;
 
             var data = GetExamDetailsFromDb(id);
 
             foreach (DataRow row in data.Rows)
             {
-                exam = new ExamStudent
+                exam = new Exam
                 {
-                    ExamId = Convert.ToInt32(row["ExamId"]),
-                    StudentId = Convert.ToInt32(row["StudentId"]),
+                    Id = Convert.ToInt32(row["Id"]),
+                    IsEnded = row["IsEnded"].ToString(),
                    // StartDate = Convert.ToDateTime(row["StartDate"]),
                     //EndDate = Convert.ToDateTime(row["EndDate"]),
                     //IsEnded = row["IsEnded"].ToString()
@@ -36,8 +36,10 @@ namespace UI.SignalR.Repositories
 
         private DataTable GetExamDetailsFromDb(int? id)
         {
-            var query = "SELECT * FROM ExamStudent ES INNER JOIN Exam E ON ES.ExamId = E.ID" +
-                "  where E.ID = " + id;
+            //var query = "SELECT * FROM ExamUser ES INNER JOIN Exam E ON ES.ExamId = E.ID" +
+             //   "  where E.ID = " + id;
+
+            var query = "SELECT * FROM Exam E where E.ID = " + id;
             DataTable dataTable = new DataTable();
 
             using (SqlConnection connection = new SqlConnection(connectionString))

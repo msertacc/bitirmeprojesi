@@ -1,25 +1,25 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-namespace Entity.Domain.ExamStudent
+namespace Entity.Domain.ExamUser
 {
 
-    [Table("ExamStudent")]
-    public class ExamStudent:BaseEntity.BaseEntity
+    [Table("ExamUser")]
+    public class ExamUser:BaseEntity.BaseEntity
     {
         public int Id { get; set; }
         public int ExamId { get; set; }
-        public int StudentId { get; set; }
-		//public DateTime StartDate { get; set; }
-		//public DateTime EndDate { get; set; }
-		//public string? IsEnded { get; set; }
+        public string UserId { get; set; }
 	}
 
     [Table("Exam")]
-    public class Exam 
+    public class Exam : BaseEntity.BaseEntity
     {
-        public int? Id { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public string? ExamName { get; set; }
+        public string? ExamDescription { get; set; }
+        public DateTime? ExamStartTime { get; set; }
+        public DateTime? ExamEndTime { get; set; }
+        public int? ExamDuration { get; set; }
+        public int? CourseId { get; set; }
         public string? IsEnded { get; set; }
     }
 }

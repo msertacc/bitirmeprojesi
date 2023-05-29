@@ -1,19 +1,24 @@
+using Abstraction.Service.Course;
+using Abstraction.Service.ExamUser;
+using Abstraction.Service.User;
 using DataAccess.Data;
+using Entity.Domain.ApplicationUser;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Abstraction.Service.Course;
-using Abstraction.Service.Student;
 using Service.Course;
-using Service.Student;
-using Abstraction.Service.ExamStudent;
-using Service.ExamStudent;
+using Service.ExamUser;
+using Service.User;
+using System.Globalization;
 using UI.SignalR.Hubs;
-using UI.SignalR.SubscribeTableDependicies;
 using UI.SignalR.MiddlewareExtensions;
+using UI.SignalR.SubscribeTableDependicies;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+var cultureInfo = new CultureInfo("tr-TR");
+CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
 //builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddDbContext<ApplicationDbContext>();
@@ -25,8 +30,8 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddDefaultTokenProviders();
 //builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
-builder.Services.AddScoped<IExamStudentService, ExamStudentService>();
-builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddScoped<IExamUserService, ExamUserService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<HttpClient>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddSignalR();
@@ -57,7 +62,7 @@ app.UseAuthorization();
 app.MapHub<ExamHub>("/examHub");
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Exam}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
 //using (var scope = app.Services.CreateScope())

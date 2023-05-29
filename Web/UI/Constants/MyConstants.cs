@@ -6,7 +6,4 @@
         Student,
         Teacher
     }
-    public class MyConstants
-    {
-    }
 }

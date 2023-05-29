@@ -1,9 +1,10 @@
-﻿@model UI.Models.Student.StudentViewModel;
+﻿@model ApplicationUser;
+@using Entity.Domain.ApplicationUser;
 @using UI.Constants;
 
-@using (Html.BeginForm("Update", "Student", FormMethod.Post))
+@using (Html.BeginForm("Update", "User", FormMethod.Post))
 {
-	<div id="updateStudentForm" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="updateStudentForm" aria-hidden="true">
+	<div id="updateUserForm" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="updateUserForm" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -24,7 +25,7 @@
 								<label>Telefon Numarası</label>
 								<input type="text" value="@Model.PhoneNumber" name="PhoneNumber" pattern="[5][0-9]{9}" title="Lütfen telefon numarasını başında 0 olmadan 10 karakter giriniz" placeholder="Lütfen öğrenci telefon numarasını başında sıfır olmadan giriniz" class="form-control small-input" required />
 								<label>E-Mail Adresi</label>
-									<input type="email" value="@Model.EMail" name="EMail" title="Lütfen e-mail'i doğru formatta giriniz" placeholder="Lütfen öğrenci e-postasını giriniz" class="form-control small-input" required />
+									<input type="email" value="@Model.Email" name="EMail" title="Lütfen e-mail'i doğru formatta giriniz" placeholder="Lütfen öğrenci e-postasını giriniz" class="form-control small-input" required />
 								<label>Cinsiyet</label>
 								<select class="form-select" value="@Model.Gender" name="Gender">
 									<option>Lütfen cinsiyet seçiniz</option>

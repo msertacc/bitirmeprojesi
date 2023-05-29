@@ -1,29 +1,29 @@
 ﻿using Abstraction.Service.Course;
-using Abstraction.Service.ExamStudent;
+using Abstraction.Service.ExamUser;
 using AutoMapper;
 using Entity.Dto.Course;
-using Entity.Dto.ExamStudent;
+using Entity.Dto.ExamUser;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Controllers.ExamStudent
+namespace API.Controllers.ExamUser
 {
     [ApiController]
     [Route("[controller]")]
-    public class ExamStudentController : ControllerBase
+    public class ExamUserController : ControllerBase
     {
-        private readonly IExamStudentService examStudentService;
+        private readonly IExamUserService examUserService;
         private readonly IMapper mapper;
 
-        public ExamStudentController(IExamStudentService examStudentService, IMapper mapper)
+        public ExamUserController(IExamUserService examUserService, IMapper mapper)
         {
-            this.examStudentService = examStudentService;
+            this.examUserService = examUserService;
             this.mapper = mapper;
         }
 
-        [HttpGet("GetExamByStudentId/{userId}")]
-        public List<ExamStudentDto> GetExamByStudentId(int userId)
+        [HttpGet("GetExamByUserId/{userId}")]
+        public List<ExamUserDto> GetExamByUserId(string user)
         {
-            var response = this.examStudentService.GetExamByStudent(userId);
+            var response = this.examUserService.GetExamByUser(user);
             return response;
         }
 

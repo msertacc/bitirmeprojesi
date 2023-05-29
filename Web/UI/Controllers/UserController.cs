@@ -1,19 +1,19 @@
 ﻿using AutoMapper;
+using Entity.Domain.ApplicationUser;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using Newtonsoft.Json;
 using System.Text;
 using UI.Constants;
-using UI.Models.Course;
-using UI.Models.Student;
+using UI.Models.User;
 
 namespace UI.Controllers
 {
-	public class StudentController:Controller
+    public class UserController:Controller
 	{
 		private readonly HttpClient client;
 		private readonly IMapper mapper;
-		public StudentController(HttpClient client, IMapper mapper)
+		public UserController(HttpClient client, IMapper mapper)
 		{
 			this.client = client;
 			this.mapper = mapper;
@@ -21,29 +21,29 @@ namespace UI.Controllers
 
 		public async Task<ActionResult> Index()
 		{
-			List<StudentViewModel>? result = new List<StudentViewModel>();
-			var response = await client.GetAsync(ApiEndpoints.GetStudentEndPoint).ConfigureAwait(false);
+			List<ApplicationUser>? result = new List<ApplicationUser>();
+			var response = await client.GetAsync(ApiEndpoints.GetUserEndPoint).ConfigureAwait(false);
 
 			if (response.IsSuccessStatusCode)
 			{
 				string apiResponse = await response.Content.ReadAsStringAsync();
-				result = JsonConvert.DeserializeObject<List<StudentViewModel>>(apiResponse);
+				result = JsonConvert.DeserializeObject<List<ApplicationUser>>(apiResponse);
 			}
 			return View(result);
 		}
 
 		public ActionResult _Create()
 		{
-			var viewModel = new StudentViewModel();
+			var viewModel = new UserViewModel();
 			return PartialView(viewModel);
 		}
 
-		public async Task<ActionResult> Create(StudentViewModel viewModel)
+		public async Task<ActionResult> Create(UserViewModel viewModel)
 		{
 			var errorMessage = "";
 			var json = JsonConvert.SerializeObject(viewModel, new JsonSerializerSettings { });
 			var data = new StringContent(json, Encoding.UTF8, "application/json");
-			var response = await client.PostAsync(ApiEndpoints.CreateStudentEndPoint, data).ConfigureAwait(false);
+			var response = await client.PostAsync(ApiEndpoints.CreateUserEndPoint, data).ConfigureAwait(false);
 			if (!response.IsSuccessStatusCode)
 			{
 				errorMessage = response.Content.ReadAsStringAsync().Result;
@@ -57,26 +57,26 @@ namespace UI.Controllers
 
 			var query = new Dictionary<string, string>()
 			{
-				["studentId"] = id.ToString(),
+				["userId"] = id.ToString(),
 			};
 
-			var uri = QueryHelpers.AddQueryString(ApiEndpoints.GetStudentByIdEndPoint, query);
+			var uri = QueryHelpers.AddQueryString(ApiEndpoints.GetUserByIdEndPoint, query);
 			var response = await client.GetAsync(uri).ConfigureAwait(false);
 			var apiResponse = await response.Content.ReadAsStringAsync();
 			if (!response.IsSuccessStatusCode)
 			{
 				errorMessage = apiResponse;
 			}
-			var result = JsonConvert.DeserializeObject<StudentViewModel>(apiResponse);
+			var result = JsonConvert.DeserializeObject<UserViewModel>(apiResponse);
 			return PartialView(result);
 		}
 
-		public async Task<ActionResult> Update(StudentViewModel viewModel)
+		public async Task<ActionResult> Update(UserViewModel viewModel)
 		{
 			var errorMessage = "";
 			var json = JsonConvert.SerializeObject(viewModel, new JsonSerializerSettings { });
 			var data = new StringContent(json, Encoding.UTF8, "application/json");
-			var response = await client.PostAsync(ApiEndpoints.UpdateStudentEndPoint, data).ConfigureAwait(false);
+			var response = await client.PostAsync(ApiEndpoints.UpdateUserEndPoint, data).ConfigureAwait(false);
 			if (!response.IsSuccessStatusCode)
 			{
 				errorMessage = response.Content.ReadAsStringAsync().Result;
@@ -90,26 +90,26 @@ namespace UI.Controllers
 
 			var query = new Dictionary<string, string>()
 			{
-				["studentId"] = id.ToString(),
+				["userId"] = id.ToString(),
 			};
 
-			var uri = QueryHelpers.AddQueryString(ApiEndpoints.GetStudentByIdEndPoint, query);
+			var uri = QueryHelpers.AddQueryString(ApiEndpoints.GetUserByIdEndPoint, query);
 			var response = await client.GetAsync(uri).ConfigureAwait(false);
 			var apiResponse = await response.Content.ReadAsStringAsync();
 			if (!response.IsSuccessStatusCode)
 			{
 				errorMessage = apiResponse;
 			}
-			var result = JsonConvert.DeserializeObject<StudentViewModel>(apiResponse);
+			var result = JsonConvert.DeserializeObject<UserViewModel>(apiResponse);
 			return PartialView(result);
 		}
 
-		public async Task<ActionResult> Delete(StudentViewModel viewModel)
+		public async Task<ActionResult> Delete(UserViewModel viewModel)
 		{
 			var errorMessage = "";
 			var json = JsonConvert.SerializeObject(viewModel.Id, new JsonSerializerSettings { });
 			var data = new StringContent(json, Encoding.UTF8, "application/json");
-			var response = await client.PostAsync(ApiEndpoints.DeleteStudentEndPoint, data).ConfigureAwait(false);
+			var response = await client.PostAsync(ApiEndpoints.DeleteUserEndPoint, data).ConfigureAwait(false);
 			if (!response.IsSuccessStatusCode)
 			{
 				errorMessage = response.Content.ReadAsStringAsync().Result;

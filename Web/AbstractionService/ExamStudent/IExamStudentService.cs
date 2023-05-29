@@ -1,16 +1,16 @@
-﻿using Entity.Dto.ExamStudent;
+﻿using Entity.Dto.ExamUser;
 
-namespace Abstraction.Service.ExamStudent
+namespace Abstraction.Service.ExamUser
 {
-	public interface IExamStudentService
+	public interface IExamUserService
 	{
-		List<ExamStudentDto> GetExamByStudent(int userId);
+		List<ExamUserDto> GetExamByUser(string user);
 
-        //ExamStudentDto GetExamStudentById(int id);
+        //ExamUserDto GetExamUserById(int id);
 
-		//Task Create(ExamStudentDto studentDto);
+		//Task Create(ExamUserDto userDto);
 
-		//Task Update(ExamStudentDto studentDto);
+		//Task Update(ExamUserDto userDto);
 
 		//Task Delete(int id);
 	}

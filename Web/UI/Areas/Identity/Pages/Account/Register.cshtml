@@ -1,24 +1,30 @@
 ﻿@page
 @model RegisterModel
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Kullanıcı Kaydı";
 }
-<script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
-<h1>@ViewData["Title"]</h1>
-
 <div class="row">
+    <div class="col-md-4"></div>
     <div class="col-md-4">
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>Create a new account.</h2>
+            <h2 align="center">Yeni bir kullanıcı oluştur.</h2>
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-
             <div class="form-floating mb-3">
-                <input asp-for="Input.Name" class="form-control" aria-required="true" placeholder="Name" />
-                <label asp-for="Input.Name">Name</label>
-                <span asp-validation-for="Input.Name" class="text-danger"></span>
+                <input asp-for="Input.FirstName" class="form-control" aria-required="true" placeholder="Name" />
+                <label asp-for="Input.FirstName">Adı</label>
+                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
             </div>
-
+            <div class="form-floating mb-3">
+                <input asp-for="Input.LastName" class="form-control" aria-required="true" placeholder="Name" />
+                <label asp-for="Input.LastName">Soyadı</label>
+                <span asp-validation-for="Input.LastName" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.IdentityNumber" class="form-control" aria-required="true" placeholder="Name" />
+                <label asp-for="Input.IdentityNumber">Kimlik No</label>
+                <span asp-validation-for="Input.IdentityNumber" class="text-danger"></span>
+            </div>
             <div class="form-floating mb-3">
                 <input asp-for="Input.Email" class="form-control" aria-required="true" placeholder="name@example.com" />
                 <label asp-for="Input.Email">Email</label>
@@ -35,45 +41,22 @@
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
-                <input checked type="radio" value="Student" name="Role" />Öğrenciyim<br />
-                <input type="radio" value="Teacher" name="Role" />Öğretmenim<br />
+                <input checked type="radio" value="1" name="Role" />Öğrenci<br />
+                <input type="radio" value="0" name="Role" />Öğretmen<br />
             </div>
-            <input asp-for="Input.Role" hidden class="form-control" value="Student" id="role" />
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+            <input asp-for="Input.RoleId" hidden class="form-control" value="1" id="role" />
+            <div class="form-floating mb-3">
+                <input checked type="radio" value="1" name="Gender" />Erkek<br />
+                <input type="radio" value="0" name="Gender" />Kadın<br />
+            </div>
+            <input asp-for="Input.Gender" hidden class="form-control" value="1" id="gender" />
+            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Kaydet</button>
+
+            <input asp-for="Input.IsActive" value="1" class="form-control" hidden/>
+            <input asp-for="Input.InsertedUser" value="UIAdmin" class="form-control" hidden/>
         </form>
     </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h3>Use another service to register.</h3>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">
-                                article
-                                about setting up this ASP.NET application to support logging in via external services
-                            </a>.
-                        </p>
-                    </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins!)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
-                        </div>
-                    </form>
-                }
-            }
-        </section>
-    </div>
+    <div class="col-md-4"></div>
 </div>
 
 @section Scripts {
@@ -83,7 +66,12 @@
 <script>
     $("input[name=Role]").change(function(e){
         var role = e.target.value;
-        role === "Teacher" ? $("#role").val("Teacher") : $("#role").val("Student")
+        role === "0" ? $("#role").val("0") : $("#role").val("1")
+    })
+
+    $("input[name=Gender]").change(function (e) {
+        var gender = e.target.value;
+        gender === "1" ? $("#gender").val("1") : $("#gender").val("0")
     })
 
 </script>

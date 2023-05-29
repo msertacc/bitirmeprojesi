@@ -39,6 +39,13 @@ namespace API.Controllers.Choice
             return response;
         }
 
+        [HttpGet("GetChoicesByQuestionIdList/{idList}")]
+        public IEnumerable<ChoiceDto> GetChoicesByQuestionIdList(string idList)
+        {
+            var response = this.choiceService.GetChoicesByQuestionIdList(idList);
+            return response;
+        }
+
         [HttpPost("Delete")]
         public async Task<IActionResult> Delete([FromBody] ChoiceCreateRequest model)
         {

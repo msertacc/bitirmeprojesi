@@ -1,6 +1,6 @@
 ﻿using TableDependency.SqlClient;
 using UI.SignalR.Hubs;
-using Entity.Domain.ExamStudent;
+using Entity.Domain.ExamUser;
 
 namespace UI.SignalR.SubscribeTableDependicies
 {
@@ -32,7 +32,7 @@ namespace UI.SignalR.SubscribeTableDependicies
 
         private void TableDependency_OnError(object sender, TableDependency.SqlClient.Base.EventArgs.ErrorEventArgs e)
         {
-            Console.WriteLine($"{nameof(ExamStudent)} SqlTableDependency error: {e.Error.Message}");
+            Console.WriteLine($"{nameof(ExamUser)} SqlTableDependency error: {e.Error.Message}");
         }
     }
 }

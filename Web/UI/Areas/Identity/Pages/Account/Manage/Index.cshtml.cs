@@ -3,6 +3,7 @@
 #nullable disable
 
 using DataAccess.Data;
+using Entity.Domain.ApplicationUser;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -51,18 +52,12 @@ namespace UI.Areas.Identity.Pages.Account.Manage
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
-        public class InputModel
+        public class InputModel : ApplicationUser
         {
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Phone]
-            [Display(Name = "Phone number")]
-            public string PhoneNumber { get; set; }
-            public string Name { get; set; }
-            public string ProfilePicture { get; set; }
-            public IFormFile ImageFile { get; set; }
         }
 
         private async Task LoadAsync(ApplicationUser user)
@@ -75,8 +70,13 @@ namespace UI.Areas.Identity.Pages.Account.Manage
             Input = new InputModel
             {
                 PhoneNumber = phoneNumber,
-                Name=user.Name,
-                ProfilePicture=user.ProfilePicture
+                FirstName=user.FirstName,
+                LastName = user.LastName,
+                Gender = user.Gender,
+                RoleId = user.RoleId,
+                IdentityNumber = user.IdentityNumber,
+                Email = user.Email
+                //ProfilePicture=user.ProfilePicture
             };
         }
 
@@ -116,23 +116,23 @@ namespace UI.Areas.Identity.Pages.Account.Manage
                     return RedirectToPage();
                 }
             }
-            if (Input.Name != user.Name)
-            {
-                user.Name = Input.Name;
-                await _userManager.UpdateAsync(user);
-            }
+            //if (Input.Name != user.Name)
+            //{
+            //    user.Name = Input.Name;
+            //    await _userManager.UpdateAsync(user);
+            //}
 
-            if (Input.ImageFile != null)
-            {
-                ////var result = _fileService.SaveImage(Input.ImageFile);
-                //if (result.Item1 == 1)
-                //{
-                //    var oldImage = user.ProfilePicture;
-                //    user.ProfilePicture = result.Item2;
-                //    await _userManager.UpdateAsync(user);
-                //    //var deleteResult = _fileService.DeleteImage(oldImage);
-                //}
-            }
+            //if (Input.ImageFile != null)
+            //{
+            //    ////var result = _fileService.SaveImage(Input.ImageFile);
+            //    //if (result.Item1 == 1)
+            //    //{
+            //    //    var oldImage = user.ProfilePicture;
+            //    //    user.ProfilePicture = result.Item2;
+            //    //    await _userManager.UpdateAsync(user);
+            //    //    //var deleteResult = _fileService.DeleteImage(oldImage);
+            //    //}
+            //}
 
             // code for image upload
 

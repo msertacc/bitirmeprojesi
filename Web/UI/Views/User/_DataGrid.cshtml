@@ -1,14 +1,16 @@
-﻿@model IEnumerable<UI.Models.Student.StudentViewModel>
+﻿@using Entity.Domain.ApplicationUser;
+@model IEnumerable<ApplicationUser>
 @using UI.Constants
 
 <section class="section-content">
 	<div class="row">
 		<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 actions-left">
-			<button onclick="openCreateModal();" type="button" style="margin-bottom:5px;margin-top:10px;" class="btn btn-success" tooltip="Kayıt Ekleme">Kayıt Ekleme</button>
+			<button onclick="location.href = /Account/Register" type="button" style="margin-bottom:5px;margin-top:10px;" class="btn btn-success" tooltip="Yeni Kullanıcı">Yeni Kullanıcı</button>
+			@*<button onclick="openCreateModal();" type="button" style="margin-bottom:5px;margin-top:10px;" class="btn btn-success" tooltip="Kayıt Ekleme">Kayıt Ekleme</button>*@
 		</div>
 	</div>
 	<div class="row">
-		<table class="table table-bordered" id="studentTable">
+		<table class="table table-bordered" id="userTable">
 			<thead>
 				<tr>
 					<th scope="col">İşlemler</th>
@@ -43,7 +45,7 @@
 						<td>@item.LastName</td>
 						<td>@item.IdentityNumber</td>
 						<td>@item.PhoneNumber</td>
-						<td>@item.EMail</td>
+						<td>@item.Email</td>
 						<td>@(Convert.ToInt32(item.Gender)==0 ? Gender.Kadın : Gender.Erkek)</td>
 						<td>@item.InsertedUser</td>
 						<td>@item.InsertedDate</td>

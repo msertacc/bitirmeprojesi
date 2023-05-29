@@ -5,6 +5,7 @@ using Entity.Dto.Choice;
 using Entity.Dto.Exam;
 using Entity.Dto.Question;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Service.Choice
 {
@@ -47,6 +48,18 @@ namespace Service.Choice
         public List<ChoiceDto> GetChoiceByQuestionId(int questionId)
         {
             var result = context.Choices.AsNoTracking().Where(x => x.IsActive == "1" && x.QuestionId == questionId).ToList();
+            var mappingResult = mapper.Map<List<ChoiceDto>>(result);
+            return mappingResult;
+        }
+
+        public List<ChoiceDto> GetChoicesByQuestionIdList(string questionIdList)
+        {
+            var list = questionIdList.Split(";");
+            List<int?> idList = new List<int?>();
+            foreach (var item in list) {
+                idList.Add(Convert.ToInt32(item));
+            }
+            var result = context.Choices.AsNoTracking().Where(x => x.IsActive == "1" && idList.Contains(x.QuestionId)).ToList();
             var mappingResult = mapper.Map<List<ChoiceDto>>(result);
             return mappingResult;
         }

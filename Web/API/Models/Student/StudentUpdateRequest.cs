@@ -1,6 +1,6 @@
-﻿namespace API.Models.Student
+﻿namespace API.Models.User
 {
-	public class StudentUpdateRequest
+	public class UserUpdateRequest
 	{
         public int Id { get; set; }
 

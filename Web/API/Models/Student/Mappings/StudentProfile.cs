@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
-using Entity.Dto.Student;
+using Entity.Dto.User;
 
-namespace API.Models.Student.Mappings
+namespace API.Models.User.Mappings
 {
-	public class StudentProfile:Profile
+	public class UserProfile:Profile
 	{
-		public StudentProfile()
+		public UserProfile()
 		{
-			this.CreateMap<StudentCreateRequest, StudentDto>();
-			this.CreateMap<StudentUpdateRequest, StudentDto>();
+			this.CreateMap<UserCreateRequest, UserDto>();
+			this.CreateMap<UserUpdateRequest, UserDto>();
 		}
 	}
 }

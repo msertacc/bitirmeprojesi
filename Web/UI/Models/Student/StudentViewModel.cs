@@ -1,8 +1,8 @@
 ﻿using Entity.Domain.BaseEntity;
 
-namespace UI.Models.Student
+namespace UI.Models.User
 {
-	public class StudentViewModel:BaseEntity
+	public class UserViewModel:BaseEntity
 	{
 		public string? FirstName { get; set; }
 

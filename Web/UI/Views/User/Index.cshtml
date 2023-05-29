@@ -1,4 +1,5 @@
-﻿@model IEnumerable<UI.Models.Student.StudentViewModel>
+﻿@using Entity.Domain.ApplicationUser;
+@model IEnumerable<ApplicationUser>
 <div class="row">
 	<div id="content-wrapper">
 		<div class="container-fluid">
@@ -18,10 +19,10 @@
 	function openCreateModal() {
 		$.ajax({
 			type: 'GET',
-			url: '/Student/_Create',
+			url: '/User/_Create',
 			success: function (data) {
 				$("#ModalCreate").html(data);
-				$("#createStudentForm").modal('show');
+				$("#createUserForm").modal('show');
 				$("#ModalCreate").modal('show');
 			}
 		});
@@ -30,11 +31,11 @@
 	function openUpdateModal(id) {
 		$.ajax({
 			type: 'GET',
-			url: '/Student/_Update',
+			url: '/User/_Update',
 			data: { id: id },
 			success: function (data) {
 				$("#ModalUpdate").html(data);
-				$("#updateStudentForm").modal('show');
+				$("#updateUserForm").modal('show');
 				$("#ModalUpdate").modal('show');
 			}
 		});
@@ -43,11 +44,11 @@
 	function openDeleteModal(id) {
 		$.ajax({
 			type: 'GET',
-			url: '/Student/_Delete',
+			url: '/User/_Delete',
 			data: { id: id },
 			success: function (data) {
 				$("#ModalDelete").html(data);
-				$("#deleteStudentForm").modal('show');
+				$("#deleteUserForm").modal('show');
 				$("#ModalDelete").modal('show');
 			}
 		});

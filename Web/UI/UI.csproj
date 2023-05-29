@@ -7,6 +7,14 @@
     <!--<UserSecretsId>aspnet-AspnetIdentityRoleBasedTutorial-1ce73b51-3636-49bb-9c50-6856bd8121d5</UserSecretsId>-->
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;8629;8609</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <NoWarn>1701;1702;8629;8609</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
     <Content Include="Constants\ApiEndpoints.cs" />
   </ItemGroup>

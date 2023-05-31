@@ -15,5 +15,6 @@
 
 		public string? Gender { get; set; }
         public string? RoleId { get; set; }
+        public string? IsVerify { get; set; }
     }
 }

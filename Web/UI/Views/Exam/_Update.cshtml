@@ -34,15 +34,6 @@
 						<label for="party">Bitiş Tarihi</label>
 						<input id="party" type="datetime-local" name="ExamEndTime" value="@Model.ExamViewModel.ExamEndTime" style="width:100%" />
 
-						@*DateTime.ParseExact*@
-
-						<fieldset>
-							<div class="form-group">
-								<label>Süre</label>
-								<input type="text" name="ExamDuration" value="@Model.ExamViewModel.ExamDuration" placeholder="Lütfen süre giriniz" class="form-control small-input" id="name" />
-							</div>
-						</fieldset>
-
 						<div class="form-group">
 							<label for="exampleFormControlSelect1">Ders</label>
 							<select class="form-control" id="deneme" name="CourseId">

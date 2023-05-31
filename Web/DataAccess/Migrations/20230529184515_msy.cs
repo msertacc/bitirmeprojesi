@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class Sertac : Migration
+    public partial class msy : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,8 +30,16 @@ namespace DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProfilePicture = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    IdentityNumber = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
+                    Gender = table.Column<string>(type: "nvarchar(2)", maxLength: 2, nullable: false),
+                    RoleId = table.Column<string>(type: "nvarchar(2)", maxLength: 2, nullable: false),
+                    InsertedUser = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    InsertedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedUser = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -71,13 +79,13 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ExamStudent",
+                name: "ExamUser",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ExamId = table.Column<int>(type: "int", nullable: false),
-                    StudentId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     InsertedUser = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     InsertedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedUser = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -86,7 +94,7 @@ namespace DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ExamStudent", x => x.Id);
+                    table.PrimaryKey("PK_ExamUser", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -105,29 +113,6 @@ namespace DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_QuestionType", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Student",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    IdentityNumber = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EMail = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    InsertedUser = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    InsertedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedUser = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsActive = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Student", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -246,8 +231,8 @@ namespace DataAccess.Migrations
                     ExamDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ExamStartTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     ExamEndTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ExamDuration = table.Column<int>(type: "int", nullable: true),
                     CourseId = table.Column<int>(type: "int", nullable: true),
+                    IsEnded = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     InsertedUser = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     InsertedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedUser = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -402,10 +387,7 @@ namespace DataAccess.Migrations
                 name: "Choice");
 
             migrationBuilder.DropTable(
-                name: "ExamStudent");
-
-            migrationBuilder.DropTable(
-                name: "Student");
+                name: "ExamUser");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

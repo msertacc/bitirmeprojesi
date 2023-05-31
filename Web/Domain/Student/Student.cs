@@ -28,5 +28,9 @@ namespace Entity.Domain.User
 		public string? Gender { get; set; }
 
         public string? RoleId { get; set; }
+
+        [Required]
+        [StringLength(1)]
+        public string? IsVerify { get; set; }
     }
 }

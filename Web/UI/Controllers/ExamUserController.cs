@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Entity.Domain.ApplicationUser;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Security.Claims;
 using UI.Constants;
 using UI.Models.Choice;
 using UI.Models.Exam;
@@ -13,6 +13,7 @@ using UI.Models.ViewModels;
 
 namespace UI.Controllers
 {
+    [Authorize(Roles = "Student")]
     public class ExamUserController : Controller
     {
         private readonly IMapper mapper;
@@ -29,7 +30,7 @@ namespace UI.Controllers
             UserExamViewModel userExamViewModel = new UserExamViewModel();
             var userProfile = Environment.UserName;
             List<ExamUserViewModel>? examUserResult = new List<ExamUserViewModel>();
-            var user = await _userManager.GetUserAsync(HttpContext.User);
+            string user = _userManager.GetUserAsync(HttpContext.User).Result.Id;
 
             var response = await client.GetAsync(ApiEndpoints.GetExamUserByIdEndPoint  + "/" + user).ConfigureAwait(false);
             if (response.IsSuccessStatusCode)
@@ -106,6 +107,5 @@ namespace UI.Controllers
             var viewModel = new ExamUserViewModel();
             return PartialView(viewModel);
         }
-
     }
 }

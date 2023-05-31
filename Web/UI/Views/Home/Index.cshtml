@@ -1,8 +1,68 @@
-﻿@{
+﻿@using Entity.Domain.ApplicationUser;
+@using Microsoft.AspNetCore.Identity;
+@inject UserManager<ApplicationUser> _userManager;
+
+@{
+    if (User.Identity.IsAuthenticated)
+    {
+        ViewBag.IsVerify = _userManager.GetUserAsync(User).Result.IsVerify;
+        ViewBag.FullName = _userManager.GetUserAsync(User).Result.FirstName + " " + _userManager.GetUserAsync(User).Result.LastName;
+    }
+}
+@{
     ViewData["Title"] = "Home Page";
 }
+@{
+    string message = "";
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    if (DateTime.Now.Hour > 0 && DateTime.Now.Hour <= 6)
+    {
+        message = "İyi geceler.";
+    }
+    else if (DateTime.Now.Hour > 6 && DateTime.Now.Hour <= 10)
+    {
+        message = "Günaydın.";
+    }
+    else if (DateTime.Now.Hour > 10 && DateTime.Now.Hour <= 20)
+    {
+        message = "İyi öğlenler.";
+    }
+    else
+    {
+        message = "İyi akşamlar.";
+    }
+
+}
+
+@if (User.Identity.IsAuthenticated)
+{
+    @if (ViewBag.IsVerify == "0")
+    {
+        <div class="text-center" style="margin-top:200px">
+            <h3>@message</h3>
+            <h1 class="display-4">Hoşgeldin! @ViewBag.FullName</h1>
+            <p>Ses kaydı yapılmamış görünüyor. Birkaç dakikanı alacağız ve kayıt sonrası işlemlerine devam edebileceksin.</p>
+            <br>
+            <button class="btn btn-success btn-lg" onclick="@Url.Action("bbb", "aaa")">Kaydı Başlat</button>
+        </div>
+    }
+    else
+    {
+        <div class="text-center" style="margin-top:200px">
+            <h3>@message</h3>
+            <h1 class="display-4">Hoşgeldin! @ViewBag.FullName</h1>
+            <p>Üst kısımdaki menüden işlemlerine devam edebilirsin</p>
+        </div>
+    }
+
+}
+else
+{
+    <div class="text-center" style="margin-top:200px">
+        <h3>@message</h3>
+        <h1 class="display-4">Hoşgeldin!</h1>
+        <p>Giriş yaparak işlemlerine devam edebilirsin</p>
+    </div>
+}
+
+

@@ -1,13 +1,12 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Abstraction.Service.ExamUser;
+using AutoMapper;
 using DataAccess.Data;
-using Entity.Dto.Course;
-using Abstraction.Service.ExamUser;
 using Entity.Dto.ExamUser;
+using Microsoft.EntityFrameworkCore;
 
 namespace Service.ExamUser
 {
-	public class ExamUserService : IExamUserService
+    public class ExamUserService : IExamUserService
     {
         private ApplicationDbContext context;
         private IMapper mapper;
@@ -18,9 +17,9 @@ namespace Service.ExamUser
             this.mapper = mapper;
         }
 
-		public List<ExamUserDto> GetExamByUser(string user)
+		public List<ExamUserDto> GetExamByUser(string id)
         {
-            var result = context.ExamUsers.AsNoTracking().Where(x => x.IsActive == "1" && x.UserId == user).ToList();
+            var result = context.ExamUsers.AsNoTracking().Where(x => x.IsActive == "1" && x.UserId == id).ToList();
             var mappingResult=mapper.Map<List<ExamUserDto>>(result);
             return mappingResult;
         }

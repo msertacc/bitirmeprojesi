@@ -2,7 +2,7 @@
 
 namespace UI.Models.User
 {
-	public class UserViewModel:BaseEntity
+	public class UserViewModel : BaseEntity
 	{
 		public string? FirstName { get; set; }
 

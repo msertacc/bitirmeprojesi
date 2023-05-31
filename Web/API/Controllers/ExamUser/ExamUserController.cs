@@ -20,10 +20,10 @@ namespace API.Controllers.ExamUser
             this.mapper = mapper;
         }
 
-        [HttpGet("GetExamByUserId/{userId}")]
-        public List<ExamUserDto> GetExamByUserId(string user)
+        [HttpGet("GetExamByUserId/{id}")]
+        public List<ExamUserDto> GetExamByUserId(string id)
         {
-            var response = this.examUserService.GetExamByUser(user);
+            var response = this.examUserService.GetExamByUser(id);
             return response;
         }
 

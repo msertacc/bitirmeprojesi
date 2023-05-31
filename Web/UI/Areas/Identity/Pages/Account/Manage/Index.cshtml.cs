@@ -74,9 +74,9 @@ namespace UI.Areas.Identity.Pages.Account.Manage
                 LastName = user.LastName,
                 Gender = user.Gender,
                 RoleId = user.RoleId,
+                IsVerify = user.IsVerify,
                 IdentityNumber = user.IdentityNumber,
                 Email = user.Email
-                //ProfilePicture=user.ProfilePicture
             };
         }
 

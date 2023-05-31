@@ -11,7 +11,6 @@ namespace Entity.Domain.Exam
         public virtual string? ExamDescription { get; set; }
         public DateTime? ExamStartTime { get; set; }
         public DateTime? ExamEndTime { get; set; }
-        public int? ExamDuration { get; set; }
         public int? CourseId { get; set; }
         public Course.Course? Course { get; set; }
         public List<Question.Question>? Questions { get; set; }

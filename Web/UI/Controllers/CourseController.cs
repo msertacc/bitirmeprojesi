@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using Newtonsoft.Json;
@@ -8,7 +9,7 @@ using UI.Models.Course;
 
 namespace UI.Controllers
 {
-	//[Authorize]
+	[Authorize(Roles = "Teacher")]
 	public class CourseController : Controller
 	{
 		private readonly IMapper mapper;

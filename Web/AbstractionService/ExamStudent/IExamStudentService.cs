@@ -4,7 +4,7 @@ namespace Abstraction.Service.ExamUser
 {
 	public interface IExamUserService
 	{
-		List<ExamUserDto> GetExamByUser(string user);
+		List<ExamUserDto> GetExamByUser(string id);
 
         //ExamUserDto GetExamUserById(int id);
 

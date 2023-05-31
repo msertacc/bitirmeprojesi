@@ -1,14 +1,12 @@
 ﻿using Abstraction.Service.Exam;
-using API.Models.Course;
 using API.Models.Exam;
 using AutoMapper;
-using Entity.Dto.Course;
 using Entity.Dto.Exam;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.Exam
 {
-    [ApiController]
+	[ApiController]
     [Route("[controller]")]
     public class ExamController : ControllerBase
     {

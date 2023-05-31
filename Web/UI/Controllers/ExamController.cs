@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text;
@@ -8,6 +9,7 @@ using UI.Models.Exam;
 
 namespace UI.Controllers
 {
+    [Authorize(Roles = "Teacher")]
     public class ExamController : Controller
     {
         private readonly IMapper mapper;
@@ -42,7 +44,6 @@ namespace UI.Controllers
             }
             return PartialView(result);
         }
-
 
         [HttpPost]
         public async Task<IActionResult> Create(ExamViewModel viewModel)

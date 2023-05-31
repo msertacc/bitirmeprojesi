@@ -5,7 +5,7 @@
 }
 @model UI.Models.ViewModels.ExamProcessViewModel
 @{
-    var dateTime = Model.Exam.ExamEndTime.Value;
+    var dateTime = Model.Exam?.ExamEndTime.Value;
 }
 @section Scripts{
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
@@ -89,7 +89,7 @@
 <script>
     var TIME_LIMIT;
     $(document).ready(function () {
-        TIME_LIMIT = renderCountdown(new Date(), new Date('@dateTime.Year', '@Convert.ToInt32(dateTime.Month - 1)', '@dateTime.Day', '@dateTime.Hour', '@dateTime.Minute', '@dateTime.Second'));
+        TIME_LIMIT = renderCountdown(new Date(), new Date('@dateTime??.Year', '@Convert.ToInt32(dateTime?.Month - 1)', '@dateTime?.Day', '@dateTime?.Hour', '@dateTime?.Minute', '@dateTime?.Second'));
         startTimer();
         getExam('@Model.Exam.Id');
     })

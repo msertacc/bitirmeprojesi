@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 using System.Text;
 using UI.Constants;
 using UI.Models.Choice;
@@ -11,6 +11,7 @@ using UI.Models.QuestionType;
 
 namespace UI.Controllers
 {
+    [Authorize(Roles = "Teacher")]
     public class QuestionManagementController : Controller
     {
         private readonly IMapper mapper;
@@ -83,8 +84,6 @@ namespace UI.Controllers
         {
             QuestionManagementViewModel list = new QuestionManagementViewModel();
             List<QuestionViewModel>? result = new List<QuestionViewModel>();
-            // List<QuestionTypeViewModel>? result2 = new List<QuestionTypeViewModel>();
-            // List<ChoiceViewModel>? choiceModel = new List<ChoiceViewModel>();
 
             var response = await client.GetAsync(ApiEndpoints.GetQuestionByIdEndPoint + "/" + id).ConfigureAwait(false);
 
@@ -135,6 +134,5 @@ namespace UI.Controllers
 
             return this.Redirect(Url.Action("Index", new { id = viewModel.ExamId }));
         }
-
     }
 }

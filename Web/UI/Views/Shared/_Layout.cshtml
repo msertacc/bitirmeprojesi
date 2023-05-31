@@ -1,4 +1,16 @@
-﻿<!DOCTYPE html>
+﻿@using Entity.Domain.ApplicationUser;
+@using Microsoft.AspNetCore.Identity;
+@inject  UserManager<ApplicationUser> _userManager;
+
+@{
+    if (User.Identity.IsAuthenticated)
+    {
+        ViewBag.IsVerify = _userManager.GetUserAsync(User).Result.IsVerify;
+        ViewBag.FullName = _userManager.GetUserAsync(User).Result.FirstName + " " + _userManager.GetUserAsync(User).Result.LastName;
+    }
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -24,9 +36,12 @@
                     <ul class="navbar-nav flex-grow-1">
                         @if (User.Identity.IsAuthenticated && User.IsInRole("Student"))
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="ExamStudent" asp-action="Index">Sınavlarım</a>
-                            </li>
+                            if (ViewBag.IsVerify != "0")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="ExamUser" asp-action="Index">Sınavlarım</a>
+                                </li>
+                            }
                         }
                         @if (User.Identity.IsAuthenticated && User.IsInRole("Teacher"))
                         {
@@ -56,8 +71,8 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - OSS - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        <div class="container text-center">
+            &copy; 2023 - OSS
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

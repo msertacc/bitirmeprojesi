@@ -166,7 +166,6 @@ namespace Service.Exam
             }
 
             exam.ExamName = examDto.ExamName;
-            exam.ExamDuration = examDto.ExamDuration;
             exam.ExamDescription = examDto.ExamDescription;
             exam.ExamStartTime = examDto.ExamStartTime;
             exam.ExamEndTime = examDto.ExamEndTime;

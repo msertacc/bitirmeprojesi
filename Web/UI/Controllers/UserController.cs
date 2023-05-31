@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Entity.Domain.ApplicationUser;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using Newtonsoft.Json;
@@ -9,6 +10,7 @@ using UI.Models.User;
 
 namespace UI.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class UserController:Controller
 	{
 		private readonly HttpClient client;
@@ -18,7 +20,6 @@ namespace UI.Controllers
 			this.client = client;
 			this.mapper = mapper;
 		}
-
 		public async Task<ActionResult> Index()
 		{
 			List<ApplicationUser>? result = new List<ApplicationUser>();

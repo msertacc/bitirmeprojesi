@@ -27,6 +27,10 @@ namespace Entity.Domain.ApplicationUser
         [StringLength(2)]
         public string? RoleId { get; set; }
 
+        [Required]
+        [StringLength(1)]
+        public string? IsVerify { get; set; }
+
         public string InsertedUser { get; set; }
 
         public DateTime InsertedDate { get; set; }

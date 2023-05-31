@@ -1,5 +1,9 @@
 ﻿@model List< UI.Models.Course.CourseViewModel>
 
+@{
+	string formattedDateTime = DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day + "T" + DateTime.Now.Hour + ":" + DateTime.Now.Minute;
+}
+
 @using (Html.BeginForm("Create", "Exam", FormMethod.Post, new { Id = "frmCreate" }))
 {
 	<div id="createExamForm" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createCourseForm" aria-hidden="true">
@@ -26,20 +30,12 @@
 						</fieldset>
 
 						<label for="party">Başlangıç Tarihi</label>
-						<input id="party" type="datetime-local" name="ExamStartTime" value="2017-06-01T08:30" style="width:100%" />
+						<input id="party" type="datetime-local" name="ExamStartTime" value="@formattedDateTime" style="width:100%" />
 
 
 
 						<label for="party">Bitiş Tarihi</label>
-						<input id="party" type="datetime-local" name="ExamEndTime" value="2017-06-01T08:30" style="width:100%" />
-
-
-						<fieldset>
-							<div class="form-group">
-								<label>Süre</label>
-								<input type="number" name="ExamDuration" placeholder="Lütfen sınav süresi giriniz" class="form-control small-input" id="ExamDuration" />
-							</div>
-						</fieldset>
+						<input id="party" type="datetime-local" name="ExamEndTime" value="@formattedDateTime" style="width:100%" />
 
 						<div class="form-group">
 							<label for="exampleFormControlSelect1">Ders</label>

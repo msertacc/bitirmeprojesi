@@ -105,6 +105,11 @@ namespace UI.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
+                if (Input.RoleId == "1")
+                    user.IsVerify = "0";
+                else
+                    user.IsVerify = "1";
+
                 user.FirstName = Input.FirstName;
                 user.LastName = Input.LastName;
                 user.IdentityNumber = Input.IdentityNumber;
@@ -140,7 +145,6 @@ namespace UI.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        //await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect("/Home");
                     }
                 }
@@ -149,8 +153,6 @@ namespace UI.Areas.Identity.Pages.Account
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
-
-            // If we got this far, something failed, redisplay form
             return Page();
         }
 

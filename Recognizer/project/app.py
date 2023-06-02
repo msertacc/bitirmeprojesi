@@ -6,23 +6,23 @@ import os
 import wave
 from dataclasses import dataclass, asdict
 import pyaudio
-from .a import Split
-from django.http import HttpResponse
-#from PyQst4.Qtcore import *
-from django.shortcuts import render, redirect
-from django.contrib import messages
+from a import Split
 import pickle
 import numpy as np
 from scipy.io.wavfile import read
 from sklearn.mixture import GaussianMixture
-from .featureextraction import extract_features
+from featureextraction import extract_features
 import warnings
 warnings.filterwarnings("ignore")
 from subprocess import run,PIPE
+from flask import Flask, jsonify
 
-def test(request):
-    print(request.GET.get('name'))
-    name = request.GET.get('name')+'.wav'
+app = Flask(__name__)
+
+@app.route('/test/<user>', methods=['GET'])
+def test(user):
+    print(user)
+    name = user +'.wav'
 
     s = Split()
     @dataclass
@@ -87,7 +87,7 @@ def test(request):
 
     stream_params = StreamParams()
     recorder = Recorder(stream_params)
-    recorder.record(90,"full_voice/"+ name)
+    recorder.record(20, "full_voice/"+ name)
     # print("RECORD DONE")
 
     #Split audio
@@ -137,12 +137,11 @@ def test(request):
             print('Model trained for :', picklefile, " with features = ", features.shape)
             features = np.asarray(())
         
-    return HttpResponse()
+    return jsonify({'response': 'Kayıt başarılı', 'isSuccess' : True})
 
-def result(request):
-   
-    name = request.GET.get('name')
-
+@app.route('/control/<user>', methods=['GET'])
+def result(user):  
+    name = user
     #Live recording for testing
     @dataclass
     class StreamParams:
@@ -238,22 +237,31 @@ def result(request):
         log_likelihood[x] = scores.sum()
     # print("LOG -> ",log_likelihood)
     w = np.argmax(log_likelihood)
-    result = log_likelihood[w]
+    #result = log_likelihood[w]
     # print("result-index ", w)
     # print("r : ", result)
-    if result > -25.0 or result == -(log_likelihood[result]):
-        # print(result)
-        # print(w)
-        detected = speakers[w]
-        # print(detected)
+    a = ""
+    if speakers[w] == name :
+        a, isSuccess = "Tespit edildi " + name, True
+    else :
+        a, isSuccess = "Kullanıcı bulunamadi", False
+    # if result > -25.0 or result == -(log_likelihood[result]):
+    #     # print(result)
+    #     # print(w)
+    #     detected = speakers[w]
+    #     # print(detected)
     
-        if(name == speakers[w]):
-            print("\tdetected as - ", speakers[w])
+    #     if(name == speakers[w]):
+    #         print("\tdetected as - ", speakers[w])
         
-        else:
-            print("Unknown User")
-    else:
-        print("Unknown User ")
+    #     else:
+    #         print("Unknown User")
+    # else:
+    #     print("Unknown User ")
     
     # return redirect(request, 'index')
-    return HttpResponse();
+    return jsonify({'message': a, 'isSuccess' : isSuccess})
+
+
+if __name__ == '__main__':
+    app.run()

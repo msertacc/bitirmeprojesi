@@ -4,7 +4,6 @@
 	{
 		public static string? baseUrl = "https://localhost:7093";
 
-
 		public static string? WeatherForecast = baseUrl + "/WeatherForecast";
 
 		public static string? WeatherForecastGet = WeatherForecast + "";
@@ -28,7 +27,9 @@
 
 		public static string? GetUserByIdEndPoint = UserEndPoint + "/GetById";
 
-		public static string? CreateUserEndPoint = UserEndPoint + "/Create";
+        public static string? UpdateUserVerifyEndPoint = UserEndPoint + "/UpdateUserVerify";  
+
+        public static string? CreateUserEndPoint = UserEndPoint + "/Create";
 
 		public static string? UpdateUserEndPoint = UserEndPoint + "/Update";
 
@@ -71,16 +72,6 @@
         public static string? DeleteQuestionEndPoint = QuestionEndPoint + "/Delete";
 
         public static string? UpdateQuestionEndPoint = QuestionEndPoint + "/Update";
-
-
-
-        public static string? QuestionTypeEndPoint = baseUrl + "/QuestionType";
-
-        public static string? GetQuestionTypeEndPoint = QuestionTypeEndPoint + "/Get";
-
-        public static string? GetQuestionTypeByIdEndPoint = QuestionTypeEndPoint + "/GetQuestionTypeById";
-
-
 
         public static string? ChoiceEndPoint = baseUrl + "/Choice";
 

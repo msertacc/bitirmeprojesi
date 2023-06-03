@@ -10,8 +10,6 @@ namespace Entity.Dto.Question
     public class QuestionDto : BaseEntityDto.BaseEntityDto
     {
         public string QuestionText { get; set; }
-        public int QuestionTypeId { get; set; }
-        public QuestionType.QuestionTypeDto QuestionTypes { get; set; }
         public int? ExamId { get; set; }
         public Exam.ExamDto Exam { get; set; }
         public int Score { get; set; }

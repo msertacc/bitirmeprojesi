@@ -73,7 +73,6 @@ namespace Service.Exam
 					InsertedDate = questionList[i].InsertedDate,
 					Id = questionList[i].Id,
 					QuestionText= questionList[i].QuestionText,
-					QuestionTypeId = questionList[i].QuestionTypeId,
 					ExamId = questionList[i].ExamId,
 					Score = questionList[i].Score,
 				};

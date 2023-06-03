@@ -25,7 +25,7 @@ namespace Service.User
 			return result;
 		}
 
-		public ApplicationUser GetUserById(int id)
+		public ApplicationUser GetUserById(Guid id)
 		{
 			var result = context.Users.AsNoTracking().Where(x => x.IsActive == "1" && x.Id == id.ToString()).FirstOrDefault();
 			//var mappingResult = mapper.Map<UserDto>(result);
@@ -125,5 +125,48 @@ namespace Service.User
 			}
 			return false;
 		}
+
+        public async Task<ApplicationUser> UpdateVerify(Guid id)
+        {
+			var user = this.GetUserById(id);
+
+			if (user == null)
+			{
+				throw new Exception("Böyle bir kayıt bulunamadı!");
+			}
+			user.UpdatedDate = DateTime.Now;
+			user.IsVerify = "1";
+			
+			context.Set<ApplicationUser>().Update(user);
+			await context.SaveChangesAsync();
+
+			return user;
+		}
+
+		public async Task Delete(int id)
+		{
+			//ArgumentNullException.ThrowIfNull(id);
+
+			//var user = this.GetUserById(id);
+			//if (user == null)
+			//{
+			//	throw new Exception("Böyle bir kayıt bulunamadı!");
+			//}
+
+			//user.IsActive = "0";
+			//user.UpdatedUser = Environment.UserName;
+			//user.UpdatedDate = DateTime.Now;
+
+			////var mappingResult = mapper.Map<UserDto, Entity.Domain.User.User>(user);
+			//context.Set<Entity.Domain.User.User>().Update(mappingResult);
+			//await context.SaveChangesAsync();
+
+		}
+
+        public ApplicationUser GetUserById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

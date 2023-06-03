@@ -7,6 +7,7 @@
     {
         ViewBag.IsVerify = _userManager.GetUserAsync(User).Result.IsVerify;
         ViewBag.FullName = _userManager.GetUserAsync(User).Result.FirstName + " " + _userManager.GetUserAsync(User).Result.LastName;
+        ViewBag.UserId = _userManager.GetUserAsync(User).Result.Id;
     }
 }
 @{
@@ -43,7 +44,7 @@
             <h1 class="display-4">Hoşgeldin! @ViewBag.FullName</h1>
             <p>Ses kaydı yapılmamış görünüyor. Birkaç dakikanı alacağız ve kayıt sonrası işlemlerine devam edebileceksin.</p>
             <br>
-            <button class="btn btn-success btn-lg" onclick="@Url.Action("bbb", "aaa")">Kaydı Başlat</button>
+            <button class="btn btn-success btn-lg" onclick='recordCount("@ViewBag.UserId")'>Kaydı Başlat</button>
         </div>
     }
     else
@@ -54,7 +55,6 @@
             <p>Üst kısımdaki menüden işlemlerine devam edebilirsin</p>
         </div>
     }
-
 }
 else
 {
@@ -64,5 +64,59 @@ else
         <p>Giriş yaparak işlemlerine devam edebilirsin</p>
     </div>
 }
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function recordCount (userid) {
+        let timerInterval;
+        let startTime = 5000;
+        let period = 1000;
+        Swal.fire({
+            title: 'Ses kaydediliyor..',
+            html: '<b id="recordTimer"></b> saniye kaldı.',
+            timer: 6100,
+            timerProgressBar: true,
+            didOpen: () => {
+                fetch("http://localhost:5000/test/" + userid, {
+                    mode: "no-cors"
+                })
+                $('html').css("pointer-events","none");
+                Swal.showLoading();
+                const b = document.getElementById("recordTimer");
+                timerInterval = setInterval(() => {
+                    b.innerHTML = startTime / 1000;
+                    startTime = (startTime - period);
+                    if (startTime == 1000) {
+                        clearInterval(this);
+                        updateIsVerify(userid);
+                    }
+                }, 1000)
+            }
+        })
+    }
+
+    function updateIsVerify(userid) {
+        $.ajax({
+            type: "post",
+            data: { id: userid },
+            url: '@Url.Action("UpdateUserVerify", "User")',
+            success: function (res) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Ses kaydı başarıyla oluşturuldu.',
+                    showConfirmButton: false,
+                    timer: 1333,
+                    width: 400,
+                    willClose: () => {
+                        window.location.reload(true);
+                    }
+                })
+            }
+        })
+    }
+
+   
+
+</script>
 
 

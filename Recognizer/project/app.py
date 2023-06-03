@@ -15,7 +15,7 @@ from featureextraction import extract_features
 import warnings
 warnings.filterwarnings("ignore")
 from subprocess import run,PIPE
-from flask import Flask, jsonify
+from flask import Flask, jsonify, make_response
 
 app = Flask(__name__)
 
@@ -87,7 +87,7 @@ def test(user):
 
     stream_params = StreamParams()
     recorder = Recorder(stream_params)
-    recorder.record(20, "full_voice/"+ name)
+    recorder.record(5, "full_voice/"+ name)
     # print("RECORD DONE")
 
     #Split audio
@@ -206,7 +206,7 @@ def result(user):
 
     stream_params = StreamParams()
     recorder = Recorder(stream_params)
-    recorder.record(20, "identify/test.wav")
+    recorder.record(10, "identify/test.wav")
     # print("done")
     # path to training data
     source = "identify/"
@@ -236,6 +236,10 @@ def result(user):
         scores = np.array(gmmall.score(vector))
         log_likelihood[x] = scores.sum()
     # print("LOG -> ",log_likelihood)
+
+    if len(log_likelihood) == 0:
+        return make_response(jsonify({'message': "Unauthorized: Veri yok."}), 401)
+
     w = np.argmax(log_likelihood)
     #result = log_likelihood[w]
     # print("result-index ", w)

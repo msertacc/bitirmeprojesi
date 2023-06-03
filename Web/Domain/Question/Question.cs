@@ -6,8 +6,6 @@ namespace Entity.Domain.Question
     public class Question : BaseEntity.BaseEntity
     {
         public virtual string QuestionText { get; set; }
-        public int? QuestionTypeId { get; set; }
-        public QuestionType.QuestionType QuestionTypes { get; set; }
         public int? ExamId { get; set; }
         public Exam.Exam Exam { get; set; }
         public int? Score { get; set; }

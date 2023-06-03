@@ -28,6 +28,5 @@ namespace DataAccess.Data
         public DbSet<Entity.Domain.Exam.Exam> Exams { get; set; }
         public DbSet<Entity.Domain.Choice.Choice> Choices { get; set; }
         public DbSet<Entity.Domain.Question.Question> Questions { get; set; }
-        public DbSet<Entity.Domain.QuestionType.QuestionType> QuestionTypes { get; set; }
     }
 }

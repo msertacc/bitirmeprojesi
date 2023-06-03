@@ -10,7 +10,6 @@ using UI.Models.User;
 
 namespace UI.Controllers
 {
-    [Authorize(Roles = "Admin")]
     public class UserController:Controller
 	{
 		private readonly HttpClient client;
@@ -117,5 +116,14 @@ namespace UI.Controllers
 			}
 			return this.Redirect(Url.Action("Index"));
 		}
+
+		public async Task<JsonResult> UpdateUserVerify(Guid id)
+		{
+            var json = JsonConvert.SerializeObject(id, new JsonSerializerSettings { });
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await client.PostAsync(ApiEndpoints.UpdateUserVerifyEndPoint, data).ConfigureAwait(false);
+			return Json(response);
+			//return this.Redirect(Url.Action("Index"));
+        }
 	}
 }

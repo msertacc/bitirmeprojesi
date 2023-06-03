@@ -3,7 +3,6 @@ using Abstraction.Service.Course;
 using Abstraction.Service.ExamUser;
 using Abstraction.Service.Exam;
 using Abstraction.Service.Question;
-using Abstraction.Service.QuestionType;
 using Abstraction.Service.User;
 using API.Filters;
 using DataAccess.Data;
@@ -12,7 +11,6 @@ using Service.Course;
 using Service.ExamUser;
 using Service.Exam;
 using Service.Question;
-using Service.QuestionType;
 using Service.User;
 using System.Globalization;
 
@@ -34,7 +32,6 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IExamUserService, ExamUserService>();
 builder.Services.AddScoped<IExamService, ExamService>();
 builder.Services.AddScoped<IQuestionService, QuestionService>();
-builder.Services.AddScoped<IQuestionTypeService, QuestionTypeService>();
 builder.Services.AddScoped<IChoiceService, ChoiceService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddMvc((options) =>

@@ -1,4 +1,16 @@
-﻿@using System.Globalization;
+﻿@using Entity.Domain.ApplicationUser;
+@using Microsoft.AspNetCore.Identity;
+@using System.Globalization;
+@inject UserManager<ApplicationUser> _userManager;
+
+@{
+    if (User.Identity.IsAuthenticated)
+    {
+        ViewBag.IsVerify = _userManager.GetUserAsync(User).Result.IsVerify;
+        ViewBag.FullName = _userManager.GetUserAsync(User).Result.FirstName + " " + _userManager.GetUserAsync(User).Result.LastName;
+        ViewBag.UserId = _userManager.GetUserAsync(User).Result.Id;
+    }
+}
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -11,19 +23,6 @@
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
     <script src="~/js/exam.js"></script>
 }
-<table id="tblExam" class="table table-active" hidden>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>ExamId</th>
-            <th>UserId</th>
-        </tr>
-    </thead>
-    <tbody>
-    </tbody>
-
-</table>
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,7 +40,7 @@
         <div class="carousel-inner">
             @foreach (var item in Model.Question.Select((x, i) => new { Value = x, Index = i }))
             {
-                <div class="carousel-item @(item.Index.ToString() == "0" ? "active" : null )">
+                <div class="carousel-item @(item.Index.ToString() == "0" ? "active" : null )" value="@item.Value.Id">
                     <div style="background-color:#fff; width:100%; height : 700px;padding:40px 130px 40px 130px;">
                         <div style="float:left">
                             <h1 style="font-family : Tahoma; color:tomato">Soru - @(item.Index + 1)</h1>
@@ -57,14 +56,14 @@
                         @foreach (var choice in Model.Choice.Where((x, i) => x.QuestionId == item.Value.Id).Select((x, i) => new { Value = x, Index = i }))
                         {
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                <input class="form-check-input" type="radio" name="@item.Value.Id" id="flexRadioDefault1" value="@(Convert.ToChar(choice.Index + 65))">
                                 <label style="font-size:larger;font-family : Tahoma" class="form-check-label" for="flexRadioDefault1">
                                     @(Convert.ToChar(choice.Index + 65))) @choice.Value.ChoiceExplanation
                                 </label>
                             </div>
                         }          
                         <div class="form-check mt-5">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                            <input class="form-check-input" type="radio" name="@item.Value.Id" id="flexRadioDefault2" checked>
                             <label style="font-size:larger;font-family : Tahoma" class="form-check-label" for="flexRadioDefault2">
                                 Seçimimi boş bırakacağım.
                             </label>
@@ -90,8 +89,10 @@
     var TIME_LIMIT;
     $(document).ready(function () {
         TIME_LIMIT = renderCountdown(new Date(), new Date('@dateTime??.Year', '@Convert.ToInt32(dateTime?.Month - 1)', '@dateTime?.Day', '@dateTime?.Hour', '@dateTime?.Minute', '@dateTime?.Second'));
+        verifyControl('@ViewBag.UserId');
         startTimer();
         getExam('@Model.Exam.Id');
+        listener();
     })
 
     const FULL_DASH_ARRAY = 283;
@@ -221,5 +222,98 @@
         }
         var seconds = getCountdown();
         return seconds;
+    }
+
+    function checkSpeechRecognitionSupport() {
+        return window.SpeechRecognition || window.webkitSpeechRecognition;
+    }
+
+    function listener() {
+        if (checkSpeechRecognitionSupport()) {
+            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.continuous = true;
+            recognition.lang = "tr-TR";
+            recognition.onresult = function (event) {
+                const transcript = event.results[event.results.length - 1][0].transcript;
+                console.log('Söylenen metin: ' + transcript);
+                if (transcript.includes('sonraki') || transcript.includes('sonra ki')) {
+                    moveQuestion("next");
+                } else if (transcript.includes('önceki') || transcript.includes('önce ki')) {
+                    moveQuestion("prev");
+                }
+                else if(transcript.includes("cevap")){
+                    var parsedArray = transcript.trim().split(" ");
+
+                    if (parsedArray[1].includes("boş") || parsedArray[1].includes("bos")){
+                        $(".active #flexRadioDefault2")[0].checked = true;
+                    }
+                    else{
+                        selectChoice(parsedArray[1][0]);
+                    }
+                }
+            };
+            recognition.start();
+        } else {
+            console.error('Web Speech API desteklenmiyor.');
+        }
+    }
+
+    function moveQuestion(type) {
+        if (type == "next") {
+            $(".carousel-control-next").trigger("click");
+        } else {
+            $(".carousel-control-prev").trigger("click");
+        }
+    }
+
+    function selectChoice(choice){
+        $(".active .form-check-input").each(function (e) {
+            if ($(this)[0].value.toUpperCase() == choice.toUpperCase()) {
+               $(this)[0].checked = true;
+            }
+        })
+    }
+
+    function verifyControl(userid) {
+        $('html').css("pointer-events", "none");
+        let timerInterval;
+        let startTime = 10000;
+        let period = 1000;
+        Swal.fire({
+            title: 'Lütfen konuşun, sesiniz kontrol edilecektir..',
+            html: '<b id="recordTimer"></b> saniye kaldı.',
+            timer: 11000,
+            timerProgressBar: true,
+            didOpen: () => {
+                callVerifyApi(userid);
+  //              fetch("http://localhost:5000/control/" + userid, {
+  //                  mode: "no-cors"
+  //              }).then(response => console.log(response.status) || response) // output the status and return response
+  //.then(response => response.text()) // send response body to next then chain
+  //.then(body => console.log(body)) // you can use response body here
+                Swal.showLoading();
+                const b = document.getElementById("recordTimer");
+                timerInterval = setInterval(() => {
+                    b.innerHTML = startTime / 1000;
+                    startTime = (startTime - period);
+                    if (startTime == 1000) {
+                        clearInterval(this);
+                    }
+                }, 1000)
+            }
+        })
+    }
+
+    function callVerifyApi(userid){
+        $.ajax({
+            type : "get",
+            url: "http://localhost:5000/control/" + userid,
+            success : function(res){
+                console.log(res);
+            },
+            error: function(err){
+                console.log(err);
+            }
+        })
     }
 </script>

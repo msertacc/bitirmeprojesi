@@ -7,7 +7,6 @@ using UI.Constants;
 using UI.Models.Choice;
 using UI.Models.Question;
 using UI.Models.QuestionManagement;
-using UI.Models.QuestionType;
 
 namespace UI.Controllers
 {
@@ -37,16 +36,8 @@ namespace UI.Controllers
 
         public async Task<IActionResult> CreateQuestionAndAnswer(int id = 0)
         {
-            List<QuestionTypeViewModel>? result = new List<QuestionTypeViewModel>();
-            var response = await client.GetAsync(ApiEndpoints.GetQuestionTypeEndPoint).ConfigureAwait(false);
-
-            if (response.IsSuccessStatusCode)
-            {
-                string apiResponse = await response.Content.ReadAsStringAsync();
-                result = JsonConvert.DeserializeObject<List<QuestionTypeViewModel>>(apiResponse);
-            }
             ViewBag.ExamId = id;
-            return View(result);
+            return View();
         }
 
         [HttpPost]
@@ -55,10 +46,6 @@ namespace UI.Controllers
             List<QuestionViewModel>? questionDataResult = new List<QuestionViewModel>();
             List<QuestionViewModel>? result = new List<QuestionViewModel>();
             int questionId = 0;
-            if (viewModel.QuestionTypeId == null || viewModel.QuestionTypeId == 0)
-            {
-                return null;
-            }
             var json = JsonConvert.SerializeObject(viewModel, new JsonSerializerSettings { });
             var data = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await client.PostAsync(ApiEndpoints.CreateQuestionEndPoint, data).ConfigureAwait(false);
@@ -69,10 +56,6 @@ namespace UI.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(QuestionViewModel viewModel)
         {
-            if (viewModel.QuestionTypeId == null || viewModel.QuestionTypeId == 0)
-            {
-                return null;
-            }
             var json = JsonConvert.SerializeObject(viewModel, new JsonSerializerSettings { });
             var data = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await client.PostAsync(ApiEndpoints.UpdateQuestionEndPoint, data).ConfigureAwait(false);
@@ -94,22 +77,13 @@ namespace UI.Controllers
                 list.QuestionModel = result[0];
             }
 
-            var response2 = await client.GetAsync(ApiEndpoints.GetQuestionTypeEndPoint).ConfigureAwait(false);
+            var choiceResponse = await client.GetAsync(ApiEndpoints.GetChoiceByQuestionIdEndPoint + "/" + list.QuestionModel.Id).ConfigureAwait(false);
 
-            if (response2.IsSuccessStatusCode)
+            if (choiceResponse.IsSuccessStatusCode)
             {
-                string apiResponse = await response2.Content.ReadAsStringAsync();
-                list.QuestionTypeList = JsonConvert.DeserializeObject<List<QuestionTypeViewModel>>(apiResponse);
-            }
-
-            var response3 = await client.GetAsync(ApiEndpoints.GetChoiceByQuestionIdEndPoint + "/" + list.QuestionModel.Id).ConfigureAwait(false);
-
-            if (response3.IsSuccessStatusCode)
-            {
-                string apiResponse = await response3.Content.ReadAsStringAsync();
+                string apiResponse = await choiceResponse.Content.ReadAsStringAsync();
                 list.ChoiceList = JsonConvert.DeserializeObject<List<ChoiceViewModel>>(apiResponse);
             }
-
             return View(list);
         }
 

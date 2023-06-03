@@ -9,10 +9,12 @@ namespace Abstraction.Service.User
 
         ApplicationUser GetUserById(int id);
 
-		//Task Create(UserDto userDto);
+        Task<ApplicationUser> UpdateVerify(Guid id);
 
-		//Task Update(UserDto userDto);
+        //Task Create(UserDto userDto);
 
-		//Task Delete(int id);
-	}
+        //Task Update(UserDto userDto);
+
+        //Task Delete(int id);
+    }
 }

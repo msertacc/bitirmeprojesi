@@ -1,5 +1,4 @@
-﻿@model List< UI.Models.QuestionType.QuestionTypeViewModel>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+﻿<script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
 <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'></link>
 <link href="~/css/svg.css" rel="stylesheet" />
 <h3>Soru Ekle</h3>
@@ -22,18 +21,6 @@
                 <input type="number" name="Score" placeholder="Lütfen soru puanı giriniz" class="form-control small-input" id="Score" />
             </div>
         </fieldset>
-
-        <div class="form-group">
-            <label for="exampleFormControlSelect1">Soru Tipi</label>
-            <select class="form-control" name="QuestionTypeId" id="QuestionTypeId" onchange="QuestionTypeChangeCreate()">
-                <option value="0"></option>
-                @foreach (var item in Model)
-                {
-                    <option value=@item.Id>@item.TypeName</option>
-                }
-            </select>
-        </div>
-
     </form>
     <br>
 
@@ -44,136 +31,57 @@
 <h3 id="answerHeader">Cevap Ekle</h3>
 <div id="multipleChoiceAnswer">
     <div id="multipleChoiceInput">
-        <input type="radio" id="html" name="fav_language" value="HTML">
-        <input type="text" id="fname" name="fname"><br><br>
+        <input type="radio" id="0MChoiceRadioId" name="fav_language" value="0">
+        <div class="col-md-4">
+            <input type="text" id="0MChoiceTextId" name="fname" class="form-control">
+        </div>
+        <br /><br />
     </div>
-    <div id="choiceButtonDivId">
-        <button onclick="AddChoice()" style="background-color: snow;">Seçenek Ekle</button>
+    <div id="choiceButtonDivId" class="col-md-3">
+        <button onclick="AddChoice()" class="btn btn-success">Seçenek Ekle</button>
     </div>
 </div>
-
-<div id="trueFalseAnswer">
-@*    <svg class="svg-icon" viewBox="0 0 20 20">
-        <path fill="none" d="M7.197,16.963H7.195c-0.204,0-0.399-0.083-0.544-0.227l-6.039-6.082c-0.3-0.302-0.297-0.788,0.003-1.087
-							C0.919,9.266,1.404,9.269,1.702,9.57l5.495,5.536L18.221,4.083c0.301-0.301,0.787-0.301,1.087,0c0.301,0.3,0.301,0.787,0,1.087
-							L7.741,16.738C7.596,16.882,7.401,16.963,7.197,16.963z"></path>
-    </svg>*@
-    <label for="fname">Doğru</label>
-    <input type="text" id="answerTrueId" name="fname"><br><br>
-
-@*    <svg class="svg-icon" viewBox="0 0 20 20">
-        <path fill="none" d="M11.469,10l7.08-7.08c0.406-0.406,0.406-1.064,0-1.469c-0.406-0.406-1.063-0.406-1.469,0L10,8.53l-7.081-7.08
-							c-0.406-0.406-1.064-0.406-1.469,0c-0.406,0.406-0.406,1.063,0,1.469L8.531,10L1.45,17.081c-0.406,0.406-0.406,1.064,0,1.469
-							c0.203,0.203,0.469,0.304,0.735,0.304c0.266,0,0.531-0.101,0.735-0.304L10,11.469l7.08,7.081c0.203,0.203,0.469,0.304,0.735,0.304
-							c0.267,0,0.532-0.101,0.735-0.304c0.406-0.406,0.406-1.064,0-1.469L11.469,10z"></path>
-    </svg>*@
-    <label for="fname">Yanlış</label>
-    <input type="text" id="answerFalseId" name="fname" style="margin-left:7px"><br><br>
-</div>
-
 
 
 
 <script>
     function CheckValidInput() {
-        var hasError=false;
-        if ($("#QuestionText").val().trim().length <= 0 || $("#ExamId").val().trim().length <= 0 || $("#QuestionTypeId").val().trim().length <= 0 || $("#Score").val().trim().length <= 0) 
-        {
-           hasError =true;
+        var hasError = false;
+        if ($("#QuestionText").val().trim().length <= 0 || $("#ExamId").val().trim().length <= 0 || $("#Score").val().trim().length <= 0) {
+            hasError = true;
         }
         return hasError;
     };
 
-
-    var multipleChoiceCount = 0;
-
-    $(document).ready(function () {
-        document.getElementById("trueFalseAnswer").style.visibility = "hidden";
-        document.getElementById("multipleChoiceAnswer").style.visibility = "hidden";
-        document.getElementById("answerHeader").style.visibility = "hidden";
-
-
-        //console.log("deneme")
-        //swal("Have a nice day!");
-        //swal("Oops!", "Something went wrong, you should choose again!", "error");
-
-    });
-
+    var multipleChoiceCount = 1;
 
     function AddChoice() {
         $("#multipleChoiceInput").append('<input type="radio" ' + 'id="' + multipleChoiceCount + 'MChoiceRadioId"' + 'name="fav_language"' + ' value="' + multipleChoiceCount + '"' + ' >');
-        $("#multipleChoiceInput").append('<input type="text"  ' + 'id="' + multipleChoiceCount + 'MChoiceTextId"' + 'name="fname"' + '><br><br>');
-
+        $("#multipleChoiceInput").append('<div class="col-md-4"><input type="text"  ' + 'id="' + multipleChoiceCount + 'MChoiceTextId"' + 'name="fname"  class="form-control"' + '></div><br><br>');
         multipleChoiceCount++;
 
     }
-
-
-    function QuestionTypeChangeCreate() {
-        $('#multipleChoiceInput').html('');
-        multipleChoiceCount = 0;
-        document.getElementById("answerHeader").style.visibility = "visible";
-        if ($("#QuestionTypeId").val() == 1) {
-
-            document.getElementById("trueFalseAnswer").style.visibility = "hidden";
-            document.getElementById("multipleChoiceAnswer").style.visibility = "visible";
-            AddChoice(); AddChoice();
-        }
-        else if ($("#QuestionTypeId").val() == 2) {
-            document.getElementById("trueFalseAnswer").style.visibility = "visible";
-            document.getElementById("trueFalseAnswer").style.marginTop = "-20px";
-            document.getElementById("multipleChoiceAnswer").style.visibility = "hidden";
-        }
-    }
-
 
     function CreateQuestionFunc() {
         const answerArray = [];
         var trueAnswer = '';
         var getError = false;
-        debugger;
-        //var checkInput= CheckValidInput();
-
-        //if (!checkInput){
-        //    console.log("haata var")
-        //    getError=true;
-        //}
-        //else{
-        //    console.log("hata yok")
-        //}
-
-        if ($('#QuestionTypeId').val() == '1') {
-
-            for (var i = 0; i < multipleChoiceCount; i++) {
-                if ($('#' + i.toString() + 'MChoiceTextId').val() == '') {
-                    getError = true;
-                }
-                else {
-
-                    answerArray.push($('#' + i.toString() + 'MChoiceTextId').val());
-                }
-            }
-            var getSelectedValue = document.querySelector('input[name="fav_language"]:checked');
-
-            if (getSelectedValue != null) {
-                trueAnswer = document.querySelector('input[name="fav_language"]:checked').value;
+        for (var i = 0; i < multipleChoiceCount; i++) {
+            if ($('#' + i.toString() + 'MChoiceTextId').val() == '') 
+            {
+                getError = true;
             }
             else {
-                getError = true;
+                answerArray.push($('#' + i.toString() + 'MChoiceTextId').val());
             }
         }
+        var getSelectedValue = document.querySelector('input[name="fav_language"]:checked');
 
-
-        else if ($('#QuestionTypeId').val() == '2') {
-            trueAnswer = 0;
-
-            answerArray.push($('#answerTrueId').val());
-            answerArray.push($('#answerFalseId').val());
-
-            if ($('#answerTrueId').val() == '' || $('#answerFalseId').val() == '') {
-                getError = true;
-            }
-
+        if (getSelectedValue != null) {
+            trueAnswer = document.querySelector('input[name="fav_language"]:checked').value;
+        }
+        else {
+            getError = true;
         }
 
         if (answerArray.length < 2) {
@@ -184,15 +92,12 @@
 
             let viewModel = {
                 QuestionText: $('#QuestionText').val(),
-                QuestionTypeId: $('#QuestionTypeId').val(),
                 ExamId: $('#ExamId').val(),
                 Score: $('#Score').val(),
                 AnswerArray: answerArray,
                 TrueAnswer: trueAnswer,
             };
-
             console.log(viewModel)
-
             $.ajax({
                 url: '@Url.Action("Create", "QuestionManagement")',
                 type: 'post',
@@ -207,8 +112,6 @@
         }
         else {
             sweetAlert("Oops...", "Tüm alanlar dolu olmalıdır. Seçenek sayısı 2den az olamaz.", "error");
-            //alert("Tüm alanlar dolu olmalıdır. Seçenek sayısı 2den az olamaz.")
         }
-
     }
 </script>

@@ -2,7 +2,6 @@
 using AutoMapper;
 using DataAccess.Data;
 using Entity.Domain.Question;
-using Entity.Domain.QuestionType;
 using Entity.Dto.Choice;
 using Entity.Dto.Exam;
 using Entity.Dto.Question;
@@ -42,7 +41,7 @@ namespace Service.Question
             await context.SaveChangesAsync();
 
             QuestionDto questionInfo = new QuestionDto();
-            questionInfo = GetQuestionsByParameters2(newQuestionDto.QuestionText, newQuestionDto.Score, newQuestionDto.QuestionTypeId);
+            questionInfo = GetQuestionsByParameters(newQuestionDto.QuestionText, newQuestionDto.Score);
 
             ArgumentNullException.ThrowIfNull(questionInfo.Id);
 
@@ -72,8 +71,6 @@ namespace Service.Question
             }
             catch (DbUpdateConcurrencyException)
             {
-                // use an optimistic concurrency strategy from:
-                // https://learn.microsoft.com/en-us/ef/core/saving/concurrency#resolving-concurrency-conflicts
             }
         }
 
@@ -154,14 +151,14 @@ namespace Service.Question
 
         public List<QuestionDto> GetQuestionsByExamId(int id)
         {
-            var result = context.Questions.AsNoTracking().Include(i => i.QuestionTypes).Where(x => x.QuestionTypeId == x.QuestionTypes.Id && x.IsActive == "1" && x.ExamId == id).ToList();
+            var result = context.Questions.AsNoTracking().Where(x => x.IsActive == "1" && x.ExamId == id).ToList();
             var mappingResult = mapper.Map<List<QuestionDto>>(result);
             return mappingResult;
         }
 
-        public QuestionDto GetQuestionsByParameters2(string questionText, int score, int questionTypeId)
+        public QuestionDto GetQuestionsByParameters(string questionText, int score)
         {
-            var result = context.Questions.AsNoTracking().Where(x => x.QuestionTypeId == questionTypeId && x.QuestionText == questionText && x.Score == score).FirstOrDefault();
+            var result = context.Questions.AsNoTracking().Where(x => x.QuestionText == questionText && x.Score == score).FirstOrDefault();
             var mappingResult = mapper.Map<QuestionDto>(result);
             return mappingResult;
         }
@@ -180,7 +177,6 @@ namespace Service.Question
             }
 
             question.QuestionText = questionDto.QuestionText;
-            question.QuestionTypeId = questionDto.QuestionTypeId;
             question.Score = questionDto.Score;
             question.UpdatedUser = Environment.UserName;
             question.UpdatedDate = DateTime.Now;

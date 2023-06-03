@@ -7,8 +7,8 @@ namespace Service.User.Mappings
 	{
 		public UserProfile()
 		{
-			this.CreateMap<Entity.Domain.User.User, UserDto>();
-			this.CreateMap<UserDto,	Entity.Domain.User.User>();
+		//	this.CreateMap<Entity.Domain.User.User, UserDto>();
+		//	this.CreateMap<UserDto,	Entity.Domain.User.User>();
 		}
 	}
 }

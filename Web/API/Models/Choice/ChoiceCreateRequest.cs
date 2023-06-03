@@ -4,7 +4,6 @@
     {
         public int Id { get; set; }
         public int? QuestionId { get; set; }
-        public int? QuestionTypeId { get; set; }
         public string? ChoiceExplanation { get; }
         public bool? IsTrue { get; set; }
         public string[] AnswerArray { get; set; }

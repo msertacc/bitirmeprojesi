@@ -14,7 +14,7 @@ namespace DataAccess.Data
 		{
 			if (!options.IsConfigured)
 			{
-				options.UseSqlServer("Server=DESKTOP-0IL4JB7;Database=SSA;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true");
+				options.UseSqlServer("Server=DESKTOP-0IL4JB7;Database=SSA;User Id=sa; Password=12;Integrated Security=SSPI;TrustServerCertificate=True");
 			}
 		}
 

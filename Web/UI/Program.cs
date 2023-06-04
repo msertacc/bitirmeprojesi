@@ -65,9 +65,5 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
-//using (var scope = app.Services.CreateScope())
-//{
-//    await DbSeeder.SeedRolesAndAdminAsync(scope.ServiceProvider);
-//}
-app.UseSqlTableDependency<SubscribeExamTableDependency>(connectionString);
+//app.UseSqlTableDependency<SubscribeExamTableDependency>(connectionString);
 app.Run();

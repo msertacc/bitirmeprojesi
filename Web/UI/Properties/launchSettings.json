@@ -1,5 +1,8 @@
 ﻿{
   "iisSettings": {
+    "iis": {
+      "applicationUrl": "http://ossapp.com"
+    },
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
@@ -8,6 +11,14 @@
     }
   },
   "profiles": {
+    "Local IIS": {
+      "commandName": "IIS",
+      "launchBrowser": true,
+      "launchUrl": "http://ossapp.com",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
     "http": {
       "commandName": "Project",
       "dotnetRunMessages": true,

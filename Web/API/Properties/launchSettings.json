@@ -1,6 +1,9 @@
 ﻿{
   "$schema": "https://json.schemastore.org/launchsettings.json",
   "iisSettings": {
+    "iis": {
+      "applicationUrl": "http://ossappapi.com"
+    },
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
@@ -9,6 +12,15 @@
     }
   },
   "profiles": {
+    "Local IIS": {
+      "commandName": "IIS",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "applicationUrl": "http://ossappapi.com",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
     "http": {
       "commandName": "Project",
       "dotnetRunMessages": true,

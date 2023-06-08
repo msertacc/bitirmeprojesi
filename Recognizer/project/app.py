@@ -15,10 +15,11 @@ from featureextraction import extract_features
 import warnings
 warnings.filterwarnings("ignore")
 from subprocess import run,PIPE
-from flask import Flask, jsonify, make_response
+from flask import Response,Flask, jsonify, make_response, after_this_request
+from flask_cors import CORS
 
 app = Flask(__name__)
-
+CORS(app)
 @app.route('/test/<user>', methods=['GET'])
 def test(user):
     print(user)
@@ -28,7 +29,7 @@ def test(user):
     @dataclass
     class StreamParams:
         format: int = pyaudio.paInt16
-        channels: int = 2
+        channels: int = 1
         rate: int = 44100
         frames_per_buffer: int = 1024
         input: bool = True
@@ -87,7 +88,7 @@ def test(user):
 
     stream_params = StreamParams()
     recorder = Recorder(stream_params)
-    recorder.record(5, "full_voice/"+ name)
+    recorder.record(30, "full_voice/"+ name)
     # print("RECORD DONE")
 
     #Split audio
@@ -140,13 +141,17 @@ def test(user):
     return jsonify({'response': 'Kayıt başarılı', 'isSuccess' : True})
 
 @app.route('/control/<user>', methods=['GET'])
-def result(user):  
+def result(user): 
+    @after_this_request
+    def add_header(response):
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        return response 
     name = user
     #Live recording for testing
     @dataclass
     class StreamParams:
         format: int = pyaudio.paInt16
-        channels: int = 2
+        channels: int = 1
         rate: int = 44100
         frames_per_buffer: int = 1024
         input: bool = True
@@ -196,7 +201,7 @@ def result(user):
         def _write_wav_file_reading_from_stream(self, duration: int) -> None:
             # print("saveit")
             for _ in range(int(self.stream_params.rate * duration / self.stream_params.frames_per_buffer)):
-                audio_data = self._stream.read(self.stream_params.frames_per_buffer)
+                audio_data = self._stream.read(self.stream_params.frames_per_buffer, exception_on_overflow=False)
                 self._wav_file.writeframes(audio_data)
 
         def _close_recording_resources(self) -> None:
@@ -238,7 +243,7 @@ def result(user):
     # print("LOG -> ",log_likelihood)
 
     if len(log_likelihood) == 0:
-        return make_response(jsonify({'message': "Unauthorized: Veri yok."}), 401)
+        return Response(response =  "noverify", status =401)
 
     w = np.argmax(log_likelihood)
     #result = log_likelihood[w]
@@ -246,9 +251,9 @@ def result(user):
     # print("r : ", result)
     a = ""
     if speakers[w] == name :
-        a, isSuccess = "Tespit edildi " + name, True
+        return Response(response =  "verify", status =200)
     else :
-        a, isSuccess = "Kullanıcı bulunamadi", False
+        return Response(response =  "noverify", status =401)
     # if result > -25.0 or result == -(log_likelihood[result]):
     #     # print(result)
     #     # print(w)
@@ -264,7 +269,7 @@ def result(user):
     #     print("Unknown User ")
     
     # return redirect(request, 'index')
-    return jsonify({'message': a, 'isSuccess' : isSuccess})
+    
 
 
 if __name__ == '__main__':

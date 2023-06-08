@@ -56,7 +56,7 @@ namespace UI.Areas.Identity.Pages.Account.Manage
             /// </summary>
             [Required]
             [DataType(DataType.Password)]
-            [Display(Name = "Current password")]
+            [Display(Name = "Şu anki şifren")]
             public string OldPassword { get; set; }
 
             /// <summary>
@@ -64,9 +64,9 @@ namespace UI.Areas.Identity.Pages.Account.Manage
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "Şifren en az bir büyük, bir küçük ve özel karakter içermelidir.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "New password")]
+            [Display(Name = "Yeni şifren")]
             public string NewPassword { get; set; }
 
             /// <summary>
@@ -74,8 +74,8 @@ namespace UI.Areas.Identity.Pages.Account.Manage
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm new password")]
-            [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+            [Display(Name = "Yeni şifren (tekrar)")]
+            [Compare("NewPassword", ErrorMessage = "Yeni şifreyle tekrarlı şifre uyuşmuyor")]
             public string ConfirmPassword { get; set; }
         }
 
@@ -120,8 +120,8 @@ namespace UI.Areas.Identity.Pages.Account.Manage
             }
 
             await _signInManager.RefreshSignInAsync(user);
-            _logger.LogInformation("User changed their password successfully.");
-            StatusMessage = "Your password has been changed.";
+            _logger.LogInformation("Şifre güncelleme işlemin başarıyla gerçekleşti.");
+            StatusMessage = "Şifre güncelleme işlemin başarıyla gerçekleşti.";
 
             return RedirectToPage();
         }

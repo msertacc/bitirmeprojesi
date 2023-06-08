@@ -7,6 +7,7 @@
     {
         ViewBag.IsVerify = _userManager.GetUserAsync(User).Result.IsVerify;
         ViewBag.FullName = _userManager.GetUserAsync(User).Result.FirstName + " " + _userManager.GetUserAsync(User).Result.LastName;
+        ViewBag.UserId = _userManager.GetUserAsync(User).Result.Id;
     }
 }
 
@@ -41,6 +42,9 @@
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="ExamUser" asp-action="Index">Sınavlarım</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="ExamUser" asp-action="MyScoresPage" asp-route-id="@ViewBag.UserId">Sonuçlarım</a>
+                                </li>
                             }
                         }
                         @if (User.Identity.IsAuthenticated && User.IsInRole("Teacher"))
@@ -64,7 +68,7 @@
             </div>
         </nav>
     </header>
-    <div class="container-fluid p-4">
+    <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

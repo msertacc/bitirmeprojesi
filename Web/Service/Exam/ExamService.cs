@@ -135,9 +135,7 @@ namespace Service.Exam
 		}
 		public ExamDto GetExamById(int id)
         {
-
             var result = context.Exams.AsNoTracking().Where(x => x.IsActive == "1" && x.Id == id).FirstOrDefault();
-            //var endTime = DateTime.ParseExact(result.ExamEndTime.ToString(), "M/d/yyyy HH:mm:ss",  CultureInfo.);
             var mappingResult = mapper.Map<ExamDto>(result);
             return mappingResult;
         }

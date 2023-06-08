@@ -28,11 +28,13 @@
 <br />
 <br />
 
-<h3 id="answerHeader">Cevap Ekle</h3>
+<h3 id="answerHeader">Cevap Ekle</h3><br />
 <div id="multipleChoiceAnswer">
     <div id="multipleChoiceInput">
-        <input type="radio" id="0MChoiceRadioId" name="fav_language" value="0">
-        <div class="col-md-4">
+        <div class="col-md-2">
+            <input type="radio" id="0MChoiceRadioId" name="fav_language" value="0">
+        </div>
+        <div class="col-md-4" style="margin-top:-2%;margin-left:1%">
             <input type="text" id="0MChoiceTextId" name="fname" class="form-control">
         </div>
         <br /><br />
@@ -56,8 +58,11 @@
     var multipleChoiceCount = 1;
 
     function AddChoice() {
+        $("#multipleChoiceInput").append(' <div class="col-md-2">');
         $("#multipleChoiceInput").append('<input type="radio" ' + 'id="' + multipleChoiceCount + 'MChoiceRadioId"' + 'name="fav_language"' + ' value="' + multipleChoiceCount + '"' + ' >');
-        $("#multipleChoiceInput").append('<div class="col-md-4"><input type="text"  ' + 'id="' + multipleChoiceCount + 'MChoiceTextId"' + 'name="fname"  class="form-control"' + '></div><br><br>');
+        $("#multipleChoiceInput").append(' </div>');
+        $("#multipleChoiceInput").append('<div class="col-md-4" style="margin-top:-2%;margin-left:1%" ><input type="text"  ' + 'id="' + multipleChoiceCount + 'MChoiceTextId"' + 'name="fname"  class="form-control"' + '></div><br><br>');
+        $("#multipleChoiceInput").append(' </div>');
         multipleChoiceCount++;
 
     }

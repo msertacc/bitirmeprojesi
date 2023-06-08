@@ -11,5 +11,6 @@ namespace Entity.Domain.Choice
         public bool? IsTrue { get; set; }
         public int? QuestionId { get; set; }
         public Question.Question Question { get; set; }
+        public List<AnswerOfQuestion.AnswerOfQuestion> Answers { get; set; }
     }
 }

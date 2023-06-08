@@ -1,0 +1,35 @@
+﻿@using System.Globalization;
+@using UI.Models.ExamUser;
+@model IEnumerable<ResultExam>
+
+<section class="section-content" align="center">
+	<div class="row">
+		<h3 align="left">Sonuçlarım</h3>
+		<br />
+	</div>
+	<div class="row">
+		<table class="table table-bordered" id="resultTable">
+			<thead>
+				<tr>
+					<th scope="col">Ders Adı</th>
+					<th scope="col">Sınav Adı</th>
+					<th scope="col">Sınav Başlangıç Tarihi</th>
+					<th scope="col">Sınav Bitiş Tarihi</th>
+					<th scope="col">Puan</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var item in Model)
+				{
+					<tr>
+						<td> @item.CourseName</td>
+						<td> @item.ExamName</td>
+						<td> @item.ExamStartTime</td>
+						<td> @item.ExamEndTime</td>
+						<td> @item.Score</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+</section>

@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="~/css/exam.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
 </head>
+<button class="form-control" onclick="SaveStudentAnswer()">Cevapları Kaydet</button>
 <div class="row" style="border: 2px solid #ccc">
     <div id="carouselExampleDark" class="col-lg-10 carousel carousel-dark slide" data-bs-ride="carousel" data-bs-interval="false">
         <ol class="carousel-indicators">
@@ -46,24 +47,24 @@
                             <h1 style="font-family : Tahoma; color:tomato">Soru - @(item.Index + 1)</h1>
                         </div>
                         <div class="mt-2" style="float:right;">
-                            <p style="font-size: 20px; background-color: #057ff8;color:white"><b>Puan : @item.Value.Score </b></p>
+                            <p style="font-size: 20px; background-color: #057ff8;color:white"><b class="point" value="@item.Value.Score">Puan : @item.Value.Score </b></p>
                         </div>
                         <br /><br />
                         <hr />
                         <p style="font-size :20px; font-family:Tahoma">
-                            <b>@item.Value.QuestionText</b>
+                            <b class="question-text">@item.Value.QuestionText</b>
                         </p>
                         @foreach (var choice in Model.Choice.Where((x, i) => x.QuestionId == item.Value.Id).Select((x, i) => new { Value = x, Index = i }))
                         {
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="@item.Value.Id" id="flexRadioDefault1" value="@(Convert.ToChar(choice.Index + 65))">
-                                <label style="font-size:larger;font-family : Tahoma" class="form-check-label" for="flexRadioDefault1">
+                                <input class="form-check-input" type="radio" choice="@choice.Value.Id" name="@item.Value.Id" id="flexRadioDefault1" value="@(Convert.ToChar(choice.Index + 65))">
+                                <label style="font-size:larger;font-family : Tahoma" class="form-check-label" for="flexRadioDefault1" value="@(Convert.ToChar(choice.Index + 65))) @choice.Value.ChoiceExplanation">
                                     @(Convert.ToChar(choice.Index + 65))) @choice.Value.ChoiceExplanation
                                 </label>
                             </div>
-                        }          
+                        }
                         <div class="form-check mt-5">
-                            <input class="form-check-input" type="radio" name="@item.Value.Id" id="flexRadioDefault2" checked>
+                            <input class="form-check-input" type="radio" choice="999999999" name="@item.Value.Id" id="flexRadioDefault2" checked>
                             <label style="font-size:larger;font-family : Tahoma" class="form-check-label" for="flexRadioDefault2">
                                 Seçimimi boş bırakacağım.
                             </label>
@@ -85,11 +86,53 @@
         <div id="app"></div>
     </div>
 </div>
+
+
 <script>
+
+    function SaveStudentAnswer() {
+        var QuestionOfAnswer = [];
+        var choice = "";
+
+        $(".carousel-inner .carousel-item").each(function (e) {
+            var questionId = $(this)[0].attributes.value.nodeValue;
+            $(this).find('.form-check-input').each(function () {
+                if ($(this).is(':checked')) {
+                    choice = $(this)[0].attributes.choice.nodeValue;
+                    var data = {
+                        'ChoiceId': choice,
+                        'QuestionId': questionId,
+                    }
+                    QuestionOfAnswer.push(data);
+                }
+            });
+        });
+
+        var model = {
+            'AnswerList': QuestionOfAnswer,
+            'ExamId': '@Model.Exam.Id',
+            'UserId': '@ViewBag.UserId'
+        }
+        console.log(model);
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("CreateQuestionOfAnswer", "ExamUser")',
+            data: model,
+            success: function (data) {
+                console.log(data)
+                console.log("basarili")
+            },
+            error: function () {
+                QuestionOfAnswer = [];
+            }
+        });
+
+    }
+
     var TIME_LIMIT;
     $(document).ready(function () {
-        TIME_LIMIT = renderCountdown(new Date(), new Date('@dateTime??.Year', '@Convert.ToInt32(dateTime?.Month - 1)', '@dateTime?.Day', '@dateTime?.Hour', '@dateTime?.Minute', '@dateTime?.Second'));
-        verifyControl('@ViewBag.UserId');
+        TIME_LIMIT = renderCountdown(new Date(), new Date('@dateTime?.Year', '@Convert.ToInt32(dateTime?.Month - 1)', '@dateTime?.Day', '@dateTime?.Hour', '@dateTime?.Minute', '@dateTime?.Second'));
+        //verifyControl('@ViewBag.UserId');
         startTimer();
         getExam('@Model.Exam.Id');
         listener();
@@ -119,28 +162,28 @@
     let remainingPathColor = COLOR_CODES.info.color;
 
     document.getElementById("app").innerHTML = `
-                    <div class="base-timer">
-                      <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <g class="base-timer__circle">
-                          <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
-                          <path
-                            id="base-timer-path-remaining"
-                            stroke-dasharray="283"
-                            class="base-timer__path-remaining ${remainingPathColor}"
-                            d="
-                              M 50, 50
-                              m -45, 0
-                              a 45,45 0 1,0 90,0
-                              a 45,45 0 1,0 -90,0
-                            "
-                          ></path>
-                        </g>
-                      </svg>
-                      <span id="base-timer-label" class="base-timer__label">${formatTime(
+                                    <div class="base-timer">
+                                      <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                        <g class="base-timer__circle">
+                                          <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
+                                          <path
+                                            id="base-timer-path-remaining"
+                                            stroke-dasharray="283"
+                                            class="base-timer__path-remaining ${remainingPathColor}"
+                                            d="
+                                              M 50, 50
+                                              m -45, 0
+                                              a 45,45 0 1,0 90,0
+                                              a 45,45 0 1,0 -90,0
+                                            "
+                                          ></path>
+                                        </g>
+                                      </svg>
+                                      <span id="base-timer-label" class="base-timer__label">${formatTime(
         timeLeft
     )}</span>
-                    </div>
-                    `;
+                                    </div>
+                                    `;
 
 
     function onTimesUp() {
@@ -154,8 +197,8 @@
             if (timeLeft < 0) {
                 timeLeft = 0;
             }
-                document.getElementById("base-timer-label").innerHTML = formatTime(
-                    timeLeft)
+            document.getElementById("base-timer-label").innerHTML = formatTime(
+                timeLeft)
             setCircleDasharray();
             setRemainingPathColor(timeLeft);
             if (timeLeft === 0) {
@@ -241,13 +284,44 @@
                 } else if (transcript.includes('önceki') || transcript.includes('önce ki')) {
                     moveQuestion("prev");
                 }
-                else if(transcript.includes("cevap")){
+                else if (transcript.includes("tümünü") && transcript.includes("oku")) { // soruyla ilgili her seyi seslendirir.
+                    voiceProvider("Soru");
+                    delay(400);
+                    voiceProvider($(".active .question-text").text());
+                    delay(400);
+                    voiceProvider("Şıklar");
+                    delay(400);
+                    $(".active .form-check-label").each(function (e) {
+                        voiceProvider($(this)[0].innerText);
+                        delay(1000);
+                    });
+                }
+                else if (transcript.includes("soruyu") && transcript.includes("oku")) { // sadece soruyu okur.
+                    voiceProvider($(".active .question-text").text());
+
+                }
+                else if (transcript.includes("şıkları") && transcript.includes("oku")) { // sadece şıkları okur.
+                    $(".active .form-check-label").each(function (e) {
+                        voiceProvider($(this)[0].innerText);
+                        delay(1000);
+                    });
+                }
+                else if (transcript.includes("puanı") && transcript.includes("oku")) { // sadece puanı okur.
+                    voiceProvider("Bu soru" + $(".active .point").attr("value") + "puandır.");
+                }
+                else if (transcript.includes("kalan") && transcript.includes("süre")) {
+                    let time = $('.base-timer__label').text();
+                    let parsedTime = time.split(":");
+                    voiceProvider(parsedTime[0] + " dakika " + parsedTime[1] + " saniye kaldı.");
+                }
+                else if (transcript.includes("cevap")) {
                     var parsedArray = transcript.trim().split(" ");
 
-                    if (parsedArray[1].includes("boş") || parsedArray[1].includes("bos")){
+                    if (parsedArray[1].includes("boş") || parsedArray[1].includes("bos")) {
                         $(".active #flexRadioDefault2")[0].checked = true;
+                        voiceProvider("Cevabınız " + "boş" + " olarak kaydedildi.");
                     }
-                    else{
+                    else {
                         selectChoice(parsedArray[1][0]);
                     }
                 }
@@ -261,15 +335,18 @@
     function moveQuestion(type) {
         if (type == "next") {
             $(".carousel-control-next").trigger("click");
+            voiceProvider("Sonraki soruya geçildi");
         } else {
             $(".carousel-control-prev").trigger("click");
+            voiceProvider("Önceki soruya geçildi");
         }
     }
 
-    function selectChoice(choice){
+    function selectChoice(choice) {
         $(".active .form-check-input").each(function (e) {
             if ($(this)[0].value.toUpperCase() == choice.toUpperCase()) {
-               $(this)[0].checked = true;
+                $(this)[0].checked = true;
+                voiceProvider("Cevabınız " + choice.toUpperCase() + " olarak kaydedildi.");
             }
         })
     }
@@ -280,17 +357,12 @@
         let startTime = 10000;
         let period = 1000;
         Swal.fire({
-            title: 'Lütfen konuşun, sesiniz kontrol edilecektir..',
+            title: 'Lütfen konuşun, sesiniz kontrol edilecektir..<br>Doğrulama yapılmaması durumunda ekranınız kitlenecektir. Sayfayı yenileyerek tekrar doğrulamayı deneyebilirsiniz.',
             html: '<b id="recordTimer"></b> saniye kaldı.',
             timer: 11000,
             timerProgressBar: true,
             didOpen: () => {
                 callVerifyApi(userid);
-  //              fetch("http://localhost:5000/control/" + userid, {
-  //                  mode: "no-cors"
-  //              }).then(response => console.log(response.status) || response) // output the status and return response
-  //.then(response => response.text()) // send response body to next then chain
-  //.then(body => console.log(body)) // you can use response body here
                 Swal.showLoading();
                 const b = document.getElementById("recordTimer");
                 timerInterval = setInterval(() => {
@@ -304,16 +376,46 @@
         })
     }
 
-    function callVerifyApi(userid){
+    function callVerifyApi(userid) {
         $.ajax({
-            type : "get",
+            type: "get",
             url: "http://localhost:5000/control/" + userid,
-            success : function(res){
-                console.log(res);
+            success: function (res) {
+                if (res == "verify") {
+                    responseVerify("success", "Doğrulama başarılı.");
+                    $('html').css("pointer-events", "");
+                } else {
+                    responseVerify("error", "Doğrulama başarısız. Yeniden deneyiniz.");
+                }
             },
-            error: function(err){
-                console.log(err);
+            error: function (err) {
+                if (err == "noverify")
+                    responseVerify("error", "Doğrulama başarısız. Yeniden deneyiniz.");
             }
         })
+    }
+
+    function responseVerify(type, message) {
+        Swal.fire({
+            position: 'top-end',
+            icon: type,
+            title: message,
+            showConfirmButton: false,
+            timer: 1500
+        })
+    }
+
+    function voiceProvider(text) {
+        if ('speechSynthesis' in window) {
+            var konusma = new SpeechSynthesisUtterance(text);
+            konusma.lang = 'tr-TR';
+            speechSynthesis.speak(konusma);
+        } else {
+            alert("Tarayıcınız metni seslendirmeyi desteklemiyor.");
+        }
+    }
+
+    function delay(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
     }
 </script>

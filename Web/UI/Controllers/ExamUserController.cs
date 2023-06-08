@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Text;
 using UI.Constants;
+using UI.Models.AnswerOfQuestion;
 using UI.Models.Choice;
 using UI.Models.Exam;
 using UI.Models.ExamUser;
@@ -106,6 +108,29 @@ namespace UI.Controllers
         {
             var viewModel = new ExamUserViewModel();
             return PartialView(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateQuestionOfAnswer(AnswerOfQuestionViewModel model)
+        {
+            var json = JsonConvert.SerializeObject(model, new JsonSerializerSettings { });
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await client.PostAsync(ApiEndpoints.CreateAnswerOfQuestionEndPoint, data).ConfigureAwait(false);
+
+            return this.Redirect(Url.Action("Index", "ExamUser"));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> MyScoresPage(Guid id)
+        {
+            var response = await client.GetAsync(ApiEndpoints.GetResultsForExams + "/" + id).ConfigureAwait(false);
+            IEnumerable<ResultExam>? resultMyScores = new List<ResultExam>();
+            if (response.IsSuccessStatusCode)
+            {
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                resultMyScores = JsonConvert.DeserializeObject<List<ResultExam>>(apiResponse);
+            }
+            return View("~/Views/ExamUser/Scores.cshtml", resultMyScores);
         }
     }
 }

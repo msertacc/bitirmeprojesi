@@ -1,3 +1,4 @@
+using Abstraction.Service.AnswerOfQuestionService;
 using Abstraction.Service.Course;
 using Abstraction.Service.ExamUser;
 using Abstraction.Service.User;
@@ -5,6 +6,7 @@ using DataAccess.Data;
 using Entity.Domain.ApplicationUser;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Service.AnswerOfQuestion;
 using Service.Course;
 using Service.ExamUser;
 using Service.User;
@@ -29,6 +31,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddDefaultUI()
             .AddDefaultTokenProviders();
 //builder.Services.AddScoped<IFileService, FileService>();
+builder.Services.AddScoped<IAnswerOfQuestionService, AnswerOfQuestionService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<IExamUserService, ExamUserService>();
 builder.Services.AddScoped<IUserService, UserService>();

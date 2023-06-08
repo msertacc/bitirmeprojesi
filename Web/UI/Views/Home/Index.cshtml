@@ -68,12 +68,12 @@ else
 <script>
     function recordCount (userid) {
         let timerInterval;
-        let startTime = 5000;
+        let startTime = 30000;
         let period = 1000;
         Swal.fire({
             title: 'Ses kaydediliyor..',
             html: '<b id="recordTimer"></b> saniye kaldı.',
-            timer: 6100,
+            timer: 31000,
             timerProgressBar: true,
             didOpen: () => {
                 fetch("http://localhost:5000/test/" + userid, {
@@ -114,8 +114,6 @@ else
             }
         })
     }
-
-   
 
 </script>
 

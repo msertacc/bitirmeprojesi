@@ -8,6 +8,7 @@ namespace Entity.Domain.Course
     {
         [Required]
         public virtual string? Name { get; set; }
+
         public List<Exam.Exam>? Exams { get; set; }
 
     }

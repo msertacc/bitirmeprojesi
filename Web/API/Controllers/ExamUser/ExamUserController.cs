@@ -3,6 +3,7 @@ using Abstraction.Service.ExamUser;
 using AutoMapper;
 using Entity.Dto.Course;
 using Entity.Dto.ExamUser;
+using Entity.Dto.Question;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.ExamUser
@@ -27,5 +28,11 @@ namespace API.Controllers.ExamUser
             return response;
         }
 
+        [HttpGet("GetResultsForExamsByUserId/{id}")]
+        public IEnumerable<ResultExamDto> GetResultsForExamsByUserId(Guid id)
+        {
+            var response = this.examUserService.GetResultsForExams(id);
+            return response;
+        }
     }
 }

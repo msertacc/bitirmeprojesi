@@ -13,6 +13,8 @@ using Service.Exam;
 using Service.Question;
 using Service.User;
 using System.Globalization;
+using Abstraction.Service.AnswerOfQuestionService;
+using Service.AnswerOfQuestion;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +30,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ICourseService, CourseService>();
+builder.Services.AddScoped<IAnswerOfQuestionService, AnswerOfQuestionService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IExamUserService, ExamUserService>();
 builder.Services.AddScoped<IExamService, ExamService>();

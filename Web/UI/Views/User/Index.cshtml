@@ -1,9 +1,18 @@
 ﻿@using Entity.Domain.ApplicationUser;
 @model IEnumerable<ApplicationUser>
+@using Microsoft.AspNetCore.Identity;
+@inject UserManager<ApplicationUser> _userManager;
+@{
+    if (User.Identity.IsAuthenticated)
+    {
+        ViewBag.UserId = _userManager.GetUserAsync(User).Result.Id;
+    }
+}
+
 <div class="row">
 	<div id="content-wrapper">
 		<div class="container-fluid">
-			<h2>Öğrenci Oluşturma</h2>
+			<h2>Kullanıcı Oluşturma</h2>
 			@Html.Partial("_DataGrid", Model)
 		</div>
 	</div>

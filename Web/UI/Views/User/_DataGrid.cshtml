@@ -5,8 +5,8 @@
 <section class="section-content">
 	<div class="row">
 		<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 actions-left">
-			<button onclick="location.href = /Account/Register" type="button" style="margin-bottom:5px;margin-top:10px;" class="btn btn-success" tooltip="Yeni Kullanıcı">Yeni Kullanıcı</button>
-			@*<button onclick="openCreateModal();" type="button" style="margin-bottom:5px;margin-top:10px;" class="btn btn-success" tooltip="Kayıt Ekleme">Kayıt Ekleme</button>*@
+			@*<button onclick="location.href = /Account/Register" type="button" style="margin-bottom:5px;margin-top:10px;" class="btn btn-success" tooltip="Yeni Kullanıcı">Yeni Kullanıcı</button>*@
+			<button onclick="openCreateModal();" type="button" style="margin-bottom:5px;margin-top:10px;" class="btn btn-success" tooltip="Kayıt Ekleme">Kayıt Ekleme</button>
 		</div>
 	</div>
 	<div class="row">
@@ -47,7 +47,7 @@
 						<td>@item.PhoneNumber</td>
 						<td>@item.Email</td>
 						<td>@(Convert.ToInt32(item.Gender)==0 ? Gender.Kadın : Gender.Erkek)</td>
-						<td>@item.InsertedUser</td>
+						@*<td>@item.InsertedUserName</td>*@
 						<td>@item.InsertedDate</td>
 					</tr>
 				}

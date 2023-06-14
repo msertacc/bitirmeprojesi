@@ -1,6 +1,8 @@
 ﻿using Abstraction.Service.User;
+using API.Models.User;
 using AutoMapper;
 using Entity.Domain.ApplicationUser;
+using Entity.Dto.User;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.User
@@ -25,13 +27,6 @@ namespace API.Controllers.User
 			return response;
 		}
 
-		[HttpGet("GetById")]
-		public ApplicationUser GetById(int userId)
-		{
-			var response = this.userService.GetUserById(userId);
-			return response;
-		}
-
         [HttpPost("UpdateUserVerify")]
         public ApplicationUser UpdateUserVerify([FromBody] Guid id)
         {
@@ -39,27 +34,20 @@ namespace API.Controllers.User
             return response.Result;
         }
 
-
-
-
-        //[HttpPost("Create")]
-        //public async Task<IActionResult> Create([FromBody] UserCreateRequest model)
-        //{
-        //	try
-        //	{
-        //		var mappingModel = this.mapper.Map<UserCreateRequest, UserDto>(model);
-
-        //		await this.userService.Create(mappingModel).ConfigureAwait(false);
-
-        //		return this.Ok();
-        //	}
-        //	catch (Exception ex)
-        //	{
-
-        //		return this.BadRequest(ex.Message);
-        //	}
-
-        //}
+        [HttpPost("Create")]
+        public async Task<IActionResult> Create([FromBody] UserCreateRequest model)
+        {
+            try
+            {
+                var mappingModel = this.mapper.Map<UserCreateRequest, UserDto>(model);
+                await this.userService.Create(mappingModel).ConfigureAwait(false);
+                return this.Ok();
+            }
+            catch (Exception ex)
+            {
+                return this.BadRequest(ex.Message);
+            }
+        }
 
         //[HttpPost("Update")]
         //public async Task<IActionResult> Update([FromBody] UserUpdateRequest model)

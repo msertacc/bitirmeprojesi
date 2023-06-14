@@ -15,6 +15,8 @@ using Service.User;
 using System.Globalization;
 using Abstraction.Service.AnswerOfQuestionService;
 using Service.AnswerOfQuestion;
+using Entity.Domain.ApplicationUser;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +28,10 @@ CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
 builder.Services.AddDbContext<ApplicationDbContext>();
 builder.Services.AddControllers();
+
+builder.Services.AddIdentityCore<ApplicationUser>()
+	.AddEntityFrameworkStores<ApplicationDbContext>();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

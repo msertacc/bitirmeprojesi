@@ -20,6 +20,18 @@ namespace DataAccess.Data
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+			modelBuilder.Entity<ApplicationUser>()
+				.Ignore(x => x.AccessFailedCount)
+				.Ignore(x => x.ConcurrencyStamp)
+				.Ignore(x => x.EmailConfirmed)
+				.Ignore(x => x.LockoutEnabled)
+				.Ignore(x => x.LockoutEnd)
+				.Ignore(x => x.NormalizedEmail)
+				.Ignore(x => x.NormalizedUserName)
+				.Ignore(x => x.TwoFactorEnabled)
+				.Ignore(x => x.PhoneNumberConfirmed)
+				.Ignore(x => x.SecurityStamp);
+				//.Ignore(x => x.InsertedUserName);
 			base.OnModelCreating(modelBuilder);
 		}
 		public DbSet<Entity.Domain.Course.Course> Courses { get; set; }

@@ -61,6 +61,8 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ChoiceId");
+
                     b.ToTable("AnswerOfQuestion");
                 });
 
@@ -69,9 +71,6 @@ namespace DataAccess.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -79,9 +78,6 @@ namespace DataAccess.Migrations
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -101,9 +97,8 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("InsertedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("InsertedUser")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid?>("InsertedUser")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("IsActive")
                         .IsRequired()
@@ -119,12 +114,6 @@ namespace DataAccess.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -139,19 +128,10 @@ namespace DataAccess.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
                     b.Property<string>("RoleId")
                         .IsRequired()
                         .HasMaxLength(2)
                         .HasColumnType("nvarchar(2)");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
@@ -515,6 +495,15 @@ namespace DataAccess.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Entity.Domain.AnswerOfQuestion.AnswerOfQuestion", b =>
+                {
+                    b.HasOne("Entity.Domain.Choice.Choice", "Choice")
+                        .WithMany("Answers")
+                        .HasForeignKey("ChoiceId");
+
+                    b.Navigation("Choice");
+                });
+
             modelBuilder.Entity("Entity.Domain.Choice.Choice", b =>
                 {
                     b.HasOne("Entity.Domain.Question.Question", "Question")
@@ -591,6 +580,11 @@ namespace DataAccess.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Entity.Domain.Choice.Choice", b =>
+                {
+                    b.Navigation("Answers");
                 });
 
             modelBuilder.Entity("Entity.Domain.Course.Course", b =>

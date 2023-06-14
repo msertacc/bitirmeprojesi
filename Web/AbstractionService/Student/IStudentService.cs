@@ -7,11 +7,11 @@ namespace Abstraction.Service.User
 	{
 		List<ApplicationUser> GetUsers();
 
-        ApplicationUser GetUserById(int id);
+        ApplicationUser GetUserById(Guid id);
 
         Task<ApplicationUser> UpdateVerify(Guid id);
 
-        //Task Create(UserDto userDto);
+        Task Create(UserDto userDto);
 
         //Task Update(UserDto userDto);
 

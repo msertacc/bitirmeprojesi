@@ -8,8 +8,11 @@ namespace UI.Models.ExamUser
         public int UserName { get; set; }
 		public string IsEnded { get; set; }
         //public DateTime EndDate { get; }
-		//public DateTime StartDate { get; }
-	}
+        //public DateTime StartDate { get; }
+        public DateTime? ExamEndTime { get; set; }
+        public DateTime? ExamStartTime { get; set; }
+        public string ExamName { get; set; }
+    }
 
     public class ResultExam
     {

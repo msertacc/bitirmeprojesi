@@ -2,7 +2,7 @@
 {
 	public static class ApiEndpoints
 	{
-		public static string? baseUrl = "http://ossappapi.com";
+		public static string? baseUrl = "https://localhost:44358";
 
 		public static string? WeatherForecast = baseUrl + "/WeatherForecast";
 
@@ -34,6 +34,9 @@
 		public static string? UpdateUserEndPoint = UserEndPoint + "/Update";
 
 		public static string? DeleteUserEndPoint = UserEndPoint + "/Delete";
+
+		public static string? GetUserByGuidEndPoint = UserEndPoint + "/GetUserByGuid";
+
 		#endregion
 		#region ExamUser
 		public static string? ExamUserEndPoint = baseUrl + "/ExamUser";
@@ -92,7 +95,23 @@
         //public static string? UpdateChoiceEndPoint = ChoiceEndPoint + "/Update";
 
         public static string? AnswerOfQuestion = baseUrl + "/AnswerOfQuestion";
+
         public static string? CreateAnswerOfQuestionEndPoint = AnswerOfQuestion + "/Create";
 
-    }
+
+        public static string? StudentCourse = baseUrl + "/StudentCourse";
+
+        public static string? GetStudentCourseEndPoint = StudentCourse + "/Get";
+
+		public static string? GetStudentCourseByUserIdEndPoint = StudentCourse + "/GetStudentCourseByUserId";
+
+		public static string? GetStudentCourseByIdEndPoint = StudentCourse + "/GetById";
+
+		public static string? CreateStudentCourseEndPoint = StudentCourse + "/Create";
+
+		public static string? DeleteStudentCourseEndPoint = StudentCourse + "/Delete";
+
+
+
+	}
 }

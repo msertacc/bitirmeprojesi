@@ -1,6 +1,7 @@
 ﻿using Abstraction.Service.User;
 using AutoMapper;
 using Entity.Domain.ApplicationUser;
+using Entity.Dto.StudentCourse;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.User
@@ -39,62 +40,67 @@ namespace API.Controllers.User
             return response.Result;
         }
 
+     
+		[HttpGet("GetUserByGuid/{id:Guid}")]
+		public ApplicationUser GetUserByGuid(Guid id)
+		{
+			var response = this.userService.GetUserByGuid(id);
+			return response;
+		}
 
+		//[HttpPost("Create")]
+		//public async Task<IActionResult> Create([FromBody] UserCreateRequest model)
+		//{
+		//	try
+		//	{
+		//		var mappingModel = this.mapper.Map<UserCreateRequest, UserDto>(model);
 
+		//		await this.userService.Create(mappingModel).ConfigureAwait(false);
 
-        //[HttpPost("Create")]
-        //public async Task<IActionResult> Create([FromBody] UserCreateRequest model)
-        //{
-        //	try
-        //	{
-        //		var mappingModel = this.mapper.Map<UserCreateRequest, UserDto>(model);
+		//		return this.Ok();
+		//	}
+		//	catch (Exception ex)
+		//	{
 
-        //		await this.userService.Create(mappingModel).ConfigureAwait(false);
+		//		return this.BadRequest(ex.Message);
+		//	}
 
-        //		return this.Ok();
-        //	}
-        //	catch (Exception ex)
-        //	{
+		//}
 
-        //		return this.BadRequest(ex.Message);
-        //	}
+		//[HttpPost("Update")]
+		//public async Task<IActionResult> Update([FromBody] UserUpdateRequest model)
+		//{
+		//	try
+		//	{
+		//		var mappingModel = this.mapper.Map<UserUpdateRequest, UserDto>(model);
 
-        //}
+		//		await this.userService.Update(mappingModel).ConfigureAwait(false);
 
-        //[HttpPost("Update")]
-        //public async Task<IActionResult> Update([FromBody] UserUpdateRequest model)
-        //{
-        //	try
-        //	{
-        //		var mappingModel = this.mapper.Map<UserUpdateRequest, UserDto>(model);
+		//		return this.Ok();
+		//	}
+		//	catch (Exception ex)
+		//	{
 
-        //		await this.userService.Update(mappingModel).ConfigureAwait(false);
+		//		return this.BadRequest(ex.Message);
+		//	}
 
-        //		return this.Ok();
-        //	}
-        //	catch (Exception ex)
-        //	{
+		//}
 
-        //		return this.BadRequest(ex.Message);
-        //	}
+		//[HttpPost("Delete")]
+		//public async Task<IActionResult> Delete([FromBody] int userId)
+		//{
+		//	try
+		//	{
+		//		await this.userService.Delete(userId).ConfigureAwait(false);
 
-        //}
+		//		return this.Ok();
+		//	}
+		//	catch (Exception ex)
+		//	{
 
-        //[HttpPost("Delete")]
-        //public async Task<IActionResult> Delete([FromBody] int userId)
-        //{
-        //	try
-        //	{
-        //		await this.userService.Delete(userId).ConfigureAwait(false);
+		//		return this.BadRequest(ex.Message);
+		//	}
 
-        //		return this.Ok();
-        //	}
-        //	catch (Exception ex)
-        //	{
-
-        //		return this.BadRequest(ex.Message);
-        //	}
-
-        //}
-    }
+		//}
+	}
 }

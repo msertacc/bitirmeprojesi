@@ -30,10 +30,10 @@
         <table class="table table-bordered" id="courseTable">
             <thead>
                 <tr>
-                    <th scope="col" style="width:12%">İşlemler</th>
+                    <th scope="col" style="width:10%">İşlemler</th>
                     <th scope="col">Sınav Adı</th>
-                    <th scope="col">Açıklama</th>
-                    <th scope="col">Kurs Adı</th>
+                    <th scope="col" style="width: 20%;">Açıklama</th>
+                    <th scope="col">Ders</th>
                     <th scope="col">Başlangıç Tarihi</th>
                     <th scope="col">Bitiş Tarihi</th>
                     <th scope="col">Oluşturulma Tarihi</th>
@@ -69,9 +69,9 @@
                         </td>
                         <td>@item.ExamName</td>
                         <td>@item.ExamDescription</td>
+                        <td>@item.CourseName</td>
                         <td>@item.ExamStartTime</td>
                         <td>@item.ExamEndTime</td>
-                        <td>@item.Course.Name</td>
                         <td>@item.InsertedDate</td>
                         <td>@item.UpdatedDate</td>
                     </tr>

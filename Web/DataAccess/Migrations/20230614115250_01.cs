@@ -6,32 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class sertac : Migration
+    public partial class _01 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "AnswerOfQuestion",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ExamId = table.Column<int>(type: "int", nullable: true),
-                    QuestionId = table.Column<int>(type: "int", nullable: true),
-                    ChoiceId = table.Column<int>(type: "int", nullable: true),
-                    InsertedUser = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    InsertedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedUser = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsActive = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AnswerOfQuestion", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -254,6 +233,36 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "StudentCourse",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CourseId = table.Column<int>(type: "int", nullable: true),
+                    ExamUserId = table.Column<int>(type: "int", nullable: true),
+                    InsertedUser = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    InsertedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedUser = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StudentCourse", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_StudentCourse_Course_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Course",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_StudentCourse_ExamUser_ExamUserId",
+                        column: x => x.ExamUserId,
+                        principalTable: "ExamUser",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Question",
                 columns: table => new
                 {
@@ -302,6 +311,37 @@ namespace DataAccess.Migrations
                         principalTable: "Question",
                         principalColumn: "Id");
                 });
+
+            migrationBuilder.CreateTable(
+                name: "AnswerOfQuestion",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ExamId = table.Column<int>(type: "int", nullable: true),
+                    QuestionId = table.Column<int>(type: "int", nullable: true),
+                    ChoiceId = table.Column<int>(type: "int", nullable: true),
+                    InsertedUser = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    InsertedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedUser = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AnswerOfQuestion", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AnswerOfQuestion_Choice_ChoiceId",
+                        column: x => x.ChoiceId,
+                        principalTable: "Choice",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AnswerOfQuestion_ChoiceId",
+                table: "AnswerOfQuestion",
+                column: "ChoiceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -356,6 +396,16 @@ namespace DataAccess.Migrations
                 name: "IX_Question_ExamId",
                 table: "Question",
                 column: "ExamId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StudentCourse_CourseId",
+                table: "StudentCourse",
+                column: "CourseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StudentCourse_ExamUserId",
+                table: "StudentCourse",
+                column: "ExamUserId");
         }
 
         /// <inheritdoc />
@@ -380,16 +430,19 @@ namespace DataAccess.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Choice");
+                name: "StudentCourse");
 
             migrationBuilder.DropTable(
-                name: "ExamUser");
+                name: "Choice");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "ExamUser");
 
             migrationBuilder.DropTable(
                 name: "Question");

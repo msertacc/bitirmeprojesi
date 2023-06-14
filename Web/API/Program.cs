@@ -15,6 +15,8 @@ using Service.User;
 using System.Globalization;
 using Abstraction.Service.AnswerOfQuestionService;
 using Service.AnswerOfQuestion;
+using Abstraction.Service.StudentCourse;
+using Service.StudentCourse;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +35,7 @@ builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<IAnswerOfQuestionService, AnswerOfQuestionService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IExamUserService, ExamUserService>();
+builder.Services.AddScoped<IStudentCourseService, StudentCourseService>();
 builder.Services.AddScoped<IExamService, ExamService>();
 builder.Services.AddScoped<IQuestionService, QuestionService>();
 builder.Services.AddScoped<IChoiceService, ChoiceService>();

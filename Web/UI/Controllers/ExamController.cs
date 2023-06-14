@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Entity.Domain.ApplicationUser;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text;
@@ -9,20 +11,29 @@ using UI.Models.Exam;
 
 namespace UI.Controllers
 {
-    [Authorize(Roles = "Teacher")]
+   // [Authorize(Roles = "Teacher")]
     public class ExamController : Controller
     {
         private readonly IMapper mapper;
         private readonly HttpClient client;
-        public ExamController(IMapper mapper, HttpClient client)
+		private readonly UserManager<ApplicationUser> _userManager;
+
+		public ExamController(IMapper mapper, HttpClient client, UserManager<ApplicationUser> userManager)
         {
-            this.mapper = mapper;
+			_userManager = userManager;
+			this.mapper = mapper;
             this.client = client;
         }
         public async Task<IActionResult> Index()
         {
             List<ExamViewModel>? result = new List<ExamViewModel>();
-            var response = await client.GetAsync(ApiEndpoints.GetExamEndPoint).ConfigureAwait(false);
+			//string user = Environment.UserName; //_userManager.GetUserAsync(HttpContext.User).Result.Id;
+			//string guidString = "bc5cbb76-0b16-472d-8ab0-3453ece564dc";
+			//Guid manualGuid = new Guid(guidString);
+			string user = _userManager.GetUserAsync(HttpContext.User).Result.Id;
+
+			//var response = await client.GetAsync(ApiEndpoints.GetExamUserByIdEndPoint + "/" + user).ConfigureAwait(false);
+			var response = await client.GetAsync(ApiEndpoints.GetExamEndPoint + "/" + user).ConfigureAwait(false);
 
             if (response.IsSuccessStatusCode)
             {

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230607220946_sertac")]
-    partial class sertac
+    [Migration("20230614115250_01")]
+    partial class _01
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -63,6 +63,8 @@ namespace DataAccess.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ChoiceId");
 
                     b.ToTable("AnswerOfQuestion");
                 });
@@ -385,6 +387,49 @@ namespace DataAccess.Migrations
                     b.ToTable("Question");
                 });
 
+            modelBuilder.Entity("Entity.Domain.StudentCourse.StudentCourse", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ExamUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("InsertedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("InsertedUser")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IsActive")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedUser")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("ExamUserId");
+
+                    b.ToTable("StudentCourse");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -518,6 +563,15 @@ namespace DataAccess.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Entity.Domain.AnswerOfQuestion.AnswerOfQuestion", b =>
+                {
+                    b.HasOne("Entity.Domain.Choice.Choice", "Choice")
+                        .WithMany("Answers")
+                        .HasForeignKey("ChoiceId");
+
+                    b.Navigation("Choice");
+                });
+
             modelBuilder.Entity("Entity.Domain.Choice.Choice", b =>
                 {
                     b.HasOne("Entity.Domain.Question.Question", "Question")
@@ -543,6 +597,19 @@ namespace DataAccess.Migrations
                         .HasForeignKey("ExamId");
 
                     b.Navigation("Exam");
+                });
+
+            modelBuilder.Entity("Entity.Domain.StudentCourse.StudentCourse", b =>
+                {
+                    b.HasOne("Entity.Domain.Course.Course", "Course")
+                        .WithMany("StudentCourses")
+                        .HasForeignKey("CourseId");
+
+                    b.HasOne("Entity.Domain.ExamUser.ExamUser", null)
+                        .WithMany("StudentCourses")
+                        .HasForeignKey("ExamUserId");
+
+                    b.Navigation("Course");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -596,14 +663,26 @@ namespace DataAccess.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Entity.Domain.Choice.Choice", b =>
+                {
+                    b.Navigation("Answers");
+                });
+
             modelBuilder.Entity("Entity.Domain.Course.Course", b =>
                 {
                     b.Navigation("Exams");
+
+                    b.Navigation("StudentCourses");
                 });
 
             modelBuilder.Entity("Entity.Domain.Exam.Exam", b =>
                 {
                     b.Navigation("Questions");
+                });
+
+            modelBuilder.Entity("Entity.Domain.ExamUser.ExamUser", b =>
+                {
+                    b.Navigation("StudentCourses");
                 });
 
             modelBuilder.Entity("Entity.Domain.Question.Question", b =>

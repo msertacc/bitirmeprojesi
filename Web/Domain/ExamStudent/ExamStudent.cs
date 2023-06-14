@@ -9,9 +9,11 @@ namespace Entity.Domain.ExamUser
         public int Id { get; set; }
         public int ExamId { get; set; }
         public string UserId { get; set; }
+		public List<StudentCourse.StudentCourse>? StudentCourses { get; set; }
+
 	}
 
-    [Table("Exam")]
+	[Table("Exam")]
     public class Exam : BaseEntity.BaseEntity
     {
         public string? ExamName { get; set; }

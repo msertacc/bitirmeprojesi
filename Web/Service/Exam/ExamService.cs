@@ -7,6 +7,7 @@ using Entity.Dto.Course;
 using Entity.Dto.Exam;
 using Entity.Dto.Question;
 using Microsoft.EntityFrameworkCore;
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
 
@@ -140,14 +141,26 @@ namespace Service.Exam
             return mappingResult;
         }
 
-        public List<ExamDto> GetExams()
+        public List<ExamDto> GetExams(Guid id)
         {
-            // var result = context.Exams.AsNoTracking().Where(x => x.IsActive == "1").ToList();
-            var result = context.Exams.AsNoTracking().Include(i => i.Course).Where(x => x.CourseId == x.Course.Id && x.IsActive == "1").ToList();
-            var mappingResult = mapper.Map<List<ExamDto>>(result);
-            return mappingResult;
-            //return null;
-        }
+			var query =(from exams in context.Exams
+						join courses in context.Courses on exams.CourseId equals courses.Id 
+						join studentCourses in context.StudentCourses on courses.Id equals studentCourses.CourseId
+						where courses.IsActive=="1" && studentCourses.IsActive=="1" && exams.IsActive=="1" && studentCourses.UserId==id
+						select new ExamDto
+						{
+							Id= exams.Id,
+							ExamName = exams.ExamName,
+							ExamDescription = exams.ExamDescription,
+							ExamStartTime = exams.ExamStartTime,
+							ExamEndTime= exams.ExamEndTime,
+							CourseName = exams.Course.Name,
+							InsertedDate=exams.InsertedDate,
+							UpdatedDate=exams.UpdatedDate,
+
+						}).ToList();
+			return  query;
+		}
 
         public async Task Update(ExamDto examDto)
         {

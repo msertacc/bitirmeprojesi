@@ -1,7 +1,9 @@
 ﻿@model IEnumerable<UI.Models.Question.QuestionViewModel>
+<link rel="stylesheet" href="~/css/general.css" />
+
 <div class="row">
 	<div id="content-wrapper">
-		<div class="container">
+		<div class="">
 			<h2>Soru Oluşturma</h2>
 			@Html.Partial("_DataGrid", Model)
 		</div>

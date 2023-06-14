@@ -19,10 +19,10 @@ namespace API.Controllers.Exam
             this.mapper = mapper;
         }
 
-        [HttpGet("Get")]
-        public IEnumerable<ExamDto> Get()
+        [HttpGet("Get/{id:Guid}")]
+        public IEnumerable<ExamDto> Get(Guid id )
         {
-            var response = this.examService.GetExams();
+            var response = this.examService.GetExams(id);
             return response;
         }
 

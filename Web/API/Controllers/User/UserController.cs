@@ -3,6 +3,7 @@ using API.Models.User;
 using AutoMapper;
 using Entity.Domain.ApplicationUser;
 using Entity.Dto.User;
+using Entity.Dto.StudentCourse;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.User
@@ -33,7 +34,6 @@ namespace API.Controllers.User
             var response = this.userService.UpdateVerify(id);
             return response.Result;
         }
-
         [HttpPost("Create")]
         public async Task<IActionResult> Create([FromBody] UserCreateRequest model)
         {
@@ -49,40 +49,47 @@ namespace API.Controllers.User
             }
         }
 
-        //[HttpPost("Update")]
-        //public async Task<IActionResult> Update([FromBody] UserUpdateRequest model)
-        //{
-        //	try
-        //	{
-        //		var mappingModel = this.mapper.Map<UserUpdateRequest, UserDto>(model);
+		[HttpGet("GetUserByGuid/{id:Guid}")]
+		public ApplicationUser GetUserByGuid(Guid id)
+		{
+			var response = this.userService.GetUserByGuid(id);
+			return response;
+		}
 
-        //		await this.userService.Update(mappingModel).ConfigureAwait(false);
+		//[HttpPost("Update")]
+		//public async Task<IActionResult> Update([FromBody] UserUpdateRequest model)
+		//{
+		//	try
+		//	{
+		//		var mappingModel = this.mapper.Map<UserUpdateRequest, UserDto>(model);
 
-        //		return this.Ok();
-        //	}
-        //	catch (Exception ex)
-        //	{
+		//		await this.userService.Update(mappingModel).ConfigureAwait(false);
 
-        //		return this.BadRequest(ex.Message);
-        //	}
+		//		return this.Ok();
+		//	}
+		//	catch (Exception ex)
+		//	{
 
-        //}
+		//		return this.BadRequest(ex.Message);
+		//	}
 
-        //[HttpPost("Delete")]
-        //public async Task<IActionResult> Delete([FromBody] int userId)
-        //{
-        //	try
-        //	{
-        //		await this.userService.Delete(userId).ConfigureAwait(false);
+		//}
 
-        //		return this.Ok();
-        //	}
-        //	catch (Exception ex)
-        //	{
+		//[HttpPost("Delete")]
+		//public async Task<IActionResult> Delete([FromBody] int userId)
+		//{
+		//	try
+		//	{
+		//		await this.userService.Delete(userId).ConfigureAwait(false);
 
-        //		return this.BadRequest(ex.Message);
-        //	}
+		//		return this.Ok();
+		//	}
+		//	catch (Exception ex)
+		//	{
 
-        //}
-    }
+		//		return this.BadRequest(ex.Message);
+		//	}
+
+		//}
+	}
 }

@@ -41,15 +41,15 @@ namespace UI.Controllers
 				examUserResult = JsonConvert.DeserializeObject<List<ExamUserViewModel>>(apiResponse);
             }
 
-			List<ExamViewModel>? resultExam = new List<ExamViewModel>();
-			var responseExam = await client.GetAsync(ApiEndpoints.GetExamEndPoint).ConfigureAwait(false);
+			//List<ExamViewModel>? resultExam = new List<ExamViewModel>();
+			//var responseExam = await client.GetAsync(ApiEndpoints.GetExamEndPoint).ConfigureAwait(false);
 
-			if (responseExam.IsSuccessStatusCode)
-			{
-				string apiResponse = await responseExam.Content.ReadAsStringAsync();
-				resultExam = JsonConvert.DeserializeObject<List<ExamViewModel>>(apiResponse);
-			}
-			userExamViewModel.ExamList = resultExam;
+			//if (responseExam.IsSuccessStatusCode)
+			//{
+			//	string apiResponse = await responseExam.Content.ReadAsStringAsync();
+			//	resultExam = JsonConvert.DeserializeObject<List<ExamViewModel>>(apiResponse);
+			//}
+			//userExamViewModel.ExamList = resultExam;
 			userExamViewModel.ExamUserList = examUserResult;
 			
             return View(userExamViewModel);

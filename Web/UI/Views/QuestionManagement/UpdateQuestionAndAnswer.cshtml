@@ -1,43 +1,52 @@
 ﻿@model UI.Models.QuestionManagement.QuestionManagementViewModel
-
+<link rel="stylesheet" href="~/css/general.css" />
 <link href="~/css/svg.css" rel="stylesheet" />
-<h3>Soru Güncelle</h3>
-<div class="btn-group" style="margin-left: 95%;">
-    <button type="submit" onclick="UpdateQuestionFunc()" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">Kaydet</button>
-</div>
+
 <section class="section-content">
-    <form>
-        <fieldset>
-            <div class="form-group">
-                <label>Soru Başlığı</label>
-                <input type="text" name="QuestionText" value="@Model.QuestionModel.QuestionText" placeholder="Lütfen soru başlığı giriniz" class="form-control small-input" id="QuestionText" />
-                <input type="text" name="Id" value="@Model.QuestionModel.Id" class="form-control small-input" id="Id" style="display:none;" />
-                <input type="text" name="ExamId" value="@Model.QuestionModel.ExamId" class="form-control small-input" id="ExamId" style="display:none;" />
+    <div id="content-wrapper">
+        <h3>Soru Güncelle</h3>
+        <div class="btn-group" style="margin-left: 95%;">
+            <button type="submit" onclick="UpdateQuestionFunc()" class="btn btn-success" data-bs-dismiss="modal">Kaydet</button>
+        </div>
 
-            </div>
-        </fieldset>
+        <form>
+            <div class="row">
+                <div class="col-md-10">
+                    <fieldset>
+                        <div class="form-group">
+                            <label>Soru Başlığı</label>
+                            <input type="text" name="QuestionText" value="@Model.QuestionModel.QuestionText" placeholder="Lütfen soru başlığı giriniz" class="form-control small-input" id="QuestionText" />
+                            <input type="text" name="Id" value="@Model.QuestionModel.Id" class="form-control small-input" id="Id" style="display:none;" />
+                            <input type="text" name="ExamId" value="@Model.QuestionModel.ExamId" class="form-control small-input" id="ExamId" style="display:none;" />
 
-        <fieldset>
-            <div class="form-group">
-                <label>Puan</label>
-                <input type="number" name="Score" value="@Model.QuestionModel.Score" placeholder="Lütfen soru puanı giriniz" class="form-control small-input" id="Score" />
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="col-md-2">
+                    <fieldset>
+                        <div class="form-group">
+                            <label>Puan</label>
+                            <input type="number" name="Score" value="@Model.QuestionModel.Score" placeholder="Lütfen soru puanı giriniz" class="form-control small-input" id="Score" />
+                        </div>
+                    </fieldset>
+                </div>
             </div>
-        </fieldset>
-    </form>
-    <br>
+          
+        </form>
+        <br><br /><br />
+        <h3>Cevap Güncelle</h3><br />
+        <div id="multipleChoiceAnswer">
+            <div id="multipleChoiceInput">
+            </div>
+            <div id="choiceButtonDivId" class="col-md-3" style="margin-left:26%">
+                <button onclick="AddChoice()" class="btn btn-success">Seçenek Ekle</button>
+            </div>
+        </div>
+
+    </div>
+
 
 </section>
-<br />
-<br />
-
-<h3>Cevap Güncelle</h3><br />
-<div id="multipleChoiceAnswer">
-    <div id="multipleChoiceInput">
-    </div>
-    <div id="choiceButtonDivId" class="col-md-3">
-        <button onclick="AddChoice()" class="btn btn-success">Seçenek Ekle</button>
-    </div>
-</div>
 
 
 <script>

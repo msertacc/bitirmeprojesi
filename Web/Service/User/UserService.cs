@@ -32,8 +32,14 @@ namespace Service.User
 			var result = context.Users.AsNoTracking().Where(x => x.IsActive == "1" && x.Id == id.ToString()).FirstOrDefault();
 			return result;
 		}
+		public ApplicationUser GetUserByGuid(Guid id)
+		{
+			var result = context.Users.AsNoTracking().Where(x => x.IsActive == "1" && x.Id==id.ToString()).FirstOrDefault();
+			//var mappingResult = mapper.Map<List<UserDto>>(result);
+			return result;
+		}
 
-		public async Task Create(UserDto userDto)
+public async Task Create(UserDto userDto)
 		{
 			ArgumentNullException.ThrowIfNull(userDto);
 			ArgumentNullException.ThrowIfNull(userDto.FirstName);
@@ -87,7 +93,6 @@ namespace Service.User
 
 			await context.SaveChangesAsync();
 		}
-
 		//public async Task Update(UserDto userDto)
 		//{
 		//	ArgumentNullException.ThrowIfNull(userDto);
@@ -190,7 +195,17 @@ namespace Service.User
 		//	////var mappingResult = mapper.Map<UserDto, Entity.Domain.User.User>(user);
 		//	//context.Set<Entity.Domain.User.User>().Update(mappingResult);
 		//	//await context.SaveChangesAsync();
+//}
+	//}
 
-		//}
-	}
+
+
+        public List<ApplicationUser> GetStudentList()
+        {
+            var result = context.Users.AsNoTracking().Where(x => x.IsActive == "1" && x.RoleId=="1").ToList();
+            //var mappingResult = mapper.Map<List<UserDto>>(result);
+            return result;
+        }
+    }
+
 }

@@ -1,0 +1,167 @@
+﻿@using Entity.Domain.ApplicationUser;
+@model UI.Models.StudentCourse.StudentCourseViewModel
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+<link rel="stylesheet" href="~/css/general.css" />
+<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'></link>
+
+<div class="row">
+	<div id="content-wrapper">
+		<h2>Kullanıcı Ders Eşleşmesi</h2>
+		<br />
+		<b style="margin-left:1%">Öğrenci Adı - Soyadı: </b> @ViewBag.UserFullName
+		<br /><br />
+		<form>
+			<div class="col-md-12">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="exampleFormControlSelect1">Ders</label>
+							<select class="form-control" name="CourseId" id="CourseId">
+								<option value="">Seçiniz</option>
+								@foreach (var item in Model.CourseList)
+								{
+									<option value=@item.Id>@item.Name</option>
+								}
+							</select>
+						</div>
+					</div>
+					<div class="col-md-2">
+						<button type="button" class="form-control" onclick="SaveChanges()" style="margin-top:32px">Ekle</button>
+					</div>
+				</div>
+			</div>
+		</form>
+
+		<div class="container-fluid">
+			<h4>Kayıtlı Dersler</h4>
+			<div id="userCourseTableId">
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="myModal" class="modal">
+	<div class="modal-content">
+		<span class="close">&times;</span>
+		<div id="deleteUserCourseDiv"></div>
+	</div>
+</div>
+
+<script>
+	var modal = document.getElementById("myModal");
+	var span = document.getElementsByClassName("close")[0];
+
+	span.onclick = function () {
+		modal.style.display = "none";
+	}
+	window.onclick = function (event) {
+		if (event.target == modal) {
+			modal.style.display = "none";
+		}
+	}
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function () {
+		GetUserCourseTable();
+	});
+
+
+	function openDeleteModal(id) {
+		$.ajax({
+			type: 'GET',
+			url: '/StudentCourse/_Delete',
+			data: { id: id },
+			success: function (data) {
+				$("#deleteUserCourseDiv").html(data)
+				modal.style.display = "block";
+			}
+		});
+	}
+
+		function SaveChanges(){
+			var runAjax=true;
+			let viewModel={
+				'CourseId': $('#CourseId').val(),
+				'UserId':'@ViewBag.UserId',
+			}
+			if(viewModel.CourseId=="")
+			{
+				runAjax=false;
+				sweetAlert("Oops...", "Lütfen ders seçiniz", "error");
+			}
+			if(runAjax)
+			{
+				$.ajax({
+					type: 'GET',
+					url: '/StudentCourse/Create',
+					data: viewModel,
+					success: function (data) {
+						SuccessAlert();
+						GetUserCourseTable();
+					}
+				});
+			}
+			
+		}
+
+		function GetUserCourseTable(){
+					$.ajax({
+					type: 'GET',
+					url: '/StudentCourse/_DataGrid',
+					data:{id:'@ViewBag.UserId'},
+					success: function (data) {
+							$('#userCourseTableId').html(data);
+					}
+				});
+		}
+
+		function SuccessAlert(){
+		swal({
+			title: "İşlem Başarılı",
+			timer: 1500
+		});
+		}
+</script>
+
+
+<style>
+	.modal {
+		display: none; 
+		position: fixed; 
+		z-index: 1; 
+		padding-top: 100px; 
+		left: 0;
+		top: 0;
+		width: 100%; 
+		height: 100%;
+		overflow: auto;
+		background-color: rgb(0,0,0); 
+		background-color: rgba(0,0,0,0.4); 
+	}
+
+	.modal-content {
+		background-color: #fefefe;
+		margin: auto;
+		padding: 20px;
+		border: 1px solid #888;
+		width: 55%;
+	}
+
+	.close {
+		color: #aaaaaa;
+		float: right;
+		font-size: 28px;
+		font-weight: bold;
+	}
+
+		.close:hover,
+		.close:focus {
+			color: #000;
+			text-decoration: none;
+			cursor: pointer;
+		}
+</style>
+

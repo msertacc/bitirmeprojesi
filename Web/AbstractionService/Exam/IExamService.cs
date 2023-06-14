@@ -4,7 +4,7 @@ namespace Abstraction.Service.Exam
 {
     public interface IExamService
     {
-        List<ExamDto> GetExams();
+        List<ExamDto> GetExams(Guid id);
 
         ExamDto GetExamById(int id);
 

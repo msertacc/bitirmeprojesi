@@ -1,9 +1,6 @@
-﻿using Abstraction.Service.Course;
-using Abstraction.Service.ExamUser;
+﻿using Abstraction.Service.ExamUser;
 using AutoMapper;
-using Entity.Dto.Course;
 using Entity.Dto.ExamUser;
-using Entity.Dto.Question;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.ExamUser

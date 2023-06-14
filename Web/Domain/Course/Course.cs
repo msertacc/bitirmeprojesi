@@ -10,6 +10,7 @@ namespace Entity.Domain.Course
         public virtual string? Name { get; set; }
 
         public List<Exam.Exam>? Exams { get; set; }
+		public List<StudentCourse.StudentCourse>? StudentCourses { get; set; }
 
-    }
+	}
 }

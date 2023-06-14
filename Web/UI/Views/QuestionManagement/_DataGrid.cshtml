@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<UI.Models.Question.QuestionViewModel>
 <section class="section-content">
 	<div class="row">
-		<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 actions-left">
+		<div class="col-md-2" style="margin-left:92%;">
 			<button onclick="CreateQuestion(@ViewBag.ExamId);" type="button" style="margin-bottom:5px;margin-top:10px;" class="btn btn-success" tooltip="Kayıt Ekleme">Kayıt Ekleme</button>
 		</div>
 	</div>
@@ -10,9 +10,9 @@
 		<table class="table table-bordered" id="courseTable">
 			<thead>
 				<tr>
-					<th scope="col">İşlemler</th>
+					<th scope="col" style="width:10%">İşlemler</th>
 					<th scope="col">Soru Başlığı</th>
-					<th scope="col">Puan</th>
+					<th scope="col" style="width:10%">Puan</th>
 				</tr>
 			</thead>
 			<tbody>

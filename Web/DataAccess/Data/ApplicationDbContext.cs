@@ -14,7 +14,7 @@ namespace DataAccess.Data
 		{
 			if (!options.IsConfigured)
 			{
-				options.UseSqlServer("Server=DESKTOP-0IL4JB7;Database=SSA;User Id=sa; Password=12;Integrated Security=SSPI;TrustServerCertificate=True");
+				options.UseSqlServer("Server=LAPTOP-QORO4PVD;Database=SSA;User Id=sa; Password=12;Integrated Security=SSPI;TrustServerCertificate=True");
 			}
 		}
 
@@ -29,5 +29,7 @@ namespace DataAccess.Data
         public DbSet<Entity.Domain.Choice.Choice> Choices { get; set; }
         public DbSet<Entity.Domain.Question.Question> Questions { get; set; }
         public DbSet<Entity.Domain.AnswerOfQuestion.AnswerOfQuestion> AnswerOfQuestions { get; set; }
-    }
+		public DbSet<Entity.Domain.StudentCourse.StudentCourse> StudentCourses { get; set; }
+
+	}
 }

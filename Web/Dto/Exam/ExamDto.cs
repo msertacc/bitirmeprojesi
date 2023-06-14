@@ -7,7 +7,8 @@
         public DateTime? ExamStartTime { get; set; }
         public DateTime? ExamEndTime { get; set; }
         public int? CourseId { get; set; }
-        public Course.CourseDto Course { get; set; }
+        public Course.CourseDto? Course { get; set; }
         public string? IsEnded { get; set; }
+        public string? CourseName { get; set;}
     }
 }

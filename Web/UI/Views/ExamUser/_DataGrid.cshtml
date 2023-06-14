@@ -21,11 +21,11 @@
                     @foreach (var item in Model.ExamUserList)
                     {
                         <tr>
-                            <td>@Model.ExamList?.FirstOrDefault(x => x.Id == item.ExamId)?.ExamName</td>
-                            <td>@Model.ExamList?.FirstOrDefault(x => x.Id == item.ExamId)?.ExamStartTime</td>
-                            <td>@Model.ExamList?.FirstOrDefault(x => x.Id == item.ExamId)?.ExamEndTime</td>
+                            <td>@item.ExamName</td>
+                            <td>@item.ExamStartTime</td>
+                            <td>@item.ExamEndTime</td>
                             <td>
-                                @if (Model.ExamList?.FirstOrDefault(x => x.Id == item.ExamId)?.IsEnded == "1")
+                                @if (item.IsEnded == "1")
                                 {
                                     <button disabled="disabled" onclick="location.href='@Url.Action("StartExam","ExamUser", new{examId = item.ExamId})'" class="btn btn-info">Başlat</button>
                                 }

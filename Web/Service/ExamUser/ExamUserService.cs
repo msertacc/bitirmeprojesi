@@ -1,9 +1,8 @@
 ﻿using Abstraction.Service.ExamUser;
+using Abstraction.Service.Shared;
 using AutoMapper;
 using DataAccess.Data;
 using Entity.Dto.ExamUser;
-using Microsoft.EntityFrameworkCore;
-using Abstraction.Service.Shared;
 
 namespace Service.ExamUser
 {
@@ -20,9 +19,28 @@ namespace Service.ExamUser
 
         public List<ExamUserDto> GetExamByUser(string id)
         {
-            var result = context.ExamUsers.AsNoTracking().Where(x => x.IsActive == "1" && x.UserId == id).ToList();
-            var mappingResult = mapper.Map<List<ExamUserDto>>(result);
-            return mappingResult;
+
+            var query = (from examUser in context.ExamUsers
+                         join exams in context.Exams on examUser.ExamId equals exams.Id
+                         join courses in context.Courses on exams.CourseId equals courses.Id
+                         join studentCourses in context.StudentCourses on courses.Id equals studentCourses.CourseId
+                         where courses.IsActive == "1" && studentCourses.IsActive == "1" && exams.IsActive == "1" && examUser.IsActive == "1" &&  studentCourses.UserId == Guid.Parse(id) &&  examUser.UserId==id
+                         select new ExamUserDto
+                         {
+                             ExamId=exams.Id,
+                             ExamName = exams.ExamName,
+                             IsEnded = exams.IsEnded,
+                             ExamStartTime = exams.ExamStartTime,
+                             ExamEndTime = exams.ExamEndTime,
+                             InsertedDate = exams.InsertedDate,
+                             UpdatedDate = exams.UpdatedDate,
+
+                         }).ToList();
+            return query;
+
+            //var result = context.ExamUsers.AsNoTracking().Where(x => x.IsActive == "1" && x.UserId == id).ToList();
+            //var mappingResult = mapper.Map<List<ExamUserDto>>(result);
+            //return mappingResult;
         }
 
         public IEnumerable<ResultExamDto> GetResultsForExams(Guid userid)

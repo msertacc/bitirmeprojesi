@@ -1,0 +1,37 @@
+﻿@model UI.Models.StudentCourse.UsersCourseModel
+<form>
+	<fieldset>
+		<div class="form-group">
+			<h5>Seçtiğiniz kullanıcı - ders eşleşmesi silinecektir. Silme işlemine devam etmek istiyor musunuz ?</h5>
+			<input type="text" name="Id" value="@Model.Id" class="form-control small-input" id="id" style="display:none;" />
+		</div>
+	</fieldset>
+</form>
+<div class="col-md-2" style="margin-left: 82%;">
+	<button type="submit" onclick="DeleteUserCource()" class="form-control" data-bs-dismiss="modal">Sil</button>
+</div>
+					
+
+<script>
+	$('#closeDeleteModal').click(function () {
+		$('#ModalDelete').modal('hide');
+		GetUserCourseTable();
+	});
+
+	function DeleteUserCource(){
+		let viewModel = {
+			'Id': '@Model.Id',
+		}
+		$.ajax({
+			type: 'GET',
+			url: '/StudentCourse/Delete',
+			data: viewModel,
+			success: function (data) {
+				SuccessAlert();
+				GetUserCourseTable();
+				modal.style.display = "none";
+
+			}
+		});
+	}
+</script>

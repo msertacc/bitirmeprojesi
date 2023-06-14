@@ -9,7 +9,7 @@ using UI.Models.Course;
 
 namespace UI.Controllers
 {
-	[Authorize(Roles = "Teacher")]
+	//[Authorize(Roles = "Teacher")]
 	public class CourseController : Controller
 	{
 		private readonly IMapper mapper;

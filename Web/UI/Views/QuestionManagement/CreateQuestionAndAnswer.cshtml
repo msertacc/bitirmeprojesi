@@ -1,48 +1,61 @@
 ﻿<script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
 <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'></link>
 <link href="~/css/svg.css" rel="stylesheet" />
-<h3>Soru Ekle</h3>
-<div class="btn-group" style="margin-left: 95%;">
-    <button onclick="CreateQuestionFunc()" type="submit" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">Kaydet</button>
-</div>
+<link rel="stylesheet" href="~/css/general.css" />
 <section class="section-content">
+    <div id="content-wrapper">
+        <h3>Soru Ekle</h3>
+        <div class="btn-group" style="margin-left: 95%;">
+            <button onclick="CreateQuestionFunc()" type="submit" class="btn btn-success" data-bs-dismiss="modal">Kaydet</button>
+        </div>
     <form>
-        <fieldset>
-            <div class="form-group">
-                <label>Soru Başlığı</label>
-                <input type="text" name="QuestionText" placeholder="Lütfen soru başlığı giriniz" class="form-control small-input" id="QuestionText" />
-                <input type="text" name="ExamId" value="@ViewBag.ExamId" class="form-control small-input" id="ExamId" style="display:none;" />
-            </div>
-        </fieldset>
+        <div class="row">
+            <div class="col-md-10">
+                    <fieldset>
+                        <div class="form-group">
+                            <label>Soru Başlığı</label>
+                            <input type="text" name="QuestionText" placeholder="Lütfen soru başlığı giriniz" class="form-control small-input" id="QuestionText" />
+                            <input type="text" name="ExamId" value="@ViewBag.ExamId" class="form-control small-input" id="ExamId" style="display:none;" />
+                        </div>
+                    </fieldset>
 
-        <fieldset>
-            <div class="form-group">
-                <label>Puan</label>
-                <input type="number" name="Score" placeholder="Lütfen soru puanı giriniz" class="form-control small-input" id="Score" />
             </div>
-        </fieldset>
+            <div class="col-md-2">
+                    <fieldset>
+                        <div class="form-group">
+                            <label>Puan</label>
+                            <input type="number" name="Score" placeholder="Lütfen soru puanı giriniz" class="form-control small-input" id="Score" />
+                        </div>
+                    </fieldset>
+            </div>
+        </div>
+
     </form>
     <br>
+
+        <h3 id="answerHeader">Cevap Ekle</h3><br />
+        <div id="multipleChoiceAnswer">
+            <div id="multipleChoiceInput">
+                <div class="col-md-2" style="margin-left:-1%">
+                    <input type="radio" id="0MChoiceRadioId" name="fav_language" value="0">
+                </div>
+                <div class="col-md-4" style="margin-top:-2%;margin-left:1%">
+                    <input type="text" id="0MChoiceTextId" name="fname" class="form-control">
+                </div>
+                <br /><br />
+            </div>
+            <div id="choiceButtonDivId" class="col-md-3" style="margin-left:26%">
+                <button onclick="AddChoice()" class="btn btn-success">Seçenek Ekle</button>
+            </div>
+        </div>
+    </div>
+   
 
 </section>
 <br />
 <br />
 
-<h3 id="answerHeader">Cevap Ekle</h3><br />
-<div id="multipleChoiceAnswer">
-    <div id="multipleChoiceInput">
-        <div class="col-md-2">
-            <input type="radio" id="0MChoiceRadioId" name="fav_language" value="0">
-        </div>
-        <div class="col-md-4" style="margin-top:-2%;margin-left:1%">
-            <input type="text" id="0MChoiceTextId" name="fname" class="form-control">
-        </div>
-        <br /><br />
-    </div>
-    <div id="choiceButtonDivId" class="col-md-3">
-        <button onclick="AddChoice()" class="btn btn-success">Seçenek Ekle</button>
-    </div>
-</div>
+
 
 
 

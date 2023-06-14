@@ -16,5 +16,5 @@ namespace Entity.Domain.Exam
         public List<Question.Question>? Questions { get; set; }
         public string? IsEnded { get; set; }
 
-    }
+	}
 }

@@ -15,7 +15,7 @@ namespace UI.Models.ViewModels
 	public class UserExamViewModel
 	{
         public List<ExamUserViewModel>? ExamUserList { get; set; }
-		public List<ExamViewModel>? ExamList { get; set; }
+		//public List<ExamViewModel>? ExamList { get; set; }
 	}
 
 

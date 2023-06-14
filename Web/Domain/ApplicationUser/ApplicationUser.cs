@@ -31,9 +31,9 @@ namespace Entity.Domain.ApplicationUser
         [StringLength(1)]
         public string? IsVerify { get; set; }
 
-        public string InsertedUser { get; set; }
-
-        public DateTime InsertedDate { get; set; }
+        public Guid? InsertedUser{ get; set; }
+		//public string? InsertedUserName { get; set; }
+		public DateTime InsertedDate { get; set; }
 
         public string? UpdatedUser { get; set; }
 

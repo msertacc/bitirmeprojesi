@@ -1,6 +1,4 @@
 using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
-using System.Data;
 
 namespace Service.Worker
 {
@@ -8,35 +6,29 @@ namespace Service.Worker
     {
         private readonly ILogger<Worker> _logger;
         private readonly string? _connectionString;
-        public Worker(ILogger<Worker> logger, IConfiguration? configuration)
+
+        public Worker(ILogger<Worker> logger, IConfiguration configuration)
         {
             _logger = logger;
-            _connectionString = configuration?.GetConnectionString("ApplicationDbContextConnection")?.ToString();
+            _connectionString = configuration.GetConnectionString("ApplicationDbContextConnection");
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            SqlConnection connection = new SqlConnection(_connectionString);
-            string query = "UPDATE Exam SET IsEnded = 1 WHERE ExamEndTime <= GETDATE()";
-            SqlCommand command = new SqlCommand(query, connection);
-            try
-            {
-                connection.Open();
-            }
-            catch
-            {
-                throw;
-            }
-
+            const string query = "UPDATE Exam SET IsEnded = 1 WHERE ExamEndTime <= GETDATE()";
             while (!stoppingToken.IsCancellationRequested)
             {
                 _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                command.ExecuteNonQuery();
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    await connection.OpenAsync(stoppingToken);
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        await command.ExecuteNonQueryAsync(stoppingToken);
+                    }
+                }
                 await Task.Delay(1000, stoppingToken);
-
             }
         }
-
-        
     }
 }

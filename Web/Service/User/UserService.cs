@@ -3,6 +3,7 @@ using AutoMapper;
 using DataAccess.Data;
 using Entity.Domain.ApplicationUser;
 using Entity.Dto.User;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Service.User
@@ -11,27 +12,26 @@ namespace Service.User
 	{
 		private ApplicationDbContext context;
 		private IMapper mapper;
+		private UserManager<ApplicationUser> _userManager;
 
-		public UserService(ApplicationDbContext context, IMapper mapper)
+		public UserService(ApplicationDbContext context, IMapper mapper, UserManager<ApplicationUser> userManager)
 		{
 			this.context = context;
+			_userManager = userManager;
 			this.mapper = mapper;
 		}
 
 		public List<ApplicationUser> GetUsers()
 		{
 			var result = context.Users.AsNoTracking().Where(x => x.IsActive == "1").ToList();
-			//var mappingResult = mapper.Map<List<UserDto>>(result);
 			return result;
 		}
 
 		public ApplicationUser GetUserById(Guid id)
 		{
 			var result = context.Users.AsNoTracking().Where(x => x.IsActive == "1" && x.Id == id.ToString()).FirstOrDefault();
-			//var mappingResult = mapper.Map<UserDto>(result);
 			return result;
 		}
-
 		public ApplicationUser GetUserByGuid(Guid id)
 		{
 			var result = context.Users.AsNoTracking().Where(x => x.IsActive == "1" && x.Id==id.ToString()).FirstOrDefault();
@@ -39,32 +39,60 @@ namespace Service.User
 			return result;
 		}
 
-		//public async Task Create(UserDto userDto)
-		//{
-		//	ArgumentNullException.ThrowIfNull(userDto);
-		//	ArgumentNullException.ThrowIfNull(userDto.FirstName);
-		//	ArgumentNullException.ThrowIfNull(userDto.LastName);
-		//	ArgumentNullException.ThrowIfNull(userDto.IdentityNumber);
-		//	ArgumentNullException.ThrowIfNull(userDto.PhoneNumber);
-		//	ArgumentNullException.ThrowIfNull(userDto.EMail);
-		//	ArgumentNullException.ThrowIfNull(userDto.Gender);
+public async Task Create(UserDto userDto)
+		{
+			ArgumentNullException.ThrowIfNull(userDto);
+			ArgumentNullException.ThrowIfNull(userDto.FirstName);
+			ArgumentNullException.ThrowIfNull(userDto.LastName);
+			ArgumentNullException.ThrowIfNull(userDto.IdentityNumber);
+			ArgumentNullException.ThrowIfNull(userDto.PhoneNumber);
+			ArgumentNullException.ThrowIfNull(userDto.EMail);
+			ArgumentNullException.ThrowIfNull(userDto.Gender);
+			ArgumentNullException.ThrowIfNull(userDto.Password);
+			ArgumentNullException.ThrowIfNull(userDto.Role);
 
-		//	var duplicateControl = this.DuplicateControl(userDto);
-		//	if (duplicateControl == true)
-		//	{
-		//		throw new Exception("Bu öğrenci daha önce kayıt edilmiş!");
-		//	}
+			var duplicateControl = this.DuplicateControl(userDto);
+			if (duplicateControl == true)
+			{
+				throw new Exception("Bu kullanıcı daha önce kayıt edilmiş!");
+			}
 
-		//	//userDto.InsertedUser = Environment.UserName;
-		//	//userDto.InsertedDate = DateTime.Now;
-		//	//userDto.IsActive = "1";
+			userDto.InsertedDate = DateTime.Now;
+			userDto.IsActive = "1";
 
-		//	//var mappingResult = mapper.Map<UserDto,Entity.Domain.User.User>(userDto);
+			var isVerify = userDto.Role == "1" ? "0" : "1";
 
-		//	//await context.Set<Entity.Domain.User.User>().AddAsync(mappingResult);
-		//	await context.SaveChangesAsync();
-		//}
+			ApplicationUser user = new ApplicationUser()
+			{
+				FirstName = userDto.FirstName,
+				LastName = userDto.LastName,
+				IdentityNumber = userDto.IdentityNumber,
+				PhoneNumber = userDto.PhoneNumber,
+				InsertedDate = DateTime.Now,
+				InsertedUser = userDto.InsertedUser,
+				IsActive = "1",
+				RoleId = userDto.Role,
+				AccessFailedCount = 0,
+				IsVerify = isVerify,
+				UserName = userDto.EMail,
+				Email = userDto.EMail,
+				EmailConfirmed = true,
+				Gender = userDto.Gender,
+				NormalizedUserName = userDto.EMail.ToUpper(),
+				NormalizedEmail = userDto.EMail.ToUpper()
+			};
 
+			await _userManager.CreateAsync(user, userDto.Password);
+
+			PasswordHasher<ApplicationUser> hasher = new PasswordHasher<ApplicationUser>();
+
+			await context.Set<ApplicationUser>().AddAsync(user);
+
+			var hashedPassword = hasher.HashPassword(user, userDto.Password);
+			user.PasswordHash = hashedPassword;
+
+			await context.SaveChangesAsync();
+		}
 		//public async Task Update(UserDto userDto)
 		//{
 		//	ArgumentNullException.ThrowIfNull(userDto);
@@ -150,30 +178,27 @@ namespace Service.User
 			return user;
 		}
 
-		public async Task Delete(int id)
-		{
-			//ArgumentNullException.ThrowIfNull(id);
+		//public async Task Delete(int id)
+		//{
+		//	//ArgumentNullException.ThrowIfNull(id);
 
-			//var user = this.GetUserById(id);
-			//if (user == null)
-			//{
-			//	throw new Exception("Böyle bir kayıt bulunamadı!");
-			//}
+		//	//var user = this.GetUserById(id);
+		//	//if (user == null)
+		//	//{
+		//	//	throw new Exception("Böyle bir kayıt bulunamadı!");
+		//	//}
 
-			//user.IsActive = "0";
-			//user.UpdatedUser = Environment.UserName;
-			//user.UpdatedDate = DateTime.Now;
+		//	//user.IsActive = "0";
+		//	//user.UpdatedUser = Environment.UserName;
+		//	//user.UpdatedDate = DateTime.Now;
 
-			////var mappingResult = mapper.Map<UserDto, Entity.Domain.User.User>(user);
-			//context.Set<Entity.Domain.User.User>().Update(mappingResult);
-			//await context.SaveChangesAsync();
+		//	////var mappingResult = mapper.Map<UserDto, Entity.Domain.User.User>(user);
+		//	//context.Set<Entity.Domain.User.User>().Update(mappingResult);
+		//	//await context.SaveChangesAsync();
+//}
+	//}
 
-		}
 
-        public ApplicationUser GetUserById(int id)
-        {
-            throw new NotImplementedException();
-        }
 
         public List<ApplicationUser> GetStudentList()
         {
@@ -182,4 +207,5 @@ namespace Service.User
             return result;
         }
     }
+
 }

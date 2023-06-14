@@ -27,12 +27,10 @@ CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 //builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddDbContext<ApplicationDbContext>();
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultUI()
             .AddDefaultTokenProviders();
-//builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IAnswerOfQuestionService, AnswerOfQuestionService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<IExamUserService, ExamUserService>();

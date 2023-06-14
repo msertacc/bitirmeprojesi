@@ -1,6 +1,15 @@
-﻿@using Entity.Domain.ApplicationUser;
-@model ApplicationUser;
+﻿@model UserViewModel;
 @using UI.Constants;
+@using UI.Models.User;
+@using Entity.Domain.ApplicationUser;
+@using Microsoft.AspNetCore.Identity;
+@inject UserManager<ApplicationUser> _userManager;
+@{
+    if (User.Identity.IsAuthenticated)
+    {
+        ViewBag.UserId = _userManager.GetUserAsync(User).Result.Id;
+    }
+}
 
 @using (Html.BeginForm("Create", "User", FormMethod.Post))
 {
@@ -16,21 +25,27 @@
 						<fieldset>
 							<div class="form-group">
 								<label>Ad</label>
-								<input type="text" name="FirstName" placeholder="Lütfen öğrenci adını giriniz" class="form-control small-input" required />
+								<input type="text" name="FirstName" placeholder="Lütfen kullanıcı adını giriniz" class="form-control small-input" required />
 								<label>Soyad</label>
-								<input type="text" name="LastName" placeholder="Lütfen öğrenci soyadını giriniz" class="form-control small-input" required />
+								<input type="text" name="LastName" placeholder="Lütfen kullanıcı soyadını giriniz" class="form-control small-input" required />
 								<label>TC Kimlik Numarası</label>
-								<input type="text" name="IdentityNumber" pattern="[0-9]{11}" title="Lütfen kimlik numarasını 11 hane giriniz" placeholder="Lütfen öğrenci kimlik numarasını giriniz" class="form-control small-input" required />
+								<input type="text" name="IdentityNumber" pattern="[0-9]{11}" title="Lütfen kimlik numarasını 11 hane giriniz" placeholder="Lütfen kullanıcı kimlik numarasını giriniz" class="form-control small-input" required />
 								<label>Telefon Numarası</label>
-								<input type="text" name="PhoneNumber" pattern="[5][0-9]{9}" title="Lütfen telefon numarasını başında 0 olmadan 10 karakter giriniz" placeholder="Lütfen öğrenci telefon numarasını başında sıfır olmadan giriniz" class="form-control small-input" required />
+								<input type="text" name="PhoneNumber" pattern="[5][0-9]{9}" title="Lütfen telefon numarasını başında 0 olmadan 10 karakter giriniz" placeholder="Lütfen kullanıcı telefon numarasını başında sıfır olmadan giriniz" class="form-control small-input" required />
 								<label>E-Mail Adresi</label>
-									<input type="email" name="EMail" title="Lütfen e-mail'i doğru formatta giriniz" placeholder="Lütfen öğrenci e-postasını giriniz" class="form-control small-input" required />
+								<input type="email" name="EMail" title="Lütfen e-mail'i doğru formatta giriniz" placeholder="Lütfen kullanıcı e-postasını giriniz" class="form-control small-input" required />
+								<label>Şifre</label>
+								<input type="password" name="Password" pattern="(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])\S{6,}" title="Lütfen şifreyi doğru formatta giriniz" placeholder="Lütfen kullanıcının şifresini giriniz" class="form-control small-input" required />
 								<label>Cinsiyet</label>
-								<select class="form-select" name="Gender">
-									<option selected>Lütfen cinsiyet seçiniz</option>
-									<option value="@Convert.ToInt32(Gender.Erkek)">@Gender.Erkek</option>
-									<option value="@Convert.ToInt32(Gender.Kadın)">@Gender.Kadın</option>
-								</select>
+								<div class="form-floating mb-3">
+									<input checked type="radio" value="1" name="Gender" />Erkek<br />
+									<input type="radio" value="0" name="Gender" />Kadın<br />
+								</div>
+								<div class="form-floating mb-3">
+									<input checked type="radio" value="1" name="Role" />Öğrenci<br />
+									<input type="radio" value="0" name="Role" />Öğretmen<br />
+								</div>
+								<input type="text" name="InsertedUser" value="@ViewBag.UserId" required hidden/>
 							</div>
 						</fieldset>
 					</form>
@@ -49,4 +64,14 @@
 	$('#closeCreateModal').click(function () {
 		$('#ModalCreate').modal('hide');
 	});
+
+	$("input[name=Role]").change(function (e) {
+		var role = e.target.value;
+		role === "0" ? $("#role").val("0") : $("#role").val("1")
+	})
+
+	$("input[name=Gender]").change(function (e) {
+		var gender = e.target.value;
+		gender === "1" ? $("#gender").val("1") : $("#gender").val("0")
+	})
 </script>

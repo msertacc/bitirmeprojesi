@@ -12,7 +12,10 @@
 
 		public static string? GetCourseEndPoint = CourseEndPoint + "/Get";
 
-		public static string? GetCourseByIdEndPoint = CourseEndPoint + "/GetById";
+        public static string? GetCourseByGuidEndPoint = CourseEndPoint + "/GetCoursesByGuid";
+
+
+        public static string? GetCourseByIdEndPoint = CourseEndPoint + "/GetById";
 
 		public static string? CreateCourseEndPoint = CourseEndPoint + "/Create";
 

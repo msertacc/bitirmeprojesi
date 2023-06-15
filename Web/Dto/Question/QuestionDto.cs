@@ -15,6 +15,5 @@ namespace Entity.Dto.Question
         public int Score { get; set; }
         public string[] AnswerArray { get; set; }
         public int? TrueAnswer { get; set; }
-        //public List<Choice.ChoiceDto> Choices { get; set; }
     }
 }

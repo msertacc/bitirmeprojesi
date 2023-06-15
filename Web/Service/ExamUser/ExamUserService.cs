@@ -35,25 +35,6 @@ namespace Service.ExamUser
 
                          }).ToList();
             return query;
-
-
-            //var query = (from examUser in context.ExamUsers
-            //             join exams in context.Exams on examUser.ExamId equals exams.Id
-            //             join courses in context.Courses on exams.CourseId equals courses.Id
-            //             join studentCourses in context.StudentCourses on courses.Id equals studentCourses.CourseId
-            //             where courses.IsActive == "1" && studentCourses.IsActive == "1" && exams.IsActive == "1" && examUser.IsActive == "1" &&  studentCourses.UserId == Guid.Parse(id) &&  examUser.UserId==id
-            //             select new ExamUserDto
-            //             {
-            //                 ExamId=exams.Id,
-            //                 ExamName = exams.ExamName,
-            //                 IsEnded = exams.IsEnded,
-            //                 ExamStartTime = exams.ExamStartTime,
-            //                 ExamEndTime = exams.ExamEndTime,
-            //                 InsertedDate = exams.InsertedDate,
-            //                 UpdatedDate = exams.UpdatedDate,
-
-            //             }).ToList();
-            //return query;
         }
 
         public IEnumerable<ResultExamDto> GetResultsForExams(Guid userid)

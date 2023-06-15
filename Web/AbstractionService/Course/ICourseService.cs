@@ -6,6 +6,8 @@ namespace Abstraction.Service.Course
     {
         List<CourseDto> GetCourses();
 
+        List<CourseDto> GetCoursesByGuid(Guid id);
+
         CourseDto GetCourseById(int id);
 
         Task<CourseDto> Create(CourseDto courseDto);

@@ -1,10 +1,7 @@
 ﻿using Abstraction.Service.AnswerOfQuestionService;
-using Abstraction.Service.Choice;
 using API.Models.AnswerOfQuestion;
-using API.Models.Question;
 using AutoMapper;
 using Entity.Dto.AnswerOfQuestion;
-using Entity.Dto.Question;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.AnswerOfQuestion

@@ -10,7 +10,7 @@ using UI.Models.QuestionManagement;
 
 namespace UI.Controllers
 {
-  //  [Authorize(Roles = "Teacher")]
+    [Authorize(Roles = "Teacher")]
     public class QuestionManagementController : Controller
     {
         private readonly IMapper mapper;

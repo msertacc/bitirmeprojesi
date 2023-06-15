@@ -26,7 +26,14 @@ namespace API.Controllers.Course
 			return response;
 		}
 
-		[HttpGet("GetById")]
+        [HttpGet("GetCoursesByGuid/{id:Guid}")]
+        public IEnumerable<CourseDto> GetCoursesByGuid(Guid id)
+        {
+            var response = this.courseService.GetCoursesByGuid(id);
+            return response;
+        }
+
+        [HttpGet("GetById")]
 		public CourseDto GetById(int courseId)
 		{
 			var response = this.courseService.GetCourseById(courseId);

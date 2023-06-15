@@ -83,10 +83,6 @@ namespace UI.Controllers
                 throw;
             }
             
-            //if (!response.IsSuccessStatusCode)
-            //{
-            //    errorMessage = response.Content.ReadAsStringAsync().Result;
-            //}
             return this.Redirect(Url.Action("Index"));
         }
 

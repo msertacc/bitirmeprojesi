@@ -12,5 +12,5 @@ namespace Entity.Domain.Course
         public List<Exam.Exam>? Exams { get; set; }
 		public List<StudentCourse.StudentCourse>? StudentCourses { get; set; }
 
-	}
+    }
 }

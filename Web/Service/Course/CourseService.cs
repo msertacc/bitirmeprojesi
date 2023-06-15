@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using DataAccess.Data;
 using Entity.Dto.Course;
 using Abstraction.Service.Course;
+using Entity.Dto.ExamUser;
 
 namespace Service.Course
 {
@@ -113,6 +114,19 @@ namespace Service.Course
                 return true;
             }
             return false;
-		}		
-	}
+		}
+
+        public List<CourseDto> GetCoursesByGuid(Guid id)
+        {
+            var query = (from courses in context.Courses
+                         join studentCourses in context.StudentCourses on courses.Id equals studentCourses.CourseId
+                         where courses.IsActive == "1" && studentCourses.IsActive == "1" && studentCourses.UserId==id 
+                         select new CourseDto
+                         {
+                             Name = courses.Name,
+							 Id = courses.Id
+                         }).ToList();
+            return query;
+        }
+    }
 }

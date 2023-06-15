@@ -3,14 +3,10 @@ using Entity.Domain.ApplicationUser;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 using System.Text;
 using UI.Constants;
 using UI.Models.Course;
-using UI.Models.Exam;
-using UI.Models.Question;
 using UI.Models.StudentCourse;
-using UI.Models.User;
 
 namespace UI.Controllers
 {

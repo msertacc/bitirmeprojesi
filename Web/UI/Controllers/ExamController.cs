@@ -11,7 +11,7 @@ using UI.Models.Exam;
 
 namespace UI.Controllers
 {
-   // [Authorize(Roles = "Teacher")]
+    [Authorize(Roles = "Teacher")]
     public class ExamController : Controller
     {
         private readonly IMapper mapper;
@@ -27,12 +27,8 @@ namespace UI.Controllers
         public async Task<IActionResult> Index()
         {
             List<ExamViewModel>? result = new List<ExamViewModel>();
-			//string user = Environment.UserName; //_userManager.GetUserAsync(HttpContext.User).Result.Id;
-			//string guidString = "bc5cbb76-0b16-472d-8ab0-3453ece564dc";
-			//Guid manualGuid = new Guid(guidString);
 			string user = _userManager.GetUserAsync(HttpContext.User).Result.Id;
 
-			//var response = await client.GetAsync(ApiEndpoints.GetExamUserByIdEndPoint + "/" + user).ConfigureAwait(false);
 			var response = await client.GetAsync(ApiEndpoints.GetExamEndPoint + "/" + user).ConfigureAwait(false);
 
             if (response.IsSuccessStatusCode)
@@ -46,7 +42,10 @@ namespace UI.Controllers
         public async Task<ActionResult> _Create()
         {
             List<CourseViewModel>? result = new List<CourseViewModel>();
-            var response = await client.GetAsync(ApiEndpoints.GetCourseEndPoint).ConfigureAwait(false);
+
+            string id = _userManager.GetUserAsync(HttpContext.User).Result.Id;
+
+            var response = await client.GetAsync(ApiEndpoints.GetCourseByGuidEndPoint + "/" + id).ConfigureAwait(false);
 
             if (response.IsSuccessStatusCode)
             {
@@ -101,10 +100,11 @@ namespace UI.Controllers
                 result = JsonConvert.DeserializeObject<List<ExamViewModel>>(apiResponse);
                 list.ExamViewModel = result[0];
             }
+            string guid = _userManager.GetUserAsync(HttpContext.User).Result.Id;
 
-            var response2 = await client.GetAsync(ApiEndpoints.GetCourseEndPoint).ConfigureAwait(false);
+            var response2 = await client.GetAsync(ApiEndpoints.GetCourseByGuidEndPoint + "/" + guid).ConfigureAwait(false);
 
-            if (response.IsSuccessStatusCode)
+            if (response2.IsSuccessStatusCode)
             {
                 string apiResponse = await response2.Content.ReadAsStringAsync();
                 list.CourseViewModel = JsonConvert.DeserializeObject<List<CourseViewModel>>(apiResponse);

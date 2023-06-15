@@ -50,46 +50,46 @@ namespace API.Controllers.User
         }
 
 		[HttpGet("GetUserByGuid/{id:Guid}")]
-		public ApplicationUser GetUserByGuid(Guid id)
+		public ApplicationUser GetUserByGuid( Guid id)
 		{
 			var response = this.userService.GetUserByGuid(id);
 			return response;
 		}
 
-		//[HttpPost("Update")]
-		//public async Task<IActionResult> Update([FromBody] UserUpdateRequest model)
-		//{
-		//	try
-		//	{
-		//		var mappingModel = this.mapper.Map<UserUpdateRequest, UserDto>(model);
+		[HttpPost("Update")]
+		public async Task<IActionResult> Update([FromBody] UserUpdateRequest model)
+		{
+			try
+			{
+				var mappingModel = this.mapper.Map<UserUpdateRequest, UserDto>(model);
 
-		//		await this.userService.Update(mappingModel).ConfigureAwait(false);
+				await this.userService.Update(mappingModel).ConfigureAwait(false);
 
-		//		return this.Ok();
-		//	}
-		//	catch (Exception ex)
-		//	{
+				return this.Ok();
+			}
+			catch (Exception ex)
+			{
 
-		//		return this.BadRequest(ex.Message);
-		//	}
+				return this.BadRequest(ex.Message);
+			}
 
-		//}
+		}
 
-		//[HttpPost("Delete")]
-		//public async Task<IActionResult> Delete([FromBody] int userId)
-		//{
-		//	try
-		//	{
-		//		await this.userService.Delete(userId).ConfigureAwait(false);
+		[HttpPost("Delete")]
+		public async Task<IActionResult> Delete([FromBody] Guid id)
+		{
+			try
+			{
+				await this.userService.Delete(id).ConfigureAwait(false);
 
-		//		return this.Ok();
-		//	}
-		//	catch (Exception ex)
-		//	{
+				return this.Ok();
+			}
+			catch (Exception ex)
+			{
 
-		//		return this.BadRequest(ex.Message);
-		//	}
+				return this.BadRequest(ex.Message);
+			}
 
-		//}
+		}
 	}
 }

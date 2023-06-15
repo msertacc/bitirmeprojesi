@@ -66,7 +66,7 @@
                     $("#multipleChoiceInput").append('<input type="radio" ' + 'id="' + multipleChoiceCount + 'MChoiceRadioId"' + 'name="fav_language"' + ' value="' + multipleChoiceCount + '"' + ' >');
                 }
                 $("#multipleChoiceInput").append(' </div>');
-                $("#multipleChoiceInput").append('<div class="col-md-4" style="margin-top:-2%;margin-left:1%" ><input type="text"  ' + 'id="' + multipleChoiceCount + 'MChoiceTextId"' + 'value=' + choiceList[i].choiceExplanation + 'name="fname"  class="form-control"' + '></div><br><br>');
+                $("#multipleChoiceInput").append('<div class="col-md-4" style="margin-top:-2%;margin-left:1%" ><input type="text"  ' + 'id="' + multipleChoiceCount + 'MChoiceTextId" value="' + choiceList[i].choiceExplanation + '"' + ' name="fname"  class="form-control"' + '></div><br><br>');
                 multipleChoiceCount++;
             }
         }
@@ -80,7 +80,7 @@
         $("#multipleChoiceInput").append(' <div class="col-md-2">');
         $("#multipleChoiceInput").append('<input type="radio" ' + 'id="' + multipleChoiceCount + 'MChoiceRadioId"' + 'name="fav_language"' + ' value="' + multipleChoiceCount + '"' + ' >');
         $("#multipleChoiceInput").append(' </div>');
-        $("#multipleChoiceInput").append('<div class="col-md-4" style="margin-top:-2%;margin-left:1%" ><input type="text"  ' + 'id="' + multipleChoiceCount + 'MChoiceTextId"' + 'name="fname"  class="form-control"' + '></div><br><br>');
+        $("#multipleChoiceInput").append('<div class="col-md-4" style="margin-top:-2%;margin-left:1%" ><input type="text"  ' + 'id="' + multipleChoiceCount + 'MChoiceTextId"' + ' name="fname "  class="form-control"' + '></div><br><br>');
         $("#multipleChoiceInput").append(' </div>'); 
         multipleChoiceCount++;
 

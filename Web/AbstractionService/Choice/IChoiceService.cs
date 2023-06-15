@@ -13,11 +13,6 @@ namespace Abstraction.Service.Choice
     public interface IChoiceService
     {
         List<ChoiceDto> GetChoiceByQuestionId(int id);
-        List<ChoiceDto> GetChoicesByQuestionIdList(string questionIdList);
-        List<ChoiceDto> GetChoices();
-        ChoiceDto GetChoiceById(int id);
-        Task Create(ChoiceDto choiceDto);
-        Task Update(ChoiceDto choiceDto);
-        Task Delete(ChoiceDto choiceDto);
+        List<ChoiceDto> GetChoicesByQuestionIdList(string questionIdList);       
     }
 }

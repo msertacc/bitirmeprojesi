@@ -44,8 +44,9 @@
 								<div class="form-floating mb-3">
 									<input checked type="radio" value="1" name="Role" />Öğrenci<br />
 									<input type="radio" value="0" name="Role" />Öğretmen<br />
+									<input type="radio" value="2" name="Role" />Admin<br />
 								</div>
-								<input type="text" name="InsertedUser" value="@ViewBag.UserId" required hidden/>
+								<input type="text" name="InsertedUser" value="@ViewBag.UserId" hidden/>
 							</div>
 						</fieldset>
 					</form>
@@ -67,7 +68,7 @@
 
 	$("input[name=Role]").change(function (e) {
 		var role = e.target.value;
-		role === "0" ? $("#role").val("0") : $("#role").val("1")
+		role === "0" ? $("#role").val("0") : (role === "1" ? $("#role").val("1") : $("#role").val("2"))
 	})
 
 	$("input[name=Gender]").change(function (e) {

@@ -19,15 +19,13 @@ namespace Service.ExamUser
 
         public List<ExamUserDto> GetExamByUser(string id)
         {
-
-            var query = (from examUser in context.ExamUsers
-                         join exams in context.Exams on examUser.ExamId equals exams.Id
+            var query = (from exams in context.Exams 
                          join courses in context.Courses on exams.CourseId equals courses.Id
                          join studentCourses in context.StudentCourses on courses.Id equals studentCourses.CourseId
-                         where courses.IsActive == "1" && studentCourses.IsActive == "1" && exams.IsActive == "1" && examUser.IsActive == "1" &&  studentCourses.UserId == Guid.Parse(id) &&  examUser.UserId==id
+                         where courses.IsActive == "1" && studentCourses.IsActive == "1" && exams.IsActive == "1" && studentCourses.UserId == Guid.Parse(id) 
                          select new ExamUserDto
                          {
-                             ExamId=exams.Id,
+                             ExamId = exams.Id,
                              ExamName = exams.ExamName,
                              IsEnded = exams.IsEnded,
                              ExamStartTime = exams.ExamStartTime,
@@ -38,9 +36,24 @@ namespace Service.ExamUser
                          }).ToList();
             return query;
 
-            //var result = context.ExamUsers.AsNoTracking().Where(x => x.IsActive == "1" && x.UserId == id).ToList();
-            //var mappingResult = mapper.Map<List<ExamUserDto>>(result);
-            //return mappingResult;
+
+            //var query = (from examUser in context.ExamUsers
+            //             join exams in context.Exams on examUser.ExamId equals exams.Id
+            //             join courses in context.Courses on exams.CourseId equals courses.Id
+            //             join studentCourses in context.StudentCourses on courses.Id equals studentCourses.CourseId
+            //             where courses.IsActive == "1" && studentCourses.IsActive == "1" && exams.IsActive == "1" && examUser.IsActive == "1" &&  studentCourses.UserId == Guid.Parse(id) &&  examUser.UserId==id
+            //             select new ExamUserDto
+            //             {
+            //                 ExamId=exams.Id,
+            //                 ExamName = exams.ExamName,
+            //                 IsEnded = exams.IsEnded,
+            //                 ExamStartTime = exams.ExamStartTime,
+            //                 ExamEndTime = exams.ExamEndTime,
+            //                 InsertedDate = exams.InsertedDate,
+            //                 UpdatedDate = exams.UpdatedDate,
+
+            //             }).ToList();
+            //return query;
         }
 
         public IEnumerable<ResultExamDto> GetResultsForExams(Guid userid)
@@ -61,98 +74,5 @@ namespace Service.ExamUser
 
             return result;
         }
-
-
-
-        //public CourseDto GetCourseById(int id)
-        //{
-        //	var result = context.Courses.AsNoTracking().Where(x => x.IsActive == "1" && x.Id==id).FirstOrDefault();
-        //	var mappingResult = mapper.Map<CourseDto>(result);
-        //	return mappingResult;
-        //}
-
-        //public async Task<CourseDto> Create(CourseDto courseDto)
-        //{
-        //          ArgumentNullException.ThrowIfNull(courseDto);
-        //          ArgumentNullException.ThrowIfNull(courseDto.Name);
-
-        //          var duplicateControl=this.DuplicateControl(courseDto);
-        //          if(duplicateControl == true)
-        //          {
-        //              throw new Exception("Bu ders daha önce kayıt edilmiş!");
-        //          }
-
-        //	courseDto.InsertedUser=Environment.UserName;
-        //          courseDto.InsertedDate=DateTime.Now;
-        //          courseDto.IsActive = "1";
-
-        //          var mappingResult = mapper.Map<CourseDto,Entity.Domain.Course.Course>(courseDto);
-
-        //          await context.Set<Entity.Domain.Course.Course>().AddAsync(mappingResult);
-        //          await context.SaveChangesAsync();
-
-        //	return courseDto;
-
-        //}
-
-        //public async Task Update(CourseDto courseDto)
-        //{
-        //	ArgumentNullException.ThrowIfNull(courseDto);
-        //	ArgumentNullException.ThrowIfNull(courseDto.Id);
-        //	ArgumentNullException.ThrowIfNull(courseDto.Name);
-
-        //	var course=this.GetCourseById(courseDto.Id);
-
-        //	if(course == null)
-        //	{
-        //		throw new Exception("Böyle bir kayıt bulunamadı!");
-        //	}
-
-        //	course.Name=courseDto.Name;
-        //	course.UpdatedUser=Environment.UserName;
-        //	course.UpdatedDate=DateTime.Now;
-
-        //	var duplicateControl = this.DuplicateControl(course);
-        //	if (duplicateControl == true)
-        //	{
-        //		throw new Exception("Bu ders daha önce kayıt edilmiş!");
-        //	}
-
-        //	var mappingResult = mapper.Map<CourseDto, Entity.Domain.Course.Course>(course);
-
-        //	context.Set<Entity.Domain.Course.Course>().Update(mappingResult);
-        //	await context.SaveChangesAsync();
-
-        //}
-
-        //public async Task Delete(int id)
-        //{
-        //	ArgumentNullException.ThrowIfNull(id);
-
-        //	var course = this.GetCourseById(id);
-        //	if (course == null)
-        //	{
-        //		throw new Exception("Böyle bir kayıt bulunamadı!");
-        //	}
-
-        //	course.IsActive = "0";
-        //	course.UpdatedUser = Environment.UserName;
-        //	course.UpdatedDate = DateTime.Now;
-
-        //	var mappingResult = mapper.Map<CourseDto, Entity.Domain.Course.Course>(course);
-        //	context.Set<Entity.Domain.Course.Course>().Update(mappingResult);
-        //	await context.SaveChangesAsync();
-
-        //}
-
-        //public bool DuplicateControl(CourseDto courseDto)
-        //      {
-        //	var result = context.Courses.AsNoTracking().Where(x => x.IsActive == "1" && x.Name.Trim().ToLower()==courseDto.Name.Trim().ToLower()).FirstOrDefault();
-        //          if(result!=null)
-        //          {
-        //              return true;
-        //          }
-        //          return false;
-        //}		
     }
 }

@@ -53,7 +53,7 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Exam" asp-action="Index">Sınav Düzenle</a>
                             </li>
                         }
-                        @if (User.Identity.IsAuthenticated @*&& User.IsInRole("Admin")*@)
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Course" asp-action="Index">Ders Düzenle</a>

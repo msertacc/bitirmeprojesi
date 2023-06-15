@@ -14,7 +14,7 @@ namespace DataAccess.Data
 		{
 			if (!options.IsConfigured)
 			{
-				options.UseSqlServer("Server=LAPTOP-QORO4PVD;Database=SSA;User Id=sa; Password=12;Integrated Security=SSPI;TrustServerCertificate=True");
+				options.UseSqlServer("Server=DESKTOP-0IL4JB7;Database=SSA;User Id=sa; Password=12;Integrated Security=SSPI;TrustServerCertificate=True");
 			}
 		}
 
@@ -31,7 +31,7 @@ namespace DataAccess.Data
 				.Ignore(x => x.TwoFactorEnabled)
 				.Ignore(x => x.PhoneNumberConfirmed)
 				.Ignore(x => x.SecurityStamp);
-				//.Ignore(x => x.InsertedUserName);
+
 			base.OnModelCreating(modelBuilder);
 		}
 		public DbSet<Entity.Domain.Course.Course> Courses { get; set; }

@@ -1,6 +1,15 @@
-﻿@model ApplicationUser;
+﻿@model UserViewModel;
 @using Entity.Domain.ApplicationUser;
+@using Microsoft.AspNetCore.Identity;
 @using UI.Constants;
+@using UI.Models.User;
+@inject UserManager<ApplicationUser> _userManager;
+@{
+	if (User.Identity.IsAuthenticated)
+	{
+		ViewBag.UserId = _userManager.GetUserAsync(User).Result.Id;
+	}
+}
 
 @using (Html.BeginForm("Update", "User", FormMethod.Post))
 {
@@ -25,22 +34,7 @@
 								<label>Telefon Numarası</label>
 								<input type="text" value="@Model.PhoneNumber" name="PhoneNumber" pattern="[5][0-9]{9}" title="Lütfen telefon numarasını başında 0 olmadan 10 karakter giriniz" placeholder="Lütfen öğrenci telefon numarasını başında sıfır olmadan giriniz" class="form-control small-input" required />
 								<label>E-Mail Adresi</label>
-									<input type="email" value="@Model.Email" name="EMail" title="Lütfen e-mail'i doğru formatta giriniz" placeholder="Lütfen öğrenci e-postasını giriniz" class="form-control small-input" required />
-								<label>Cinsiyet</label>
-								<select class="form-select" value="@Model.Gender" name="Gender">
-									<option>Lütfen cinsiyet seçiniz</option>
-									@if(Model.Gender==Convert.ToInt32(Gender.Erkek).ToString())
-									{										
-										<option value="@Convert.ToInt32(Gender.Erkek)" selected>@Gender.Erkek</option>
-										<option value="@Convert.ToInt32(Gender.Kadın)">@Gender.Kadın</option>
-									}
-									else
-									{
-										<option value="@Convert.ToInt32(Gender.Erkek)">@Gender.Erkek</option>
-										<option value="@Convert.ToInt32(Gender.Kadın)" selected>@Gender.Kadın</option>
-									}
-
-								</select>
+								<input type="email" value="@Model.EMail" name="EMail" title="Lütfen e-mail'i doğru formatta giriniz" placeholder="Lütfen öğrenci e-postasını giriniz" class="form-control small-input" required />					
 							</div>
 						</fieldset>
 					</form>

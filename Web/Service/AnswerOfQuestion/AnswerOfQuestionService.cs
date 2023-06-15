@@ -53,26 +53,6 @@ namespace Service.AnswerOfQuestion
             {
             }
 
-        }
-
-        public Task Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<AnswerOfQuestionDto> GetCourses()
-        {
-            throw new NotImplementedException();
-        }
-
-        public AnswerOfQuestionDto GetnswerOfQuestionById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task Update(AnswerOfQuestionDto answerOfQuestionDto)
-        {
-            throw new NotImplementedException();
-        }
+        }      
     }
 }

@@ -12,12 +12,5 @@ namespace Abstraction.Service.AnswerOfQuestionService
     public interface IAnswerOfQuestionService
     {
         Task Create(AnswerOfQuestionDto answerOfQuestionDto);
-        List<AnswerOfQuestionDto> GetCourses();
-
-        AnswerOfQuestionDto GetnswerOfQuestionById(int id);
-
-        Task Update(AnswerOfQuestionDto answerOfQuestionDto);
-
-        Task Delete(int id);
     }
 }

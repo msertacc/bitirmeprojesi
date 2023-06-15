@@ -1,21 +1,13 @@
 ﻿using Abstraction.Service.Question;
 using AutoMapper;
 using DataAccess.Data;
-using Entity.Domain.Question;
 using Entity.Dto.Choice;
-using Entity.Dto.Exam;
 using Entity.Dto.Question;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace Service.Question
 {
-    public class QuestionService : IQuestionService
+	public class QuestionService : IQuestionService
     {
         private ApplicationDbContext context;
         private IMapper mapper;
@@ -56,7 +48,7 @@ namespace Service.Question
                 {
                     ChoiceExplanation = newQuestionDto.AnswerArray[i],
                     IsTrue = isTrue,
-                    QuestionId = questionInfo.Id,                                              //değiştirilecek
+                    QuestionId = questionInfo.Id,                                              
                     InsertedUser = Environment.UserName,
                     InsertedDate = DateTime.Now,
                     IsActive = "1",
@@ -122,8 +114,7 @@ namespace Service.Question
             }
             catch (DbUpdateConcurrencyException)
             {
-                // use an optimistic concurrency strategy from:
-                // https://learn.microsoft.com/en-us/ef/core/saving/concurrency#resolving-concurrency-conflicts
+                
             }
         }
 
@@ -143,8 +134,7 @@ namespace Service.Question
 
         public List<QuestionDto> GetQuestions()
         {
-            var result = context.Questions.AsNoTracking().Where(x => x.IsActive == "1").ToList();
-            //var result = context.Questions.AsNoTracking().Include(i => i.QuestionTypes).Where(x => x.QuestionTypeId == x.QuestionTypes.Id && x.IsActive == "1").ToList();
+            var result = context.Questions.AsNoTracking().Where(x => x.IsActive == "1").ToList();   
             var mappingResult = mapper.Map<List<QuestionDto>>(result);
             return mappingResult;
         }
@@ -216,8 +206,7 @@ namespace Service.Question
             }
             catch (DbUpdateConcurrencyException)
             {
-                // use an optimistic concurrency strategy from:
-                // https://learn.microsoft.com/en-us/ef/core/saving/concurrency#resolving-concurrency-conflicts
+                
             }
 
             for (int i = 0; i < questionDto.AnswerArray.Length; i++)
@@ -246,8 +235,7 @@ namespace Service.Question
             }
             catch (DbUpdateConcurrencyException)
             {
-                // use an optimistic concurrency strategy from:
-                // https://learn.microsoft.com/en-us/ef/core/saving/concurrency#resolving-concurrency-conflicts
+                
             }
 
         }

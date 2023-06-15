@@ -10,7 +10,6 @@ namespace Abstraction.Service.Question
 {
     public interface IQuestionService
     {
-        //	List<QuestionDto> GetQuestionsByParameters(string questionText, int score, int questionTypeId);
         List<QuestionDto> GetQuestionsByExamId(int id);
         List<QuestionDto> GetQuestions();
 

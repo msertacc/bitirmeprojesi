@@ -17,8 +17,6 @@ namespace Abstraction.Service.StudentCourse
 
         Task<StudentCourseDto> Create(StudentCourseDto studentCourseDto);
 
-        Task Update(StudentCourseDto studentCourseDto);
-
         Task Delete(int id);
     }
 }

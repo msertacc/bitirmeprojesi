@@ -2,7 +2,7 @@
 {
 	public class UserUpdateRequest
 	{
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         public string? FirstName { get; set; }
 
@@ -14,6 +14,5 @@
 
 		public string? EMail { get; set; }
 
-		public string? Gender { get; set; }
 	}
 }

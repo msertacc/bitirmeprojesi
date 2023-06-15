@@ -46,13 +46,13 @@ namespace API.Controllers.Choice
             return response;
         }
 
-        [HttpPost("Delete")]
-        public async Task<IActionResult> Delete([FromBody] ChoiceCreateRequest model)
-        {
+        //[HttpPost("Delete")]
+        //public async Task<IActionResult> Delete([FromBody] ChoiceCreateRequest model)
+        //{
 
-            var mappingModel = this.mapper.Map<ChoiceCreateRequest, ChoiceDto>(model);
-            await this.choiceService.Delete(mappingModel).ConfigureAwait(false);
-            return this.Ok();
-        }
+        //    var mappingModel = this.mapper.Map<ChoiceCreateRequest, ChoiceDto>(model);
+        //    await this.choiceService.Delete(mappingModel).ConfigureAwait(false);
+        //    return this.Ok();
+        //}
     }
 }

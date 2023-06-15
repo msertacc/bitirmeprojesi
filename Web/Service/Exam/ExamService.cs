@@ -115,8 +115,7 @@ namespace Service.Exam
 			}
 			catch (DbUpdateConcurrencyException)
 			{
-				// use an optimistic concurrency strategy from:
-				// https://learn.microsoft.com/en-us/ef/core/saving/concurrency#resolving-concurrency-conflicts
+				
 			}
 
 		}
@@ -189,8 +188,5 @@ namespace Service.Exam
             await context.SaveChangesAsync();
 
         }
-
-
-
     }
 }

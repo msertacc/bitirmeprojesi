@@ -2,6 +2,7 @@
 {
 	public class UserDto
 	{
+		public Guid Id { get; set; }
 		public string? FirstName { get; set; }
 
 		public string? LastName { get; set; }
@@ -18,6 +19,8 @@
 		public string? IsActive { get; set; }
 		public DateTime? InsertedDate { get; set; }
 		public Guid? InsertedUser { get; set; }
+
+		public Guid? UpdatedUser { get; set; }
 
 	}
 }

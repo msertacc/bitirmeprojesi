@@ -1,22 +1,12 @@
 ﻿using Abstraction.Service.StudentCourse;
 using AutoMapper;
 using DataAccess.Data;
-using Entity.Domain.Course;
-using Entity.Domain.Question;
-using Entity.Domain.StudentCourse;
-using Entity.Dto.Choice;
-using Entity.Dto.Course;
 using Entity.Dto.StudentCourse;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Service.StudentCourse
 {
-    public class StudentCourseService:IStudentCourseService
+	public class StudentCourseService:IStudentCourseService
     {
 		private ApplicationDbContext context;
 		private IMapper mapper;
@@ -82,11 +72,6 @@ namespace Service.StudentCourse
 			var mappingResult = mapper.Map<StudentCourseDto>(result);
 			return mappingResult;
 		}
-
-        public Task Update(StudentCourseDto studentCourseDto)
-        {
-            throw new NotImplementedException();
-        }
 
 		public bool DuplicateControl(StudentCourseDto studentCourseDto)
 		{

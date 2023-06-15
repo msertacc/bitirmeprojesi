@@ -66,7 +66,7 @@ app.UseAuthorization();
 app.MapHub<ExamHub>("/examHub");
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=User}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
 //app.UseSqlTableDependency<SubscribeExamTableDependency>(connectionString);

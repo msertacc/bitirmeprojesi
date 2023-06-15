@@ -51,23 +51,20 @@ namespace UI.Controllers
             return this.Redirect(Url.Action("Index"));
         }
 
-        public async Task<ActionResult> _Update(int id)
+        public async Task<ActionResult> _Update(Guid id)
         {
             var errorMessage = "";
 
-            var query = new Dictionary<string, string>()
-            {
-                ["courseId"] = id.ToString(),
-            };
-
-            var uri = QueryHelpers.AddQueryString(ApiEndpoints.GetUserByIdEndPoint, query);
-            var response = await client.GetAsync(uri).ConfigureAwait(false);
+			var response = await client.GetAsync(ApiEndpoints.GetUserByGuidEndPoint + "/" + id).ConfigureAwait(false);
             var apiResponse = await response.Content.ReadAsStringAsync();
             if (!response.IsSuccessStatusCode)
             {
                 errorMessage = apiResponse;
             }
+
             var result = JsonConvert.DeserializeObject<UserViewModel>(apiResponse);
+
+            
             return PartialView(result);
         }
 
@@ -76,38 +73,43 @@ namespace UI.Controllers
             var errorMessage = "";
             var json = JsonConvert.SerializeObject(viewModel, new JsonSerializerSettings { });
             var data = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await client.PostAsync(ApiEndpoints.UpdateUserEndPoint, data).ConfigureAwait(false);
-            if (!response.IsSuccessStatusCode)
+            try
             {
-                errorMessage = response.Content.ReadAsStringAsync().Result;
+				var response = await client.PostAsync(ApiEndpoints.UpdateUserEndPoint, data).ConfigureAwait(false);
+			}
+            catch (Exception ex)
+            {
+
+                throw;
             }
+            
+            //if (!response.IsSuccessStatusCode)
+            //{
+            //    errorMessage = response.Content.ReadAsStringAsync().Result;
+            //}
             return this.Redirect(Url.Action("Index"));
         }
 
-        public async Task<ActionResult> _Delete(int id)
+        public async Task<ActionResult> _Delete(Guid id)
         {
             var errorMessage = "";
 
-            var query = new Dictionary<string, string>()
-            {
-                ["courseId"] = id.ToString(),
-            };
-
-            var uri = QueryHelpers.AddQueryString(ApiEndpoints.GetUserByIdEndPoint, query);
-            var response = await client.GetAsync(uri).ConfigureAwait(false);
+			var response = await client.GetAsync(ApiEndpoints.GetUserByGuidEndPoint + "/" + id).ConfigureAwait(false);
             var apiResponse = await response.Content.ReadAsStringAsync();
             if (!response.IsSuccessStatusCode)
             {
                 errorMessage = apiResponse;
             }
-            var result = JsonConvert.DeserializeObject<UserViewModel>(apiResponse);
+
+			var result = JsonConvert.DeserializeObject<UserViewModel>(apiResponse);
+     
             return PartialView(result);
         }
 
-        public async Task<ActionResult> Delete(UserViewModel viewModel)
+        public async Task<ActionResult> Delete(Guid id)
         {
             var errorMessage = "";
-            var json = JsonConvert.SerializeObject(viewModel.Id, new JsonSerializerSettings { });
+            var json = JsonConvert.SerializeObject(id, new JsonSerializerSettings { });
             var data = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await client.PostAsync(ApiEndpoints.DeleteUserEndPoint, data).ConfigureAwait(false);
             if (!response.IsSuccessStatusCode)

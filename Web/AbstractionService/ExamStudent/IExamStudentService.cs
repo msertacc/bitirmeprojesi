@@ -7,5 +7,7 @@ namespace Abstraction.Service.ExamUser
 	{
 		List<ExamUserDto> GetExamByUser(string id);
         IEnumerable<ResultExamDto> GetResultsForExams(Guid userid);
+        Task Create(ExamUserDto examUserDto);
+        Task Update(int? examId, Guid? userId);
     }
 }

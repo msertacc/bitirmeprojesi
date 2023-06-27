@@ -46,6 +46,10 @@
 
         public static string? GetExamUserByIdEndPoint = ExamUserEndPoint + "/GetExamByUserId";
 
+        public static string? CreateExamUser = ExamUserEndPoint + "/Create";
+
+        public static string? UpdateExamUser = ExamUserEndPoint + "/Update";
+
         public static string? GetResultsForExams = ExamUserEndPoint + "/GetResultsForExamsByUserId";
         #endregion
         //get
@@ -59,6 +63,8 @@
         public static string? GetExamByIdEndPoint = ExamEndPoint + "/GetExamById";
 
         public static string? CreateExamEndPoint = ExamEndPoint + "/Create";
+
+        
 
         public static string? DeleteExamEndPoint = ExamEndPoint + "/Delete";
 

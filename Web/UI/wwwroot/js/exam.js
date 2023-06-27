@@ -13,7 +13,7 @@ function getExam(id) {
 }
 
 function InvokeExams(id) {
-	connection.invoke("SendExams", id).catch(function (err) {
+	connection.invoke("SendExams", parseInt(id)).catch(function (err) {
 		return console.error(err.toString());
 	})
 }

@@ -8,7 +8,8 @@ namespace Entity.Domain.ExamUser
     {
         public int Id { get; set; }
         public int ExamId { get; set; }
-        public string UserId { get; set; }
+        public Guid UserId { get; set; }
+        public string IsEnded { get; set; }
 		public List<StudentCourse.StudentCourse>? StudentCourses { get; set; }
 
 	}

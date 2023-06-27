@@ -1,15 +1,18 @@
 ﻿using AutoMapper;
 using Entity.Domain.ApplicationUser;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using Newtonsoft.Json;
+using System.Data;
 using System.Text;
 using UI.Constants;
 using UI.Models.User;
 
 namespace UI.Controllers
 {
-	public class UserController:Controller
+    [Authorize(Roles = "Admin")]
+    public class UserController:Controller
     {
 		private readonly HttpClient client;
 		private readonly IMapper mapper;

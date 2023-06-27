@@ -1,5 +1,15 @@
-﻿@model UI.Models.ViewModels.UserExamViewModel
-
+﻿@using Entity.Domain.ApplicationUser;
+@using Microsoft.AspNetCore.Identity;
+@model UI.Models.ViewModels.UserExamViewModel
+@inject UserManager<ApplicationUser> _userManager;
+@{
+    if (User.Identity.IsAuthenticated)
+    {
+        ViewBag.IsVerify = _userManager.GetUserAsync(User).Result.IsVerify;
+        ViewBag.FullName = _userManager.GetUserAsync(User).Result.FirstName + " " + _userManager.GetUserAsync(User).Result.LastName;
+        ViewBag.UserId = _userManager.GetUserAsync(User).Result.Id;
+    }
+}
 <section class="section-content">
     <div class="row">
         <h3 align="left">Sınavlarım</h3>
@@ -24,14 +34,14 @@
                             <td>@item.ExamName</td>
                             <td>@item.ExamStartTime</td>
                             <td>@item.ExamEndTime</td>
-                            <td>
-                                @if (item.IsEnded == "1")
+                            <td align="center">
+                                @if (item.IsEnded == "1" || item.IsEndedByUser=="1")
                                 {
-                                    <button disabled="disabled" onclick="location.href='@Url.Action("StartExam","ExamUser", new{examId = item.ExamId})'" class="btn btn-info">Başlat</button>
+                                    <button disabled="disabled" onclick="location.href='@Url.Action("StartExam","ExamUser", new { examId = item.ExamId, userId = ViewBag.UserId})'" class="btn btn-info">Başlat</button>
                                 }
                                 else
                                 {
-                                    <button onclick="location.href='@Url.Action("StartExam","ExamUser", new{examId = item.ExamId})'" class="btn btn-info">Başlat</button>
+                                    <button onclick="location.href='@Url.Action("StartExam","ExamUser", new{examId = item.ExamId, userId = ViewBag.UserId})'" class="btn btn-info">Başlat</button>
                                 }
                             </td>
                         </tr>

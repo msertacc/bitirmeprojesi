@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Entity.Domain.ApplicationUser;
+using Entity.Dto.ExamUser;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -45,13 +46,26 @@ namespace UI.Controllers
             return View(userExamViewModel);
         }
 
-		public async Task<IActionResult> StartExam(int examId)
+		public async Task<IActionResult> StartExam(int examId, Guid userId)
 		{
+            ExamUserDto examUserDto = new ExamUserDto();
+            examUserDto.UserId = userId;
+            examUserDto.ExamId = examId;
+            examUserDto.ExamName = string.Empty;
+            examUserDto.IsEnded = "0";
+            examUserDto.IsEndedByUser = string.Empty;
+            examUserDto.IsActive = "1";
+            examUserDto.InsertedUser = userId.ToString();
+
+            var json = JsonConvert.SerializeObject(examUserDto, new JsonSerializerSettings { });
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await client.PostAsync(ApiEndpoints.CreateExamUser, data).ConfigureAwait(false);
+
             ExamProcessViewModel examProcessViewModel = new ExamProcessViewModel();
 
             List<ExamViewModel>? resultExam = new List<ExamViewModel>();
-            var responseExam = await client.GetAsync(ApiEndpoints.GetExamByIdEndPoint + "/" + examId).ConfigureAwait(false);
 
+            var responseExam = await client.GetAsync(ApiEndpoints.GetExamByIdEndPoint + "/" + examId).ConfigureAwait(false);
             if (responseExam.IsSuccessStatusCode)
             {
                 string apiResponse = await responseExam.Content.ReadAsStringAsync();
@@ -106,7 +120,7 @@ namespace UI.Controllers
             var json = JsonConvert.SerializeObject(model, new JsonSerializerSettings { });
             var data = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await client.PostAsync(ApiEndpoints.CreateAnswerOfQuestionEndPoint, data).ConfigureAwait(false);
-
+            string apiResponse = await response.Content.ReadAsStringAsync();
             return this.Redirect(Url.Action("Index", "ExamUser"));
         }
 
@@ -121,6 +135,21 @@ namespace UI.Controllers
                 resultMyScores = JsonConvert.DeserializeObject<List<ResultExam>>(apiResponse);
             }
             return View("~/Views/ExamUser/Scores.cshtml", resultMyScores);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(int examId, Guid userId)
+        {
+            UpdateExamViewModel viewModel = new UpdateExamViewModel()
+            {
+                ExamId = examId,
+                UserId = userId
+            };
+
+            var json = JsonConvert.SerializeObject(viewModel, new JsonSerializerSettings { });
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await client.PostAsync(ApiEndpoints.UpdateExamUser, data).ConfigureAwait(false);
+            return this.Redirect(Url.Action("Index", "Home"));
         }
     }
 }

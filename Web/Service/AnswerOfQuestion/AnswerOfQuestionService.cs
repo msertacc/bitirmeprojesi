@@ -28,29 +28,32 @@ namespace Service.AnswerOfQuestion
             answerOfQuestionDto.InsertedUser = Environment.UserName;
             answerOfQuestionDto.InsertedDate = DateTime.Now;
             answerOfQuestionDto.IsActive = "1";
-
-            var mappingResult = mapper.Map<AnswerOfQuestionDto, Entity.Domain.AnswerOfQuestion.AnswerOfQuestion>(answerOfQuestionDto);
+            //var mappingResult = mapper.Map<AnswerOfQuestionDto, Entity.Domain.AnswerOfQuestion.AnswerOfQuestion>(answerOfQuestionDto);
 
             for (int i = 0; i < answerOfQuestionDto.AnswerList.Count; i++)
             {
-                var choiceItem = new Entity.Domain.AnswerOfQuestion.AnswerOfQuestion
+                if (answerOfQuestionDto.AnswerList[i].ChoiceId != 999999999)
                 {
-                    UserId = answerOfQuestionDto.UserId,
-                    ExamId = answerOfQuestionDto.ExamId,
-                    QuestionId = answerOfQuestionDto.AnswerList[i].QuestionId,   
-                    ChoiceId = answerOfQuestionDto.AnswerList[i].ChoiceId, 
-                    InsertedUser = Environment.UserName,
-                    InsertedDate = DateTime.Now,
-                    IsActive = "1",
-                };
-                await context.AnswerOfQuestions.AddAsync(choiceItem);
+                    var choiceItem = new Entity.Domain.AnswerOfQuestion.AnswerOfQuestion
+                    {
+                        UserId = answerOfQuestionDto.UserId,
+                        ExamId = answerOfQuestionDto.ExamId,
+                        QuestionId = answerOfQuestionDto.AnswerList[i].QuestionId,
+                        ChoiceId = answerOfQuestionDto.AnswerList[i].ChoiceId,
+                        InsertedUser = Environment.UserName,
+                        InsertedDate = DateTime.Now,
+                        IsActive = "1",
+                    };
+                    await context.AnswerOfQuestions.AddAsync(choiceItem);
+                }
             }
             try
             {
                 await context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
+                throw ex;
             }
 
         }      

@@ -1,6 +1,9 @@
 ﻿using Abstraction.Service.ExamUser;
+using API.Models.ExamUser;
+using API.Models.Question;
 using AutoMapper;
 using Entity.Dto.ExamUser;
+using Entity.Dto.Question;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.ExamUser
@@ -30,6 +33,21 @@ namespace API.Controllers.ExamUser
         {
             var response = this.examUserService.GetResultsForExams(id);
             return response;
+        }
+
+        [HttpPost("Create")]
+        public async Task<IActionResult> Create([FromBody] ExamUserDto dto)
+        {
+            await this.examUserService.Create(dto).ConfigureAwait(false);
+            return this.Ok();
+        }
+
+
+        [HttpPost("Update")]
+        public async Task<IActionResult> Update([FromBody] ExamUserUpdateRequest req)
+        {
+            await this.examUserService.Update(req.ExamId, req.UserId).ConfigureAwait(false);
+            return this.Ok();
         }
     }
 }
